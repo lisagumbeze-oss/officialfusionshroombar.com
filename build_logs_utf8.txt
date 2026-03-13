@@ -1,0 +1,794 @@
+﻿
+> fusion-site@0.1.0 build
+> next build
+
+Ôû▓ Next.js 16.1.6 (Turbopack)
+- Environments: .env
+
+node.exe : ÔÜá The "middleware" file convention is 
+deprecated. Please use "proxy" instead. Learn more: 
+https://nextjs.org/docs/messages/middleware-to-proxy
+At line:1 char:1
++ & "C:\Program Files\nodejs/node.exe" "C:\Program 
+Files\nodejs/node_mo ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (ÔÜá The  
+   "middle...leware-to-proxy:String) [], RemoteExcep  
+  tion
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+  Creating an optimized production build ...
+Turbopack build encountered 1 warnings:
+./tailwind.config.js:26:5
+Module not found: Can't resolve '@tailwindcss/forms'
+[0m [90m 24 |[39m   }[33m,[39m
+ [90m 25 |[39m   plugins[33m:[39m [
+[31m[1m>[22m[39m[90m 26 |[39m     
+require([32m'@tailwindcss/forms'[39m)[33m,[39m
+ [90m    |[39m     [31m[1m^[22m[39m[31m[1m^[2
+2m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[
+1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m
+[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m
+^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[3
+1m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[
+39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^
+[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m
+[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39
+m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[2
+2m[39m
+ [90m 27 |[39m   ][33m,[39m
+ [90m 28 |[39m }
+ [90m 29 |[39m[0m
+
+
+
+https://nextjs.org/docs/messages/module-not-found
+
+
+
+> Build error occurred
+Error: Turbopack build failed with 17 errors:
+./src/app/about/page.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import trace:
+  Server Component:
+    ./src/app/about/page.module.css
+    ./src/app/about/page.tsx
+
+
+./src/app/admin/admin.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  #1 [Server Component]:
+    ./src/app/admin/admin.module.css
+    ./src/app/admin/page.tsx
+
+  #2 [Client Component Browser]:
+    ./src/app/admin/admin.module.css [Client 
+Component Browser]
+    ./src/app/admin/blog/page.tsx [Client Component 
+Browser]
+    ./src/app/admin/blog/page.tsx [Server Component]
+
+  #3 [Client Component SSR]:
+    ./src/app/admin/admin.module.css [Client 
+Component SSR]
+    ./src/app/admin/blog/page.tsx [Client Component 
+SSR]
+    ./src/app/admin/blog/page.tsx [Server Component]
+
+  #4 [Client Component Browser]:
+    ./src/app/admin/admin.module.css [Client 
+Component Browser]
+    ./src/app/admin/settings/PaymentMethodManager.tsx 
+[Client Component Browser]
+    ./src/app/admin/settings/PaymentMethodManager.tsx 
+[Server Component]
+    ./src/app/admin/settings/page.tsx [Server 
+Component]
+
+
+./src/app/admin/login/login.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/app/admin/login/login.module.css [Client 
+Component Browser]
+    ./src/app/admin/login/page.tsx [Client Component 
+Browser]
+    ./src/app/admin/login/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/admin/login/login.module.css [Client 
+Component SSR]
+    ./src/app/admin/login/page.tsx [Client Component 
+SSR]
+    ./src/app/admin/login/page.tsx [Server Component]
+
+
+./src/app/blog/page.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import trace:
+  Server Component:
+    ./src/app/blog/page.module.css
+    ./src/app/blog/page.tsx
+
+
+./src/app/cart/cart.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/app/cart/cart.module.css [Client Component 
+Browser]
+    ./src/app/cart/page.tsx [Client Component Browser]
+    ./src/app/cart/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/cart/cart.module.css [Client Component 
+SSR]
+    ./src/app/cart/page.tsx [Client Component SSR]
+    ./src/app/cart/page.tsx [Server Component]
+
+
+./src/app/checkout/checkout.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/app/checkout/checkout.module.css [Client 
+Component Browser]
+    ./src/app/checkout/CheckoutForm.tsx [Client 
+Component Browser]
+    ./src/app/checkout/CheckoutForm.tsx [Server 
+Component]
+    ./src/app/checkout/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/checkout/checkout.module.css [Client 
+Component SSR]
+    ./src/app/checkout/CheckoutForm.tsx [Client 
+Component SSR]
+    ./src/app/checkout/CheckoutForm.tsx [Server 
+Component]
+    ./src/app/checkout/page.tsx [Server Component]
+
+
+./src/app/contact/page.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/app/contact/page.module.css [Client 
+Component Browser]
+    ./src/app/contact/page.tsx [Client Component 
+Browser]
+    ./src/app/contact/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/contact/page.module.css [Client 
+Component SSR]
+    ./src/app/contact/page.tsx [Client Component SSR]
+    ./src/app/contact/page.tsx [Server Component]
+
+
+./src/app/globals.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import trace:
+  Client Component Browser:
+    ./src/app/globals.css [Client Component Browser]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/app/page.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import trace:
+  Server Component:
+    ./src/app/page.module.css
+    ./src/app/page.tsx
+
+
+./src/app/shop/[id]/product.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Server Component:
+    ./src/app/shop/[id]/product.module.css
+    ./src/app/shop/[id]/page.tsx
+
+  Client Component Browser:
+    ./src/app/shop/[id]/product.module.css [Client 
+Component Browser]
+    ./src/app/shop/[id]/AddToCartSection.tsx [Client 
+Component Browser]
+    ./src/app/shop/[id]/AddToCartSection.tsx [Server 
+Component]
+    ./src/app/shop/[id]/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/shop/[id]/product.module.css [Client 
+Component SSR]
+    ./src/app/shop/[id]/AddToCartSection.tsx [Client 
+Component SSR]
+    ./src/app/shop/[id]/AddToCartSection.tsx [Server 
+Component]
+    ./src/app/shop/[id]/page.tsx [Server Component]
+
+
+./src/app/shop/shop.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Server Component:
+    ./src/app/shop/shop.module.css
+    ./src/app/shop/page.tsx
+
+  Client Component Browser:
+    ./src/app/shop/shop.module.css [Client Component 
+Browser]
+    ./src/app/shop/Pagination.tsx [Client Component 
+Browser]
+    ./src/app/shop/Pagination.tsx [Server Component]
+    ./src/app/shop/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/app/shop/shop.module.css [Client Component 
+SSR]
+    ./src/app/shop/Pagination.tsx [Client Component 
+SSR]
+    ./src/app/shop/Pagination.tsx [Server Component]
+    ./src/app/shop/page.tsx [Server Component]
+
+
+./src/components/Footer/Footer.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Footer/Footer.module.css [Client 
+Component Browser]
+    ./src/components/Footer/Footer.tsx [Client 
+Component Browser]
+    ./src/components/Footer/Footer.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Footer/Footer.module.css [Client 
+Component SSR]
+    ./src/components/Footer/Footer.tsx [Client 
+Component SSR]
+    ./src/components/Footer/Footer.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/components/Header/CartDropdown.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Header/CartDropdown.module.css 
+[Client Component Browser]
+    ./src/components/Header/CartDropdown.tsx [Client 
+Component Browser]
+    ./src/components/Header/Header.tsx [Client 
+Component Browser]
+    ./src/components/Header/Header.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Header/CartDropdown.module.css 
+[Client Component SSR]
+    ./src/components/Header/CartDropdown.tsx [Client 
+Component SSR]
+    ./src/components/Header/Header.tsx [Client 
+Component SSR]
+    ./src/components/Header/Header.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/components/Header/Header.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Header/Header.module.css [Client 
+Component Browser]
+    ./src/components/Header/Header.tsx [Client 
+Component Browser]
+    ./src/components/Header/Header.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Header/Header.module.css [Client 
+Component SSR]
+    ./src/components/Header/Header.tsx [Client 
+Component SSR]
+    ./src/components/Header/Header.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/components/Legal/LegalModal.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Legal/LegalModal.module.css 
+[Client Component Browser]
+    ./src/components/Legal/LegalModal.tsx [Client 
+Component Browser]
+    ./src/components/Footer/Footer.tsx [Client 
+Component Browser]
+    ./src/components/Footer/Footer.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Legal/LegalModal.module.css 
+[Client Component SSR]
+    ./src/components/Legal/LegalModal.tsx [Client 
+Component SSR]
+    ./src/components/Footer/Footer.tsx [Client 
+Component SSR]
+    ./src/components/Footer/Footer.tsx [Server 
+Component]
+    ./src/app/layout.tsx [Server Component]
+
+
+./src/components/Reveal.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/Reveal.module.css [Client 
+Component Browser]
+    ./src/components/Reveal.tsx [Client Component 
+Browser]
+    ./src/components/Reveal.tsx [Server Component]
+    ./src/app/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/Reveal.module.css [Client 
+Component SSR]
+    ./src/components/Reveal.tsx [Client Component SSR]
+    ./src/components/Reveal.tsx [Server Component]
+    ./src/app/page.tsx [Server Component]
+
+
+./src/components/admin/Sidebar.module.css
+Error evaluating Node.js code
+Error: It looks like you're trying to use 
+`tailwindcss` directly as a PostCSS plugin. The 
+PostCSS plugin has moved to a separate package, so to 
+continue using Tailwind CSS with PostCSS you'll need 
+to install `@tailwindcss/postcss` and update your 
+PostCSS configuration.
+    [at at (C:\Users\User\Downloads\SEO\fusion-site\no
+de_modules\tailwindcss\dist\lib.js:38:1643)]
+    at turbopack:///[turbopack-node]/transforms/postcs
+s.ts:56:14 [C:\Users\User\Downloads\SEO\fusion-site\.n
+ext\build\chunks\[root-of-the-server]__6d51cb5d._.js:1
+65:20]
+    [at <anonymous>]
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35]
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26]
+    [at process.processTicksAndRejections 
+(node:internal/process/task_queues:104:5)]
+
+Import traces:
+  Client Component Browser:
+    ./src/components/admin/Sidebar.module.css [Client 
+Component Browser]
+    ./src/components/admin/Sidebar.tsx [Client 
+Component Browser]
+    ./src/components/admin/Sidebar.tsx [Server 
+Component]
+    ./src/app/admin/layout.tsx [Server Component]
+
+  Client Component SSR:
+    ./src/components/admin/Sidebar.module.css [Client 
+Component SSR]
+    ./src/components/admin/Sidebar.tsx [Client 
+Component SSR]
+    ./src/components/admin/Sidebar.tsx [Server 
+Component]
+    ./src/app/admin/layout.tsx [Server Component]
+
+
+    at Module.init (turbopack:///[turbopack-node]/tran
+sforms/postcss.ts:43:33) [C:\Users\User\Downloads\SEO\
+fusion-site\.next\build\chunks\[root-of-the-server]__6
+d51cb5d._.js:155:35])
+    at run 
+(turbopack:///[turbopack-node]/ipc/evaluate.ts:77:20) 
+[C:\Users\User\Downloads\SEO\fusion-site\.next\build\c
+hunks\[root-of-the-server]__44695d76._.js:429:26])
+    ... collapsed 32 duplicate lines matching above 2 
+lines 16 times...
