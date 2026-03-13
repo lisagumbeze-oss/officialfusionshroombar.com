@@ -79,8 +79,9 @@ export async function POST(request: Request) {
             try {
                 // 1. Email to Customer
                 await resend.emails.send({
-                    from: 'Fusion Shroom Bars <support@officialfusionshroombar.com>', 
+                    from: 'Fusion Shroom Bars <order@officialfusionshroombar.com>', 
                     to: customerEmail,
+                    replyTo: 'order@officialfusionshroombar.com',
                     subject: `Order Confirmation #${order.id.slice(-6).toUpperCase()} - Fusion Shroom Bars`,
                     html: `
                         <div style="background-color: #0c0c0c; color: #ffffff; font-family: 'Inter', Arial, sans-serif; padding: 40px; line-height: 1.6;">
@@ -134,7 +135,7 @@ export async function POST(request: Request) {
                 // 2. Notification to Admin
                 const adminEmail = process.env.ADMIN_EMAIL || 'order@officialfusionshroombar.com';
                 await resend.emails.send({
-                    from: 'System <support@officialfusionshroombar.com>', 
+                    from: 'Fusion System <order@officialfusionshroombar.com>', 
                     to: adminEmail,
                     subject: `New Order Received! 💰 $${totalAmount.toFixed(2)}`,
                     html: `

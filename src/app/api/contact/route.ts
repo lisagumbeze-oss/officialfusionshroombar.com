@@ -20,7 +20,7 @@ export async function POST(req: Request) {
         const { name, email, message, subject } = body;
 
         const { data, error } = await resend.emails.send({
-            from: 'Fusion Contact <support@officialfusionshroombar.com>', 
+            from: 'Fusion Contact <order@officialfusionshroombar.com>', 
             to: ['order@officialfusionshroombar.com'], 
             subject: subject || `New Contact Form Submission from ${name}`,
             replyTo: email,
