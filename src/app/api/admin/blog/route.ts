@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
 
+export const dynamic = 'force-dynamic';
+
 // Helper to check admin session (simplified)
 async function checkAuth() {
     const cookieStore = await cookies();

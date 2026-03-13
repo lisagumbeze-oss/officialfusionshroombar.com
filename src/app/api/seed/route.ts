@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { products } from '@/data/products';
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         let count = 0;
