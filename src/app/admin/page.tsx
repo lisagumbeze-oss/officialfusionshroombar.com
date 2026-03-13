@@ -9,18 +9,23 @@ export const metadata = {
 };
 
 async function getAnalyticsData() {
-    const orders = await prisma.order.findMany();
-    
-    // Calculate KPIs
-    const totalRevenue = orders.reduce((sum, order) => sum + order.totalAmount, 0);
-    const pendingOrders = orders.filter(o => o.status === 'PENDING').length;
-    const totalSales = orders.length;
+    try {
+        const orders = await prisma.order.findMany();
+        
+        // Calculate KPIs
+        const totalRevenue = orders.reduce((sum, order) => sum + order.totalAmount, 0);
+        const pendingOrders = orders.filter(o => o.status === 'PENDING').length;
+        const totalSales = orders.length;
 
-    return { totalRevenue, pendingOrders, totalSales, recentOrders: orders.slice(0, 5) };
+        return { totalRevenue, pendingOrders, totalSales, recentOrders: orders.slice(0, 5), error: null };
+    } catch (error) {
+        console.error('[AdminDashboard] Analytics fetch failed:', error);
+        return { totalRevenue: 0, pendingOrders: 0, totalSales: 0, recentOrders: [], error: 'Database connection failed' };
+    }
 }
 
 export default async function AdminDashboard() {
-    const { totalRevenue, pendingOrders, totalSales } = await getAnalyticsData();
+    const { totalRevenue, pendingOrders, totalSales, error } = await getAnalyticsData();
 
     return (
         <div className={styles.adminContainer}>
@@ -28,6 +33,12 @@ export default async function AdminDashboard() {
                 <h1>Overview Dashboard</h1>
                 <p>Welcome back, here's what's happening today.</p>
             </header>
+
+            {error && (
+                <div style={{ padding: '1rem', background: 'rgba(255,0,0,0.1)', border: '1px solid red', borderRadius: '8px', marginBottom: '2rem', color: '#ff6b6b' }}>
+                    <strong>Database Error:</strong> {error}. Analytics shown are currently zeroed out.
+                </div>
+            )}
 
             <div className={styles.dashboardGrid}>
                 {/* KPI Card 1 */}

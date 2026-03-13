@@ -1,9 +1,17 @@
 'use client';
 import { useState } from 'react';
-import { Search, X, Eye } from 'lucide-react';
+import { Search, X, Eye, Trash2 } from 'lucide-react';
 import styles from '../admin.module.css';
 
-export default function OrdersTable({ orders, updateStatusAction }: { orders: any[], updateStatusAction: (formData: FormData) => void }) {
+export default function OrdersTable({ 
+    orders, 
+    updateStatusAction,
+    deleteOrderAction
+}: { 
+    orders: any[], 
+    updateStatusAction: (formData: FormData) => void,
+    deleteOrderAction: (formData: FormData) => void
+}) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedOrder, setSelectedOrder] = useState<any>(null);
 
@@ -67,9 +75,24 @@ export default function OrdersTable({ orders, updateStatusAction }: { orders: an
                                             <button 
                                                 onClick={() => setSelectedOrder(order)}
                                                 style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: 'white' }}
+                                                title="View Order"
                                             >
                                                 <Eye size={16} />
                                             </button>
+                                            <form action={(formData) => {
+                                                if (confirm('Permanently delete this order?')) {
+                                                    deleteOrderAction(formData);
+                                                }
+                                            }}>
+                                                <input type="hidden" name="orderId" value={order.id} />
+                                                <button 
+                                                    type="submit"
+                                                    style={{ padding: '0.5rem', background: 'rgba(255,50,50,0.15)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#ff4444' }}
+                                                    title="Delete Order"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 ))}

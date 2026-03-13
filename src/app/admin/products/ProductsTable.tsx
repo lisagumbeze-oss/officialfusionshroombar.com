@@ -1,17 +1,19 @@
 'use client';
 import { useState } from 'react';
-import { Search, X, Edit2, Package } from 'lucide-react';
+import { Search, X, Edit2, Package, Trash2 } from 'lucide-react';
 import styles from '../admin.module.css';
 import Image from 'next/image';
 
 export default function ProductsTable({ 
     products, 
     updateProductAction,
-    addProductAction 
+    addProductAction,
+    deleteProductAction
 }: { 
     products: any[], 
     updateProductAction: (formData: FormData) => void,
-    addProductAction?: (formData: FormData) => void 
+    addProductAction?: (formData: FormData) => void,
+    deleteProductAction: (formData: FormData) => void
 }) {
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
@@ -96,6 +98,20 @@ export default function ProductsTable({
                                             >
                                                 <Edit2 size={16} />
                                             </button>
+                                            <form action={(formData) => {
+                                                if (confirm(`Permanently delete ${product.name}?`)) {
+                                                    deleteProductAction(formData);
+                                                }
+                                            }}>
+                                                <input type="hidden" name="id" value={product.id} />
+                                                <button 
+                                                    type="submit"
+                                                    style={{ padding: '0.5rem', background: 'rgba(255,50,50,0.15)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#ff4444' }}
+                                                    title="Delete Product"
+                                                >
+                                                    <Trash2 size={16} />
+                                                </button>
+                                            </form>
                                         </td>
                                     </tr>
                                 ))}

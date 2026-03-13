@@ -10,9 +10,17 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-    const products = await prisma.product.findMany({
-        orderBy: { category: 'asc' },
-    });
+    let products = [];
+    let error = null;
+
+    try {
+        products = await prisma.product.findMany({
+            orderBy: { category: 'asc' },
+        });
+    } catch (e) {
+        console.error('[ProductsPage] DB Error:', e);
+        error = 'Failed to load products database.';
+    }
 
     async function updateProduct(formData: FormData) {
         'use server';
@@ -90,6 +98,17 @@ export default async function ProductsPage() {
         revalidatePath('/');
     }
 
+    async function deleteProduct(formData: FormData) {
+        'use server';
+        const id = formData.get('id') as string;
+        await (prisma as any).product.delete({
+            where: { id },
+        });
+        revalidatePath('/admin/products');
+        revalidatePath('/shop');
+        revalidatePath('/');
+    }
+
     return (
         <div className={styles.adminContainer}>
             <header className={styles.adminHeader} style={{ textAlign: 'left', marginBottom: '2rem' }}>
@@ -97,11 +116,19 @@ export default async function ProductsPage() {
                 <p>Manage your inventory, prices, and catalog visibility.</p>
             </header>
 
-            <ProductsTable 
-                products={products} 
-                updateProductAction={updateProduct} 
-                addProductAction={addProduct} 
-            />
+            {error ? (
+                <div className={styles.card} style={{ padding: '2rem', textAlign: 'center', border: '1px solid #ff4444' }}>
+                    <p style={{ color: '#ff4444' }}>{error}</p>
+                    <p style={{ fontSize: '0.9rem', color: '#888' }}>Check your database connection string in Vercel settings.</p>
+                </div>
+            ) : (
+                <ProductsTable 
+                    products={products} 
+                    updateProductAction={updateProduct} 
+                    addProductAction={addProduct} 
+                    deleteProductAction={deleteProduct}
+                />
+            )}
         </div>
     );
 }

@@ -4,12 +4,20 @@ import Image from 'next/image';
 export const dynamic = 'force-dynamic';
 import { notFound } from 'next/navigation';
 
-export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
-    
-    const post = await (prisma as any).blogPost.findUnique({
-        where: { slug }
-    });
+    let post = null;
+
+    try {
+        post = await (prisma as any).blogPost.findUnique({
+            where: { 
+                slug,
+                isPublic: true
+            }
+        });
+    } catch (error) {
+        console.error('[BlogPost] Database error:', error);
+    }
 
     if (!post) notFound();
 

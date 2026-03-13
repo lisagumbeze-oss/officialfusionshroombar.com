@@ -18,11 +18,27 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
 }
 
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function ProductPage({ 
+    params 
+}: { 
+    params: Promise<{ id: string }> 
+}) {
     const { id } = await params;
-    const product = await (prisma as any).product.findUnique({ where: { slug: id } });
+    let product = null;
 
-    if (!product || !product.isActive) {
+    try {
+        product = await (prisma as any).product.findUnique({
+            where: { slug: id }
+        });
+    } catch (error) {
+        console.error('[ProductPage] Database error:', error);
+    }
+
+    if (!product) {
+        notFound();
+    }
+
+    if (!product.isActive) {
         notFound();
     }
 

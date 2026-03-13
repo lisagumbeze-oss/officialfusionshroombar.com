@@ -8,11 +8,18 @@ import AddToCartButton from '@/components/AddToCartButton';
 import { Reveal } from '@/components/Reveal';
 
 export default async function Home() {
-  const bestsellers = await (prisma as any).product.findMany({
-    where: { isActive: true },
-    take: 8,
-    orderBy: { createdAt: 'desc' }
-  });
+  let bestsellers = [];
+  try {
+    const products = await (prisma as any).product.findMany({
+      where: { isActive: true },
+      take: 8,
+      orderBy: { createdAt: 'desc' }
+    });
+    bestsellers = products;
+  } catch (error) {
+    console.error('[Home] Failed to fetch bestsellers:', error);
+    // Keep bestsellers as empty array so page doesn't crash
+  }
 
   return (
     <div className={styles.home}>

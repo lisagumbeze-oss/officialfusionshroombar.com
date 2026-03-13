@@ -25,14 +25,24 @@ export default async function Shop({
     if (sort === 'price-high') orderBy = { price: 'desc' };
     if (sort === 'newest') orderBy = { createdAt: 'desc' };
 
-    const products = await (prisma as any).product.findMany({
-        where,
-        orderBy,
-    });
+    let products = [];
+    let categories = [];
+    let dbError = false;
 
-    const categories = Array.from(new Set((await (prisma as any).product.findMany({
-        select: { category: true }
-    })).map((p: any) => p.category)));
+    try {
+        products = await (prisma as any).product.findMany({
+            where,
+            orderBy,
+        });
+
+        const catData = await (prisma as any).product.findMany({
+            select: { category: true }
+        });
+        categories = Array.from(new Set(catData.map((p: any) => p.category)));
+    } catch (error) {
+        console.error('[Shop] Database error:', error);
+        dbError = true;
+    }
 
     return (
         <div className={styles.shopContainer}>
@@ -43,32 +53,44 @@ export default async function Shop({
 
             <ShopFilters categories={categories as string[]} />
 
-            <div className={styles.productGrid}>
-                {products.map((product: any) => (
-                    <div key={product.id} className={styles.productCard}>
-                        <div className={styles.productImagePlaceholder}>
-                            <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} />
-                            {product.regularPrice && product.regularPrice > product.price && (
-                                <span className={styles.saleTag}>SALE</span>
-                            )}
+            {dbError ? (
+                <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'rgba(255,100,100,0.05)', borderRadius: '12px', border: '1px solid rgba(255,100,100,0.1)', margin: '2rem 0' }}>
+                    <h2 style={{ color: '#ff6b6b' }}>Store Temporarily Unavailable</h2>
+                    <p>We're experiencing a connection issue with our product database. Please try refreshing the page or check back in a few minutes.</p>
+                </div>
+            ) : (
+                <div className={styles.productGrid}>
+                    {products.map((product: any) => (
+                        <div key={product.id} className={styles.productCard}>
+                            <div className={styles.productImagePlaceholder}>
+                                <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} />
+                                {product.regularPrice && product.regularPrice > product.price && (
+                                    <span className={styles.saleTag}>SALE</span>
+                                )}
+                            </div>
+                            <h3 className={styles.productTitle}>{product.name}</h3>
+                            <div className={styles.categoryTag}>{product.category}</div>
+                            <div className={styles.price}>
+                                {product.regularPrice && (
+                                    <span className={styles.oldPrice}>${product.regularPrice.toFixed(2)}</span>
+                                )}
+                                <span className={styles.newPrice}>${product.price.toFixed(2)}</span>
+                            </div>
+                            <div className={styles.buttonGroup}>
+                                <Link href={`/shop/${product.slug}`} className={`${styles.viewBtn} premium-gradient`}>
+                                    VIEW PRODUCT
+                                </Link>
+                                <AddToCartButton product={product} className={styles.cartBtn} />
+                            </div>
                         </div>
-                        <h3 className={styles.productTitle}>{product.name}</h3>
-                        <div className={styles.categoryTag}>{product.category}</div>
-                        <div className={styles.price}>
-                            {product.regularPrice && (
-                                <span className={styles.oldPrice}>${product.regularPrice.toFixed(2)}</span>
-                            )}
-                            <span className={styles.newPrice}>${product.price.toFixed(2)}</span>
+                    ))}
+                    {products.length === 0 && !dbError && (
+                        <div className={styles.noResults}>
+                            <h3>No products found in this category.</h3>
                         </div>
-                        <div className={styles.buttonGroup}>
-                            <Link href={`/shop/${product.slug}`} className={`${styles.viewBtn} premium-gradient`}>
-                                VIEW PRODUCT
-                            </Link>
-                            <AddToCartButton product={product} className={styles.cartBtn} />
-                        </div>
-                    </div>
-                ))}
-            </div>
+                    )}
+                </div>
+            )}
         </div>
     );
 }

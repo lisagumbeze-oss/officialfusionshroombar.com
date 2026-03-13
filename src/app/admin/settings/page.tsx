@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import prisma from '@/lib/prisma';
 import styles from '../admin.module.css';
 import { revalidatePath } from 'next/cache';
+import PaymentMethodManager from './PaymentMethodManager';
 
 export const metadata = {
     title: 'Admin Settings | Fusion Shroom Bars',
@@ -32,18 +33,45 @@ export default async function SettingsPage() {
         category2Price: 85
     };
 
-    async function addPaymentMethod(formData: FormData) {
+    async function deletePaymentMethod(formData: FormData) {
         'use server';
+        const id = formData.get('id') as string;
+        await prisma.manualPaymentMethod.delete({
+            where: { id },
+        });
+        revalidatePath('/admin/settings');
+    }
+
+    async function togglePaymentMethod(formData: FormData) {
+        'use server';
+        const id = formData.get('id') as string;
+        const current = await prisma.manualPaymentMethod.findUnique({ where: { id } });
+        await prisma.manualPaymentMethod.update({
+            where: { id },
+            data: { isActive: !current?.isActive },
+        });
+        revalidatePath('/admin/settings');
+    }
+
+    async function savePaymentMethod(formData: FormData) {
+        'use server';
+        const id = formData.get('id') as string;
         const name = formData.get('name') as string;
         const details = formData.get('details') as string;
         const instructions = formData.get('instructions') as string;
+        const isActive = formData.get('isActive') === 'on';
 
-        if (name && details) {
-            await prisma.manualPaymentMethod.create({
-                data: { name, details, instructions },
+        if (id) {
+            await prisma.manualPaymentMethod.update({
+                where: { id },
+                data: { name, details, instructions, isActive },
             });
-            revalidatePath('/admin/settings');
+        } else {
+            await prisma.manualPaymentMethod.create({
+                data: { name, details, instructions, isActive: true },
+            });
         }
+        revalidatePath('/admin/settings');
     }
 
     async function updateShipping(formData: FormData) {
@@ -136,53 +164,14 @@ export default async function SettingsPage() {
                         </form>
                     </div>
                 </section>
-
-                {/* Payment Methods */}
-                <section className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <h2>Add Payment Method</h2>
-                    </div>
-                    <form action={addPaymentMethod} className={styles.paymentForm}>
-                        <div className={styles.inputGroup}>
-                            <label>Method Name (e.g., Apple Cash, Zelle)</label>
-                            <input type="text" name="name" required placeholder="Bitcoin" />
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <label>Payment Details (Handle/Address)</label>
-                            <input type="text" name="details" required placeholder="bc1qxy2kgdygjrsqtzq..." />
-                        </div>
-                        <div className={styles.inputGroup}>
-                            <label>Extra Instructions (Optional)</label>
-                            <textarea name="instructions" placeholder="Please send the exact amount."></textarea>
-                        </div>
-                        <button type="submit" className={`${styles.submitBtn} premium-gradient`}>Save Method</button>
-                    </form>
-                </section>
-
-                <section className={styles.card}>
-                    <div className={styles.cardHeader}>
-                        <h2>Active Payment Methods</h2>
-                    </div>
-                    <div className={styles.methodList}>
-                        {paymentMethods.length === 0 ? (
-                            <p className={styles.emptyState}>No manual payment methods configured.</p>
-                        ) : (
-                            paymentMethods.map(method => (
-                                <div key={method.id} className={styles.methodItem}>
-                                    <div className={styles.methodHeader}>
-                                        <strong>{method.name}</strong>
-                                        <span className={method.isActive ? styles.activeBadge : styles.inactiveBadge}>
-                                            {method.isActive ? 'Active' : 'Inactive'}
-                                        </span>
-                                    </div>
-                                    <p className={styles.methodDetails}>{method.details}</p>
-                                    {method.instructions && <p className={styles.methodInstructions}>{method.instructions}</p>}
-                                </div>
-                            ))
-                        )}
-                    </div>
-                </section>
             </div>
+
+            <PaymentMethodManager 
+                methods={paymentMethods} 
+                saveAction={savePaymentMethod} 
+                deleteAction={deletePaymentMethod}
+                toggleAction={togglePaymentMethod}
+            />
         </div>
     );
 }

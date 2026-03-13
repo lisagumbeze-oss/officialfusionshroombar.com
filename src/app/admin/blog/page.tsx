@@ -116,6 +116,26 @@ export default function BlogManagement() {
         setFormData({ ...formData, tags: formData.tags.filter(t => t !== tagToRemove) });
     };
 
+    const insertMarkdown = (before: string, after: string = '') => {
+        const textarea = document.getElementById('blog-content-editor') as HTMLTextAreaElement;
+        if (!textarea) return;
+
+        const start = textarea.selectionStart;
+        const end = textarea.selectionEnd;
+        const text = textarea.value;
+        const selectedText = text.substring(start, end);
+        
+        const newText = text.substring(0, start) + before + selectedText + after + text.substring(end);
+        setFormData({ ...formData, content: newText });
+        
+        // Focus back and set selection
+        setTimeout(() => {
+            textarea.focus();
+            const newPos = start + before.length + selectedText.length + after.length;
+            textarea.setSelectionRange(newPos, newPos);
+        }, 0);
+    };
+
     if (view === 'editor') {
         return (
             <div className={cmsStyles.cmsContainer}>
@@ -143,19 +163,20 @@ export default function BlogManagement() {
                         <label className={cmsStyles.label}>Content</label>
                         <div className={cmsStyles.editorContainer}>
                             <div className={cmsStyles.editorToolbar}>
-                                <button className={cmsStyles.toolbarBtn}><Bold size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><Italic size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><Underline size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('**', '**')} title="Bold"><Bold size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('*', '*')} title="Italic"><Italic size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('<u>', '</u>')} title="Underline"><Underline size={18} /></button>
                                 <div className={cmsStyles.divider}></div>
-                                <button className={cmsStyles.toolbarBtn}><List size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><ListOrdered size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><Quote size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('\n- ')} title="Bullet List"><List size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('\n1. ')} title="Numbered List"><ListOrdered size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('\n> ')} title="Quote"><Quote size={18} /></button>
                                 <div className={cmsStyles.divider}></div>
-                                <button className={cmsStyles.toolbarBtn}><LinkIcon size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><ImageIcon size={18} /></button>
-                                <button className={cmsStyles.toolbarBtn}><Code size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('[', '](url)')} title="Link"><LinkIcon size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('![alt text](', ')')} title="Image"><ImageIcon size={18} /></button>
+                                <button className={cmsStyles.toolbarBtn} onClick={() => insertMarkdown('`', '`')} title="Code"><Code size={18} /></button>
                             </div>
                             <textarea 
+                                id="blog-content-editor"
                                 className={cmsStyles.textarea}
                                 placeholder="Start writing your magical story here..."
                                 value={formData.content}
