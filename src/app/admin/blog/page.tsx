@@ -6,7 +6,7 @@ import {
     Underline, List, ListOrdered, Quote, Link as LinkIcon, 
     Image as ImageIcon, Code, ChevronRight, LayoutDashboard,
     Eye, MoreVertical, Calendar, Tag, Layers, MessageSquare,
-    CheckCircle2, Clock
+    CheckCircle2, Clock, Brain
 } from 'lucide-react';
 import Image from 'next/image';
 
@@ -174,62 +174,78 @@ export default function BlogManagement() {
     // --- RENDER DASHBOARD (LIST VIEW) ---
     if (view === 'list') {
         return (
-            <div className="flex flex-col min-h-screen w-full bg-[#f8f9fc] dark:bg-[#0f0714] text-slate-900 dark:text-slate-100 p-4 lg:p-10 font-sans">
-                {/* Dashboard Header */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-10">
-                    <div>
-                        <h1 className="text-4xl font-black tracking-tight flex items-center gap-3 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
-                            Fusion Command <span className="text-slate-400">Posts</span>
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-500 mt-2 font-medium">Manage and publish your latest community stories.</p>
+            <div className="flex flex-col min-h-screen w-full bg-[#f7f5f8] dark:bg-[#1b1022] text-slate-900 dark:text-slate-100 font-sans">
+                {/* Unified Header */}
+                <header className="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 bg-[#f7f5f8] dark:bg-[#1b1022] sticky top-0 z-50">
+                    <div className="flex items-center gap-4">
+                        <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                            <Brain size={18} />
+                        </div>
+                        <h2 className="text-xl font-bold tracking-tight">Fusion CMS</h2>
                     </div>
-                    <button 
-                        onClick={() => openEditor()}
-                        className="flex items-center justify-center gap-2 rounded-2xl h-12 px-8 bg-primary text-white font-bold hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary/25"
-                    >
-                        <Plus size={20} strokeWidth={3} />
-                        <span>New Post</span>
-                    </button>
-                </div>
+                    <div className="flex flex-1 justify-end gap-6 items-center">
+                        <nav className="hidden md:flex items-center gap-8">
+                            <a className="text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+                            <a className="text-primary text-sm font-semibold border-b-2 border-primary pb-1" href="#">Posts</a>
+                            <a className="text-sm font-medium hover:text-primary transition-colors" href="#">Analytics</a>
+                        </nav>
+                        <div className="flex items-center gap-3 ml-4">
+                            <button 
+                                onClick={() => openEditor()}
+                                className="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold hover:brightness-110 transition-all shadow-lg shadow-primary/20"
+                            >
+                                <span>New Post</span>
+                            </button>
+                        </div>
+                    </div>
+                </header>
 
-                {/* Dashboard Stats */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="p-2 rounded-xl bg-primary/10 text-primary"><Layers size={20} /></span>
-                            <span className="text-xs font-bold text-slate-400">Total</span>
-                        </div>
-                        <div className="text-3xl font-black">{posts.length}</div>
-                        <div className="text-sm text-slate-400 mt-1">Managed Posts</div>
+                <div className="flex-1 p-6 lg:p-20">
+                    {/* Welcome Section */}
+                    <div className="mb-10">
+                        <h1 className="text-3xl font-black tracking-tight mb-2">Manage Your Stories</h1>
+                        <p className="text-slate-500 dark:text-slate-400">Craft your latest experience and share it with the community.</p>
                     </div>
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="p-2 rounded-xl bg-green-500/10 text-green-500"><CheckCircle2 size={20} /></span>
-                            <span className="text-xs font-bold text-slate-400">Active</span>
-                        </div>
-                        <div className="text-3xl font-black text-green-500">{posts.filter(p => p.isPublic).length}</div>
-                        <div className="text-sm text-slate-400 mt-1">Publicly Visible</div>
-                    </div>
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="p-2 rounded-xl bg-amber-500/10 text-amber-500"><Clock size={20} /></span>
-                            <span className="text-xs font-bold text-slate-400">Drafts</span>
-                        </div>
-                        <div className="text-3xl font-black text-amber-500">{posts.filter(p => !p.isPublic).length}</div>
-                        <div className="text-sm text-slate-400 mt-1">Pending Review</div>
-                    </div>
-                    <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-3xl p-6 shadow-sm">
-                        <div className="flex items-center justify-between mb-2">
-                            <span className="p-2 rounded-xl bg-purple-500/10 text-purple-500"><MessageSquare size={20} /></span>
-                            <span className="text-xs font-bold text-slate-400">Engage</span>
-                        </div>
-                        <div className="text-3xl font-black">Live</div>
-                        <div className="text-sm text-slate-400 mt-1">Comments Enabled</div>
-                    </div>
-                </div>
+                {/* Content wrapper continued... */}
 
-                {/* Table Section */}
-                <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] overflow-hidden shadow-sm">
+                    {/* Dashboard Stats */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="p-2 rounded-lg bg-primary/10 text-primary"><Layers size={20} /></span>
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Total</span>
+                            </div>
+                            <div className="text-3xl font-black">{posts.length}</div>
+                            <div className="text-xs text-slate-400 mt-2 font-medium">Stories Recorded</div>
+                        </div>
+                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="p-2 rounded-lg bg-green-500/10 text-green-500"><CheckCircle2 size={20} /></span>
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Active</span>
+                            </div>
+                            <div className="text-3xl font-black text-green-500">{posts.filter(p => p.isPublic).length}</div>
+                            <div className="text-xs text-slate-400 mt-2 font-medium">Publicly Visible</div>
+                        </div>
+                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="p-2 rounded-lg bg-amber-500/10 text-amber-500"><Clock size={20} /></span>
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Drafts</span>
+                            </div>
+                            <div className="text-3xl font-black text-amber-500">{posts.filter(p => !p.isPublic).length}</div>
+                            <div className="text-xs text-slate-400 mt-2 font-medium">Pending Review</div>
+                        </div>
+                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                            <div className="flex items-center justify-between mb-2">
+                                <span className="p-2 rounded-lg bg-purple-500/10 text-purple-500"><MessageSquare size={20} /></span>
+                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Engage</span>
+                            </div>
+                            <div className="text-3xl font-black">Live</div>
+                            <div className="text-xs text-slate-400 mt-2 font-medium">Comments Active</div>
+                        </div>
+                    </div>
+
+                    {/* Table Section */}
+                    <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl overflow-hidden shadow-sm">
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center py-20 gap-4">
                             <div className="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
@@ -315,94 +331,93 @@ export default function BlogManagement() {
                     )}
                 </div>
             </div>
+                
+                {/* Footer from code.html */}
+                <footer className="mt-12 py-10 border-t border-primary/10 text-center">
+                    <p className="text-xs text-slate-500 font-medium tracking-wide">© 2026 Fusion Shroom Bars. All rights reserved. Designed for mindful content creation.</p>
+                </footer>
+            </div>
         );
     }
 
     // --- RENDER EDITOR VIEW ---
     return (
-        <div className="flex flex-col min-h-screen w-full bg-[#f8f9fc] dark:bg-[#0f0714] text-slate-900 dark:text-slate-100 overflow-x-hidden font-sans">
-            {/* Header */}
-            <header className="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 bg-white dark:bg-[#0f0714]/80 backdrop-blur-xl sticky top-0 z-50 shadow-sm transition-all">
+        <div className="flex flex-col min-h-screen w-full bg-[#f7f5f8] dark:bg-[#1b1022] text-slate-900 dark:text-slate-100 font-sans">
+            {/* Unified Header */}
+            <header className="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 bg-[#f7f5f8] dark:bg-[#1b1022] sticky top-0 z-50">
                 <div className="flex items-center gap-4">
                     <button 
                         onClick={() => setView('list')} 
-                        className="size-10 bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-2xl flex items-center justify-center text-slate-600 dark:text-white hover:text-primary hover:border-primary active:scale-90 transition-all shadow-sm"
+                        className="p-2 hover:bg-primary/10 rounded-lg text-slate-600 dark:text-slate-300 transition-all"
                     >
-                        <ArrowLeft size={20} strokeWidth={3} />
+                        <ArrowLeft size={20} />
                     </button>
-                    <div>
-                        <h2 className="text-lg font-black tracking-tighter uppercase text-primary">Fusion CMS</h2>
-                        <p className="text-[10px] font-black tracking-[0.2em] text-slate-400 leading-none">Creative Suite</p>
+                    <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+                        <Brain size={18} />
                     </div>
+                    <h2 className="text-xl font-bold tracking-tight">Fusion CMS</h2>
                 </div>
-                
-                <div className="flex items-center gap-4">
+                <div className="flex flex-1 justify-end gap-3 items-center">
                     <button 
                         disabled={isSaving}
                         onClick={() => handleSubmit(false)}
-                        className="hidden sm:flex items-center justify-center rounded-2xl h-11 px-6 bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-white/10 text-sm font-black hover:bg-slate-200 dark:hover:bg-white/10 transition-all disabled:opacity-50"
+                        className="hidden sm:flex items-center justify-center rounded-lg h-10 px-4 bg-primary/10 text-primary border border-primary/20 text-sm font-bold hover:bg-primary/20 transition-all disabled:opacity-50"
                     >
                         <span>Save Draft</span>
                     </button>
                     <button 
                         disabled={isSaving}
                         onClick={() => handleSubmit(true)}
-                        className="flex items-center justify-center rounded-2xl h-11 px-8 bg-primary text-white text-sm font-black hover:brightness-110 active:scale-95 transition-all shadow-xl shadow-primary/25 disabled:opacity-50 flex-shrink-0"
+                        className="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold hover:brightness-110 transition-all shadow-lg shadow-primary/20 disabled:opacity-50"
                     >
-                        {isSaving ? (
-                            <div className="size-5 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
-                        ) : (
-                            <span>{editingPost ? 'Update' : 'Publish'}</span>
-                        )}
+                        {isSaving ? <div className="size-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div> : <span>Publish</span>}
                     </button>
                 </div>
             </header>
 
-            <main className="flex-1 flex justify-center py-10 px-4 lg:px-20">
-                <div className="w-full max-w-6xl grid grid-cols-1 lg:grid-cols-12 gap-10">
-                    {/* Main Editor Section */}
-                    <div className="lg:col-span-8 space-y-8">
+            <main className="flex-1 flex justify-center py-8 px-4 lg:px-20">
+                <div className="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Main Content Area */}
+                    <div className="lg:col-span-2 space-y-6">
                         <div>
-                            <span className="text-primary text-[10px] font-black tracking-[0.3em] uppercase mb-2 block animate-pulse underline decoration-2 underline-offset-4">LIVE CONTENT</span>
-                            <h1 className="text-4xl lg:text-5xl font-black tracking-tighter mb-4 text-slate-900 dark:text-white">
-                                {editingPost ? 'Refine Story' : 'Draft Experience'}
-                            </h1>
-                            <p className="text-slate-500 max-w-md font-medium text-lg leading-relaxed">Shape how the community sees Fusion. Content is key.</p>
+                            <h1 className="text-3xl font-black tracking-tight mb-2">{editingPost ? 'Edit Post' : 'Create New Post'}</h1>
+                            <p className="text-slate-500 dark:text-slate-400">Craft your latest experience and share it with the community.</p>
                         </div>
-
-                        <div className="space-y-6">
-                            <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 ml-1">Headline</label>
+                        
+                        <div className="space-y-4">
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">Post Title</label>
                                 <input 
-                                    className="w-full rounded-[2rem] text-2xl font-black border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 focus:ring-4 focus:ring-primary/10 h-20 px-8 placeholder:text-slate-300 dark:placeholder:text-white/10 transition-all text-slate-900 dark:text-white" 
-                                    placeholder="Enter your catch title..."
+                                    className="w-full rounded-xl text-lg font-bold border border-primary/20 bg-white dark:bg-primary/5 focus:border-primary focus:ring-1 focus:ring-primary h-14 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600" 
+                                    placeholder="Enter a descriptive title..."
                                     value={formData.title}
                                     onChange={(e) => setFormData({...formData, title: e.target.value})}
                                 />
                             </div>
                             
-                            <div className="flex flex-col gap-3">
-                                <label className="text-[10px] font-black uppercase tracking-[0.2em] text-primary/60 ml-1">Journal Content</label>
-                                <div className="rounded-[2.5rem] border border-slate-200 dark:border-white/10 bg-white dark:bg-white/5 overflow-hidden flex flex-col min-h-[600px] shadow-sm transition-all focus-within:ring-4 focus-within:ring-primary/10">
-                                    <div className="flex flex-wrap items-center gap-2 p-4 border-b border-slate-100 dark:border-white/5 bg-slate-50/50 dark:bg-white/5">
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('**', '**')} title="Bold"><Bold size={18} strokeWidth={3} /></button>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('*', '*')} title="Italic"><Italic size={18} strokeWidth={3} /></button>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('<u>', '</u>')} title="Underline"><Underline size={18} strokeWidth={3} /></button>
-                                        <div className="w-px h-6 bg-slate-200 dark:bg-white/10 mx-2"></div>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('\n- ')} title="Bullets"><List size={18} strokeWidth={3} /></button>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('\n1. ')} title="Numbers"><ListOrdered size={18} strokeWidth={3} /></button>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('\n> ')} title="Quote"><Quote size={18} strokeWidth={3} /></button>
-                                        <div className="w-px h-6 bg-slate-200 dark:bg-white/10 mx-2"></div>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => insertMarkdown('[', '](url)')} title="Link"><LinkIcon size={18} strokeWidth={3} /></button>
-                                        <button className="p-3 hover:bg-primary/10 rounded-2xl text-slate-600 dark:text-slate-400 hover:text-primary transition-all" onClick={() => {
+                            <div className="flex flex-col gap-2">
+                                <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">Content</label>
+                                <div className="rounded-xl border border-primary/20 bg-white dark:bg-primary/5 overflow-hidden flex flex-col min-h-[500px]">
+                                    <div className="flex items-center gap-1 p-2 border-b border-primary/10 bg-slate-50 dark:bg-primary/10">
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('**', '**')}><Bold size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('*', '*')}><Italic size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('<u>', '</u>')}><Underline size={18} /></button>
+                                        <div className="w-px h-6 bg-primary/20 mx-1"></div>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n- ')}><List size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n1. ')}><ListOrdered size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n> ')}><Quote size={18} /></button>
+                                        <div className="w-px h-6 bg-primary/20 mx-1"></div>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('[', '](url)')}><LinkIcon size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => {
                                             const url = prompt('Enter Image URL:');
                                             if (url) insertMarkdown('![alt text](', url + ')');
-                                        }} title="Media"><ImageIcon size={18} strokeWidth={3} /></button>
+                                        }}><ImageIcon size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('`', '`')}><Code size={18} /></button>
                                     </div>
                                     <textarea 
                                         id="blog-content-editor"
-                                        className="flex-1 w-full p-10 bg-transparent border-none focus:ring-0 resize-none text-lg leading-relaxed placeholder:text-slate-200 dark:placeholder:text-white/5 font-medium text-slate-700 dark:text-slate-200" 
-                                        placeholder="Start telling your story..."
+                                        className="flex-1 w-full p-6 bg-transparent border-none focus:ring-0 resize-none text-base leading-relaxed placeholder:text-slate-600 text-slate-800 dark:text-slate-100" 
+                                        placeholder="Start writing your magical story here..."
                                         value={formData.content}
                                         onChange={(e) => setFormData({...formData, content: e.target.value})}
                                     ></textarea>
@@ -411,75 +426,73 @@ export default function BlogManagement() {
                         </div>
                     </div>
 
-                    {/* Sidebar */}
-                    <div className="lg:col-span-4 space-y-8">
-                        <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 space-y-6 shadow-sm">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Cover Asset</h3>
+                    {/* Sidebar Area */}
+                    <div className="space-y-6">
+                        <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Featured Image</h3>
                             <div 
-                                className="aspect-[4/3] w-full rounded-3xl border-2 border-dashed border-slate-200 dark:border-white/10 flex flex-col items-center justify-center gap-3 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer group overflow-hidden relative shadow-inner shadow-black/5"
+                                className="aspect-video w-full rounded-lg border-2 border-dashed border-primary/30 flex flex-col items-center justify-center gap-2 hover:bg-primary/5 transition-colors cursor-pointer group relative overflow-hidden"
                                 onClick={() => {
-                                    const url = prompt('Enter Cover Image URL:');
+                                    const url = prompt('Cover Image URL:');
                                     if (url) setFormData({...formData, image: url});
                                 }}
                             >
                                 {formData.image ? (
-                                    <img src={formData.image} alt="Cover Preview" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                                    <img src={formData.image} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
                                 ) : (
                                     <>
-                                        <div className="p-5 rounded-[2rem] bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                                            <ImageIcon size={32} strokeWidth={2.5} />
-                                        </div>
-                                        <p className="text-xs font-black text-slate-400 uppercase tracking-widest">Select Visual</p>
+                                        <ImageIcon size={32} className="text-primary/40 group-hover:text-primary transition-colors" />
+                                        <p className="text-xs text-slate-500">Upload cover (1200x630px)</p>
                                     </>
                                 )}
                             </div>
+                            <input 
+                                className="w-full text-xs rounded-lg border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-10 px-3" 
+                                placeholder="Image URL..."
+                                value={formData.image}
+                                onChange={(e) => setFormData({...formData, image: e.target.value})}
+                            />
                         </div>
 
-                        <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 space-y-6 shadow-sm">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Classification</h3>
-                            <div className="space-y-4">
-                                <div className="space-y-2">
-                                    <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Category</label>
-                                    <select 
-                                        className="w-full rounded-2xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-slate-100 font-bold focus:ring-4 focus:ring-primary/10 h-12 px-4 appearance-none transition-all shadow-sm"
-                                        value={formData.category}
-                                        onChange={(e) => setFormData({...formData, category: e.target.value})}
-                                    >
-                                        <option>Wellness & Microdosing</option>
-                                        <option>Product Launch</option>
-                                        <option>Science & Research</option>
-                                        <option>Community Stories</option>
-                                        <option>Lifestyle</option>
-                                    </select>
-                                </div>
-                                <div className="space-y-3 pt-2">
-                                    <label className="text-[11px] font-black text-slate-400 uppercase tracking-widest ml-1">Taxonomy (Tags)</label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {formData.tags.map(tag => (
-                                            <span key={tag} className="px-4 py-2 rounded-2xl bg-primary/10 text-primary text-[10px] font-black uppercase border border-primary/20 flex items-center gap-2 group/tag">
-                                                {tag} 
-                                                <button onClick={() => removeTag(tag)} className="p-0.5 rounded-full hover:bg-red-500 hover:text-white transition-all opacity-60 group-hover/tag:opacity-100">
-                                                    <X size={10} strokeWidth={4} />
-                                                </button>
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <input 
-                                        className="w-full text-xs rounded-2xl border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 placeholder:text-slate-300 font-black uppercase tracking-widest focus:ring-4 focus:ring-primary/10 h-12 px-4 transition-all shadow-sm text-slate-900 dark:text-white" 
-                                        placeholder="Add tag..."
-                                        value={tagInput}
-                                        onChange={(e) => setTagInput(e.target.value)}
-                                        onKeyDown={(e) => e.key === 'Enter' && addTag()}
-                                    />
-                                </div>
+                        <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Category</h3>
+                            <select 
+                                className="w-full rounded-lg border-primary/20 bg-transparent text-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary h-12 px-3 appearance-none"
+                                value={formData.category}
+                                onChange={(e) => setFormData({...formData, category: e.target.value})}
+                            >
+                                <option>Wellness & Microdosing</option>
+                                <option>Product Launch</option>
+                                <option>Science & Research</option>
+                                <option>Community Stories</option>
+                                <option>Lifestyle</option>
+                            </select>
+                        </div>
+
+                        <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Tags</h3>
+                            <div className="flex flex-wrap gap-2">
+                                {formData.tags.map(tag => (
+                                    <span key={tag} className="px-3 py-1 rounded-full bg-primary/20 text-primary text-xs font-bold flex items-center gap-1 group/tag transition-all">
+                                        {tag} 
+                                        <button onClick={() => removeTag(tag)} className="opacity-60 hover:opacity-100 hover:text-red-500 transition-all"><X size={12} /></button>
+                                    </span>
+                                ))}
                             </div>
+                            <input 
+                                className="w-full text-sm rounded-lg border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-12 px-4 shadow-sm" 
+                                placeholder="Add a tag and press Enter..."
+                                value={tagInput}
+                                onChange={(e) => setTagInput(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && addTag()}
+                            />
                         </div>
 
-                        <div className="bg-white dark:bg-white/5 border border-slate-200 dark:border-white/10 rounded-[2.5rem] p-8 space-y-6 shadow-sm">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Preferences</h3>
+                        <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Settings</h3>
                             <div className="space-y-4">
-                                <label className="flex items-center justify-between cursor-pointer p-4 rounded-3xl bg-slate-50 dark:bg-white/5 border border-transparent hover:border-primary/20 transition-all group">
-                                    <span className="text-xs font-black uppercase tracking-widest text-slate-500 group-hover:text-primary">Allow Comments</span>
+                                <label className="flex items-center justify-between cursor-pointer group">
+                                    <span className="text-sm text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">Allow Comments</span>
                                     <div className="relative inline-flex items-center">
                                         <input 
                                             type="checkbox" 
@@ -487,11 +500,11 @@ export default function BlogManagement() {
                                             checked={formData.allowComments}
                                             onChange={(e) => setFormData({...formData, allowComments: e.target.checked})}
                                         />
-                                        <div className="w-12 h-6 bg-slate-200 peer-focus:outline-none dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary rounded-full"></div>
+                                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary rounded-full"></div>
                                     </div>
                                 </label>
-                                <label className="flex items-center justify-between cursor-pointer p-4 rounded-3xl bg-slate-50 dark:bg-white/5 border border-transparent hover:border-primary/20 transition-all group">
-                                    <span className="text-xs font-black uppercase tracking-widest text-slate-500 group-hover:text-primary">Live Publicly</span>
+                                <label className="flex items-center justify-between cursor-pointer group">
+                                    <span className="text-sm text-slate-600 dark:text-slate-300 group-hover:text-primary transition-colors">Make Public</span>
                                     <div className="relative inline-flex items-center">
                                         <input 
                                             type="checkbox" 
@@ -499,7 +512,7 @@ export default function BlogManagement() {
                                             checked={formData.isPublic}
                                             onChange={(e) => setFormData({...formData, isPublic: e.target.checked})}
                                         />
-                                        <div className="w-12 h-6 bg-slate-200 peer-focus:outline-none dark:bg-white/10 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary rounded-full"></div>
+                                        <div className="w-11 h-6 bg-slate-200 peer-focus:outline-none dark:bg-slate-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-primary rounded-full"></div>
                                     </div>
                                 </label>
                             </div>
@@ -507,6 +520,10 @@ export default function BlogManagement() {
                     </div>
                 </div>
             </main>
+
+            <footer className="py-10 px-6 lg:px-20 border-t border-primary/10 text-center">
+                <p className="text-xs text-slate-500 font-medium font-sans">© 2026 Fusion Shroom Bars. All rights reserved. Designed for mindful content creation.</p>
+            </footer>
         </div>
     );
 }
