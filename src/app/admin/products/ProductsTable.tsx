@@ -1,0 +1,268 @@
+'use client';
+import { useState } from 'react';
+import { Search, X, Edit2, Package } from 'lucide-react';
+import styles from '../admin.module.css';
+import Image from 'next/image';
+
+export default function ProductsTable({ 
+    products, 
+    updateProductAction,
+    addProductAction 
+}: { 
+    products: any[], 
+    updateProductAction: (formData: FormData) => void,
+    addProductAction?: (formData: FormData) => void 
+}) {
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedProduct, setSelectedProduct] = useState<any>(null);
+    const [isAdding, setIsAdding] = useState(false);
+
+    const filteredProducts = products.filter(p => 
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        p.category.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+        <section className={styles.card}>
+            <div className={styles.cardHeader}>
+                <h2>Inventory</h2>
+                <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <button 
+                        onClick={() => setIsAdding(true)}
+                        className="premium-gradient"
+                        style={{ padding: '0.5rem 1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', color: 'white', fontSize: '0.8rem', fontWeight: 'bold' }}
+                    >
+                        + NEW PRODUCT
+                    </button>
+                    <div style={{ position: 'relative' }}>
+                        <Search size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#aaa' }} />
+                        <input 
+                            type="text" 
+                            placeholder="Search by name or category..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            style={{ padding: '0.5rem 1rem 0.5rem 2.2rem', borderRadius: '4px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
+                        />
+                    </div>
+                    <span className={styles.badge}>{filteredProducts.length}</span>
+                </div>
+            </div>
+
+            <div className={styles.orderList}>
+                {filteredProducts.length === 0 ? (
+                    <p className={styles.emptyState}>No matching products found.</p>
+                ) : (
+                    <div style={{ overflowX: 'auto' }}>
+                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '700px' }}>
+                            <thead>
+                                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#aaa' }}>
+                                    <th style={{ padding: '1rem' }}>Product</th>
+                                    <th style={{ padding: '1rem' }}>Category</th>
+                                    <th style={{ padding: '1rem' }}>Price</th>
+                                    <th style={{ padding: '1rem' }}>Status</th>
+                                    <th style={{ padding: '1rem' }}>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {filteredProducts.map(product => (
+                                    <tr key={product.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                                        <td style={{ padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                            <div style={{ width: '40px', height: '40px', background: '#222', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
+                                                {product.image ? (
+                                                    <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} unoptimized />
+                                                ) : (
+                                                    <Package size={20} style={{ position: 'absolute', top: '10px', left: '10px', color: '#555' }} />
+                                                )}
+                                            </div>
+                                            <div style={{ maxWidth: '250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={product.name}>
+                                                {product.name}
+                                            </div>
+                                        </td>
+                                        <td style={{ padding: '1rem' }}>{product.category}</td>
+                                        <td style={{ padding: '1rem', fontWeight: 'bold' }}>
+                                            ${product.price.toFixed(2)}
+                                            {product.regularPrice && <span style={{ textDecoration: 'line-through', color: '#666', fontSize: '0.8rem', marginLeft: '0.5rem' }}>${product.regularPrice.toFixed(2)}</span>}
+                                        </td>
+                                        <td style={{ padding: '1rem' }}>
+                                            <span className={product.isActive ? styles.activeBadge : styles.inactiveBadge}>
+                                                {product.isActive ? 'Active' : 'Draft'}
+                                            </span>
+                                        </td>
+                                        <td style={{ padding: '1rem', display: 'flex', gap: '0.5rem' }}>
+                                            <button 
+                                                onClick={() => setSelectedProduct(product)}
+                                                style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: 'white' }}
+                                                title="Edit Product"
+                                            >
+                                                <Edit2 size={16} />
+                                            </button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+            </div>
+
+            {/* Slide-out Edit Modal */}
+            {selectedProduct && (
+                <>
+                    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 90 }} onClick={() => setSelectedProduct(null)} />
+                    <div style={{ 
+                        position: 'fixed', right: 0, top: 0, bottom: 0, width: '450px', maxWidth: '100%', 
+                        background: '#111', borderLeft: '1px solid rgba(255,255,255,0.1)', zIndex: 100, 
+                        padding: '2rem', overflowY: 'auto', display: 'flex', flexDirection: 'column' 
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                            <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Edit Product</h2>
+                            <button onClick={() => setSelectedProduct(null)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        <form action={(formData) => { updateProductAction(formData); setSelectedProduct(null); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <input type="hidden" name="id" value={selectedProduct.id} />
+                            
+                            <div className={styles.inputGroup}>
+                                <label>Product Name</label>
+                                <input type="text" name="name" defaultValue={selectedProduct.name} required />
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                    <label>Sale Price ($)</label>
+                                    <input type="number" step="0.01" name="price" defaultValue={selectedProduct.price} required />
+                                </div>
+                                <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                    <label>Regular Price ($)</label>
+                                    <input type="number" step="0.01" name="regularPrice" defaultValue={selectedProduct.regularPrice || ''} />
+                                </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Category</label>
+                                <input type="text" name="category" defaultValue={selectedProduct.category} required />
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Image URL</label>
+                                <input type="url" name="image" defaultValue={selectedProduct.image} required />
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Description</label>
+                                <textarea name="description" defaultValue={selectedProduct.description} rows={4} required></textarea>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Gallery Images (Up to 5 URLs)</label>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    {[0, 1, 2, 3, 4].map(i => {
+                                        const gallery = selectedProduct.gallery ? JSON.parse(selectedProduct.gallery) : [];
+                                        return (
+                                            <input 
+                                                key={i}
+                                                type="url" 
+                                                name={`gallery_${i}`} 
+                                                defaultValue={gallery[i] || ''} 
+                                                placeholder={`Gallery Image ${i + 1} URL`} 
+                                            />
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                                    <input type="checkbox" name="isActive" defaultChecked={selectedProduct.isActive} style={{ width: 'auto' }} />
+                                    <span>Product is Active (Visible on site)</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
+                                Save Changes
+                            </button>
+                        </form>
+                    </div>
+                </>
+            )}
+            {/* Add Product Modal */}
+            {isAdding && (
+                <>
+                    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 90 }} onClick={() => setIsAdding(false)} />
+                    <div style={{ 
+                        position: 'fixed', right: 0, top: 0, bottom: 0, width: '450px', maxWidth: '100%', 
+                        background: '#111', borderLeft: '1px solid rgba(255,255,255,0.1)', zIndex: 100, 
+                        padding: '2rem', overflowY: 'auto', display: 'flex', flexDirection: 'column' 
+                    }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+                            <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Add New Product</h2>
+                            <button onClick={() => setIsAdding(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
+                                <X size={24} />
+                            </button>
+                        </div>
+
+                        <form action={(formData) => { addProductAction?.(formData); setIsAdding(false); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                            <div className={styles.inputGroup}>
+                                <label>Product Name</label>
+                                <input type="text" name="name" placeholder="e.g. Raspberry Fusion Bar" required />
+                            </div>
+
+                            <div style={{ display: 'flex', gap: '1rem' }}>
+                                <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                    <label>Sale Price ($)</label>
+                                    <input type="number" step="0.01" name="price" placeholder="24.99" required />
+                                </div>
+                                <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                    <label>Regular Price ($)</label>
+                                    <input type="number" step="0.01" name="regularPrice" placeholder="29.99" />
+                                </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Category</label>
+                                <input type="text" name="category" placeholder="Chocolate Bars" required />
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Image URL</label>
+                                <input type="url" name="image" placeholder="https://..." required />
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Description</label>
+                                <textarea name="description" placeholder="Product details..." rows={4} required></textarea>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label>Gallery Images (Up to 5 URLs)</label>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                                    {[0, 1, 2, 3, 4].map(i => (
+                                        <input 
+                                            key={i}
+                                            type="url" 
+                                            name={`gallery_${i}`} 
+                                            placeholder={`Gallery Image ${i + 1} URL`} 
+                                        />
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div className={styles.inputGroup}>
+                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
+                                    <input type="checkbox" name="isActive" defaultChecked style={{ width: 'auto' }} />
+                                    <span>Product is Active (Visible on site)</span>
+                                </label>
+                            </div>
+
+                            <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
+                                Create Product
+                            </button>
+                        </form>
+                    </div>
+                </>
+            )}
+        </section>
+    );
+}

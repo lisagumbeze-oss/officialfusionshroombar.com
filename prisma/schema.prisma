@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model ManualPaymentMethod {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "CashApp", "Zelle", "Bitcoin"
+  details     String   // e.g., "$FusionBars", "info@fusion.com", "bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh"
+  instructions String? // Optional instructions for checkout
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  customerName    String
+  customerEmail   String
+  customerPhone   String?
+  shippingAddress String
+  shippingMethod  String?
+  shippingPrice   Float    @default(0)
+  totalAmount     Float
+  status          String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, CANCELLED
+  
+  paymentMethodId String
+  paymentMethod   ManualPaymentMethod @relation(fields: [paymentMethodId], references: [id])
+  
+  items           LineItem[]
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model LineItem {
+  id          String   @id @default(cuid())
+  orderId     String
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId   String?  // Can now optionally link to dynamic Product
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productName String
+  quantity    Int
+  price       Float    // Price at the time of purchase
+}
+
+model Product {
+  id           String     @id @default(cuid())
+  slug         String     @unique
+  name         String
+  price        Float
+  regularPrice Float?
+  category     String
+  description  String
+  image        String
+  weight       String?
+  effects      String?    // Store as JSON string stringified array
+  ingredients  String?    // Store as JSON string stringified array
+  gallery      String?    // Store as JSON stringified array of URLs (up to 5)
+  dosage       String?
+  isActive     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  
+  lineItems    LineItem[]
+}
+
+model ShippingSetting {
+  id                String   @id @default(cuid())
+  type              String   // "LOCAL" or "INTERNATIONAL"
+  category1Name     String   @default("Standard")
+  category1Price    Float    @default(0)
+  category2Name     String   @default("Express")
+  category2Price    Float    @default(0)
+  updatedAt         DateTime @updatedAt
+}
+
+model BlogPost {
+  id            String   @id @default(cuid())
+  title         String
+  slug          String   @unique
+  excerpt       String
+  content       String
+  image         String?
+  category      String   @default("Wellness & Microdosing")
+  tags          String   @default("[]") // Store as JSON stringified array
+  isPublic      Boolean  @default(true)
+  allowComments Boolean  @default(true)
+  author        String   @default("Fusion Shroom Bars")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

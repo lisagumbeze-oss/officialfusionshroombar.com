@@ -1,0 +1,295 @@
+.adminLayout {
+    display: flex;
+    min-height: 100vh;
+    background: #000;
+}
+
+.mainContent {
+    flex: 1;
+    margin-left: 260px; /* Width of sidebar */
+    padding: 2rem;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.adminContainer {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .mainContent {
+        margin-left: 0;
+        padding: 4rem 1rem 1rem 1rem;
+    }
+}
+
+.adminHeader {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.adminHeader h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    background: var(--primary-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.dashboardGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background: rgba(26, 26, 26, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cardHeader h2 {
+    font-size: 1.25rem;
+    margin: 0;
+}
+
+.badge {
+    background: var(--primary);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.875rem;
+    font-weight: bold;
+}
+
+/* Orders Styles */
+.orderItem {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.orderTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+
+.statusBadge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.pending {
+    background: rgba(255, 193, 7, 0.2);
+    color: #ffc107;
+}
+
+.processing {
+    background: rgba(23, 162, 184, 0.2);
+    color: #17a2b8;
+}
+
+.completed {
+    background: rgba(40, 167, 69, 0.2);
+    color: #28a745;
+}
+
+.cancelled {
+    background: rgba(220, 53, 69, 0.2);
+    color: #dc3545;
+}
+
+.orderDetails p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.orderItems {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.orderItems h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.9rem;
+}
+
+.orderItems ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.orderItems li {
+    font-size: 0.85rem;
+    color: #aaa;
+    margin-bottom: 0.25rem;
+}
+
+.statusForm {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.statusSelect {
+    flex: 1;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.5rem;
+    border-radius: 4px;
+}
+
+.updateBtn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.updateBtn:hover {
+    background: #9d3bea;
+}
+
+/* Payment Methods Styles */
+.paymentForm {
+    margin-bottom: 2rem;
+}
+
+.inputGroup {
+    margin-bottom: 1rem;
+}
+
+.inputGroup label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #ccc;
+}
+
+.inputGroup input,
+.inputGroup textarea {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.75rem;
+    border-radius: 4px;
+    font-family: inherit;
+}
+
+.inputGroup textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
+.submitBtn {
+    width: 100%;
+    padding: 0.75rem;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.methodItem {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.methodHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.activeBadge {
+    font-size: 0.75rem;
+    color: #28a745;
+    background: rgba(40, 167, 69, 0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+
+.inactiveBadge {
+    font-size: 0.75rem;
+    color: #dc3545;
+    background: rgba(220, 53, 69, 0.1);
+    padding: 0.1rem 0.4rem;
+    border-radius: 4px;
+}
+
+.methodDetails {
+    margin: 0;
+    font-family: monospace;
+    color: var(--primary);
+    background: rgba(0, 0, 0, 0.4);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.methodInstructions {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+@media (max-width: 900px) {
+    .dashboardGrid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.kpiValue {
+    font-size: 2rem;
+    font-weight: 800;
+    margin: 0.5rem 0;
+    color: white;
+}
+
+.kpiLabel {
+    color: #aaa;
+    font-size: 0.9rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.trendUp {
+    color: #28a745;
+    font-weight: bold;
+    font-size: 0.8rem;
+}

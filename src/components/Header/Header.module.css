@@ -1,0 +1,125 @@
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scrolled {
+    height: 65px;
+    background: rgba(5, 5, 5, 0.8) !important;
+    backdrop-filter: blur(20px) !important;
+    border-bottom: 1px solid var(--surface-border);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+}
+
+.logo {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    color: var(--foreground);
+    white-space: nowrap;
+}
+
+.logo span {
+    color: var(--primary);
+}
+
+.nav {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav a {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    transition: color 0.2s ease;
+}
+
+.nav a:hover {
+    color: var(--foreground);
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.cartBtn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--foreground);
+    position: relative;
+    transition: transform 0.2s ease;
+}
+
+.cartBtn:hover {
+    transform: scale(1.1);
+}
+
+.cartCount {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: var(--secondary);
+    color: white;
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-weight: 800;
+}
+
+.mobileMenuBtn {
+    display: none;
+    background: none;
+    color: var(--foreground);
+    border: none;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .mobileMenuBtn {
+        display: block;
+    }
+
+    .nav {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--surface);
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        border-bottom: 1px solid var(--surface-border);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        z-index: 999;
+        overflow-y: auto;
+    }
+
+    .mobileNavOpen {
+        display: flex;
+    }
+}

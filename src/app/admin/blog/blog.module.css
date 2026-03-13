@@ -1,0 +1,324 @@
+/* Admin Blog CMS Styles - Based on Stitch Design */
+
+.cmsContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2.5rem;
+}
+
+@media (max-width: 1024px) {
+    .cmsContainer {
+        grid-template-columns: 1fr;
+    }
+}
+
+.mainContent {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.pageHeader {
+    margin-bottom: 2rem;
+}
+
+.pageHeader h1 {
+    font-size: 2.25rem;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    margin-bottom: 0.5rem;
+    color: var(--foreground);
+}
+
+.pageHeader p {
+    color: var(--text-muted);
+    font-size: 1rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.label {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+}
+
+.titleInput {
+    width: 100%;
+    background: rgba(175, 83, 255, 0.05);
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: white;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.titleInput:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 2px rgba(175, 83, 255, 0.1);
+}
+
+.editorContainer {
+    background: rgba(175, 83, 255, 0.05);
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    border-radius: 15px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 500px;
+}
+
+.editorToolbar {
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(175, 83, 255, 0.1);
+    padding: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.toolbarBtn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 0.5rem;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.toolbarBtn:hover {
+    background: rgba(175, 83, 255, 0.1);
+    color: var(--primary);
+}
+
+.divider {
+    width: 1px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    margin: 0 0.25rem;
+}
+
+.textarea {
+    flex: 1;
+    background: transparent;
+    border: none;
+    padding: 1.5rem;
+    color: white;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+}
+
+/* Sidebar Widgets */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.widget {
+    background: rgba(175, 83, 255, 0.05);
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    border-radius: 15px;
+    padding: 1.5rem;
+}
+
+.widgetTitle {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-muted);
+    margin-bottom: 1.25rem;
+}
+
+.imageUpload {
+    aspect-ratio: 16/9;
+    border: 2px dashed rgba(175, 83, 255, 0.2);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.imageUpload:hover {
+    background: rgba(175, 83, 255, 0.08);
+    border-color: var(--primary);
+}
+
+.imageUpload i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    opacity: 0.5;
+}
+
+.uploadText {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+.select {
+    width: 100%;
+    background: var(--background);
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    outline: none;
+}
+
+.tagInput {
+    width: 100%;
+    background: transparent;
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    border-radius: 8px;
+    padding: 0.75rem;
+    color: white;
+    font-size: 0.875rem;
+    outline: none;
+}
+
+.tagsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.tag {
+    background: rgba(175, 83, 255, 0.2);
+    color: var(--primary);
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tag button {
+    background: none;
+    border: none;
+    color: inherit;
+    font-size: 0.8rem;
+    padding: 0;
+    cursor: pointer;
+}
+
+.settingRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.settingLabel {
+    font-size: 0.875rem;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: .4s;
+    border-radius: 24px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: var(--primary);
+}
+
+input:checked + .slider:before {
+    transform: translateX(20px);
+}
+
+.publishBtn {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    box-shadow: 0 4px 15px rgba(175, 83, 255, 0.3);
+}
+
+.saveDraftBtn {
+    width: 100%;
+    background: rgba(175, 83, 255, 0.1);
+    border: 1px solid rgba(175, 83, 255, 0.2);
+    color: var(--primary);
+    padding: 0.75rem;
+    border-radius: 8px;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.headerActions {
+    display: flex;
+    gap: 1rem;
+}
+
+.backBtn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-muted);
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    transition: color 0.2s;
+}
+
+.backBtn:hover {
+    color: var(--foreground);
+}
