@@ -3,6 +3,7 @@ import "./globals.css";
 import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { CartProvider } from "@/context/CartContext";
+import Script from "next/script";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
@@ -29,6 +30,20 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </CartProvider>
+        
+        {/* Smartsupp Live Chat script */}
+        <Script id="smartsupp-chat" strategy="afterInteractive">
+          {`
+            var _smartsupp = _smartsupp || {};
+            _smartsupp.key = '066c33c30d5a0cddcfb7a8750f96fe6b77709e72';
+            window.smartsupp||(function(d) {
+              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+              s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+              c.type='text/javascript';c.charset='utf-8';c.async=true;
+              c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+            })(document);
+          `}
+        </Script>
       </body>
     </html>
   );
