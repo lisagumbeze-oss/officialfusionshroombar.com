@@ -25,8 +25,8 @@ export default async function Shop({
     if (sort === 'price-high') orderBy = { price: 'desc' };
     if (sort === 'newest') orderBy = { createdAt: 'desc' };
 
-    let products = [];
-    let categories = [];
+    let products: any[] = [];
+    let categories: string[] = [];
     let dbError = false;
 
     try {
@@ -38,7 +38,7 @@ export default async function Shop({
         const catData = await (prisma as any).product.findMany({
             select: { category: true }
         });
-        categories = Array.from(new Set(catData.map((p: any) => p.category)));
+        categories = Array.from(new Set(catData.map((p: any) => p.category as string)));
     } catch (error) {
         console.error('[Shop] Database error:', error);
         dbError = true;

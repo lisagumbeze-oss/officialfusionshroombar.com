@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 import Link from 'next/link';
 
 export default async function BlogPage() {
-    let posts = [];
+    let posts: any[] = [];
     let dbError = false;
 
     try {

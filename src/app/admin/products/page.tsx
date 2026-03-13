@@ -10,14 +10,14 @@ export const metadata = {
 };
 
 export default async function ProductsPage() {
-    let products = [];
-    let error = null;
+    let products: any[] = [];
+    let error: string | null = null;
 
     try {
         products = await prisma.product.findMany({
             orderBy: { category: 'asc' },
         });
-    } catch (e) {
+    } catch (e: any) {
         console.error('[ProductsPage] DB Error:', e);
         error = 'Failed to load products database.';
     }

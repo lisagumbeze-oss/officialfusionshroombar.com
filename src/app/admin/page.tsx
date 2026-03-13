@@ -18,7 +18,7 @@ async function getAnalyticsData() {
         const totalSales = orders.length;
 
         return { totalRevenue, pendingOrders, totalSales, recentOrders: orders.slice(0, 5), error: null };
-    } catch (error) {
+    } catch (error: any) {
         console.error('[AdminDashboard] Analytics fetch failed:', error);
         return { totalRevenue: 0, pendingOrders: 0, totalSales: 0, recentOrders: [], error: 'Database connection failed' };
     }

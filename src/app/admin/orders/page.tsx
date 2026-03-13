@@ -10,8 +10,8 @@ export const metadata = {
 };
 
 export default async function OrdersPage() {
-    let orders = [];
-    let error = null;
+    let orders: any[] = [];
+    let error: string | null = null;
 
     try {
         orders = await prisma.order.findMany({
@@ -21,7 +21,7 @@ export default async function OrdersPage() {
             },
             orderBy: { createdAt: 'desc' },
         });
-    } catch (e) {
+    } catch (e: any) {
         console.error('[OrdersPage] DB Error:', e);
         error = 'Failed to load orders database.';
     }
