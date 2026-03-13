@@ -79,7 +79,7 @@ export default async function Shop({
                             <div key={product.id} className={styles.productCard}>
                                 <div className={styles.productImagePlaceholder}>
                                     <Image 
-                                        src={`/api/proxy-image?url=${encodeURIComponent(product.image)}`} 
+                                        src={product.image} 
                                         alt={product.name} 
                                         fill 
                                         style={{ objectFit: 'cover' }}

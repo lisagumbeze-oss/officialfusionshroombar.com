@@ -6,6 +6,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'officialfusionshroombars.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'officialfusionshroombars.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'officialfusionshroombar.com',
       },
       {

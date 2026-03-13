@@ -38,9 +38,41 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 )}
                 
                 <div className={styles.content}>
-                    {post.content.split('\n').map((para: string, i: number) => (
-                        <p key={i}>{para}</p>
-                    ))}
+                    {post.content.split('\n').map((para: string, i: number) => {
+                        if (!para.trim()) return <br key={i} />;
+                        
+                        // Simple header check
+                        if (para.startsWith('# ')) return <h1 key={i}>{para.substring(2)}</h1>;
+                        if (para.startsWith('## ')) return <h2 key={i}>{para.substring(3)}</h2>;
+                        if (para.startsWith('### ')) return <h3 key={i}>{para.substring(4)}</h3>;
+                        
+                        // Simple quote check
+                        if (para.startsWith('> ')) return <blockquote key={i} className={styles.quote}>{para.substring(2)}</blockquote>;
+
+                        // Support for basic tags like **bold**, *italic*, <u>underline</u>
+                        let formattedText: any = para;
+                        
+                        // Note: This is a very simple parser. In a real app, use a markdown library.
+                        const renderFormatted = (text: string) => {
+                            // Bold
+                            let parts = text.split(/(\*\*.*?\*\*)/g);
+                            return parts.map((part, index) => {
+                                if (part.startsWith('**') && part.endsWith('**')) {
+                                    return <strong key={index}>{part.slice(2, -2)}</strong>;
+                                }
+                                // Italic
+                                let iParts = part.split(/(\*.*?\*)/g);
+                                return iParts.map((iPart, iIndex) => {
+                                    if (iPart.startsWith('*') && iPart.endsWith('*')) {
+                                        return <em key={`${index}-${iIndex}`}>{iPart.slice(1, -1)}</em>;
+                                    }
+                                    return iPart;
+                                });
+                            });
+                        };
+
+                        return <p key={i}>{renderFormatted(para)}</p>;
+                    })}
                 </div>
             </div>
         </article>
