@@ -44,33 +44,40 @@ export default function ContactForm() {
 
     if (status === 'success') {
         return (
-            <div className={styles.successMessage}>
-                <h3>Thank you for reaching out!</h3>
-                <p>We've received your message and will get back to you shortly at the provided email.</p>
-                <button onClick={() => setStatus('idle')} className="premium-gradient">SEND ANOTHER MESSAGE</button>
+            <div className={styles.successContainer}>
+                <div className={styles.successIcon}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                        <polyline points="20 6 9 17 4 12"></polyline>
+                    </svg>
+                </div>
+                <h3>Message Received!</h3>
+                <p>We've received your inquiry and will reach out to you shortly at the provided email address.</p>
+                <div style={{ marginTop: '2rem' }}>
+                    <button onClick={() => setStatus('idle')} className="premium-gradient">SEND NEW MESSAGE</button>
+                </div>
             </div>
         );
     }
 
     return (
         <form onSubmit={handleSubmit} className={styles.form}>
-            <div className={styles.formGrid}>
-                <div className={styles.formGroup}>
+            <div className={styles.inputRow}>
+                <div className={styles.inputGroup}>
                     <label htmlFor="name">Full Name</label>
                     <input type="text" id="name" name="name" required placeholder="John Doe" />
                 </div>
-                <div className={styles.formGroup}>
+                <div className={styles.inputGroup}>
                     <label htmlFor="email">Email Address</label>
                     <input type="email" id="email" name="email" required placeholder="john@example.com" />
                 </div>
             </div>
             
-            <div className={styles.formGroup}>
+            <div className={styles.inputGroup}>
                 <label htmlFor="subject">Subject</label>
                 <input type="text" id="subject" name="subject" required placeholder="Inquiry about Wholesale" />
             </div>
 
-            <div className={styles.formGroup}>
+            <div className={styles.inputGroup}>
                 <label htmlFor="message">Message</label>
                 <textarea id="message" name="message" required placeholder="Your message here..." rows={6}></textarea>
             </div>
@@ -86,7 +93,9 @@ export default function ContactForm() {
                 className={`${styles.submitBtn} premium-gradient`}
                 disabled={status === 'submitting'}
             >
-                {status === 'submitting' ? 'SENDING...' : 'SEND MESSAGE'}
+                {status === 'submitting' ? (
+                    <span className={styles.loader}></span>
+                ) : 'SEND MESSAGE'}
             </button>
         </form>
     );

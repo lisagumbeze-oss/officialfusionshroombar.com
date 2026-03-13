@@ -83,24 +83,50 @@ export async function POST(request: Request) {
                     to: customerEmail,
                     subject: `Order Confirmation #${order.id.slice(-6).toUpperCase()} - Fusion Shroom Bars`,
                     html: `
-                        <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
-                            <h1 style="color: #9d3bea;">Order Confirmed!</h1>
-                            <p>Hi ${customerName},</p>
-                            <p>Thank you for your order. We have received it and it is currently marked as <strong>PENDING</strong>.</p>
-                            
-                            <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin: 20px 0;">
-                                 <h3>Payment Instructions</h3>
-                                 <p><strong>Method:</strong> ${(order as any).paymentMethod?.name}</p>
-                                 <p><strong>Pay To:</strong> ${(order as any).paymentMethod?.details}</p>
-                                 <p><strong>Total Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-                                 ${(order as any).paymentMethod?.instructions ? `<p><em>${(order as any).paymentMethod.instructions}</em></p>` : ''}
-                             </div>
-                            
-                            <p>Once you send the payment, we will process your order and prepare it for shipping to:</p>
-                            <p><em>${shippingAddress}</em></p>
-                            
-                            <br/>
-                            <p>Thank you,<br/>Fusion Shroom Bars Team</p>
+                        <div style="background-color: #0c0c0c; color: #ffffff; font-family: 'Inter', Arial, sans-serif; padding: 40px; line-height: 1.6;">
+                            <div style="max-width: 600px; margin: 0 auto; background: #1a1a1a; border-radius: 16px; border: 1px solid #333; overflow: hidden; box-shadow: 0 25px 60px rgba(0,0,0,0.6);">
+                                <div style="background: linear-gradient(135deg, #a855f7 0%, #6b21a8 100%); padding: 40px; text-align: center;">
+                                    <div style="font-size: 12px; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.8;">Order Received</div>
+                                    <h1 style="margin: 0; font-size: 28px; font-weight: 900; letter-spacing: 1px;">WELCOME TO THE FUSION</h1>
+                                </div>
+                                <div style="padding: 40px; background-color: #141414;">
+                                    <p style="font-size: 16px; color: #cccccc; margin-top: 0;">Hi ${customerName},</p>
+                                    <p style="font-size: 16px; color: #cccccc;">Extremely good choice. Your order <strong>#${order.id.slice(-6).toUpperCase()}</strong> has been captured and is currently <strong>AWAITING PAYMENT</strong>.</p>
+                                    
+                                    <div style="background: #1a1a1a; padding: 30px; border-radius: 12px; border: 1px dotted #444; margin: 30px 0; border: 1px solid #332244;">
+                                        <h3 style="margin-top: 0; color: #a855f7; font-size: 14px; text-transform: uppercase; letter-spacing: 2px;">Secured Payment Instructions</h3>
+                                        <div style="margin-top: 15px;">
+                                            <p style="margin: 5px 0; color: #888; font-size: 13px;">Method</p>
+                                            <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 600;">${(order as any).paymentMethod?.name}</p>
+                                        </div>
+                                        <div style="margin-top: 15px;">
+                                            <p style="margin: 5px 0; color: #888; font-size: 13px;">Recipient Detail</p>
+                                            <p style="margin: 0; color: #ffffff; font-size: 16px; font-weight: 600; background: #222; padding: 8px 12px; display: inline-block; border-radius: 4px;">${(order as any).paymentMethod?.details}</p>
+                                        </div>
+                                        <div style="margin-top: 15px;">
+                                            <p style="margin: 5px 0; color: #888; font-size: 13px;">Final Total</p>
+                                            <p style="margin: 0; color: #a855f7; font-size: 24px; font-weight: 900;">$${order.totalAmount.toFixed(2)}</p>
+                                        </div>
+                                        ${(order as any).paymentMethod?.instructions ? `
+                                        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid #333;">
+                                            <p style="margin: 0; color: #999; font-size: 13px; font-style: italic;">Note: ${(order as any).paymentMethod.instructions}</p>
+                                        </div>` : ''}
+                                    </div>
+
+                                    <div style="margin-bottom: 40px;">
+                                        <h4 style="color: #ffffff; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; margin-bottom: 15px;">Shipping Destination</h4>
+                                        <p style="margin: 0; color: #999; font-size: 15px;">${shippingAddress}</p>
+                                    </div>
+
+                                    <div style="text-align: center; padding-top: 20px; border-top: 1px solid #222;">
+                                        <p style="color: #666; font-size: 13px;">Once payment is verified, your premium shroom bars will be dispatched.</p>
+                                        <p style="color: #a855f7; font-size: 14px; font-weight: 700; margin-top: 20px;">FUSION SHROOM BARS TEAM</p>
+                                    </div>
+                                </div>
+                                <div style="padding: 20px; text-align: center; background-color: #0c0c0c; color: #444; font-size: 10px; text-transform: uppercase; letter-spacing: 3px; font-weight: 700;">
+                                    Premium Quality • Discreet Shipping • 100% Authentic
+                                </div>
+                            </div>
                         </div>
                     `,
                 });
@@ -112,12 +138,44 @@ export async function POST(request: Request) {
                     to: adminEmail,
                     subject: `New Order Received! 💰 $${totalAmount.toFixed(2)}`,
                     html: `
-                        <div style="font-family: Arial, sans-serif;">
-                             <h2>New Order #${order.id.slice(-6).toUpperCase()}</h2>
-                             <p><strong>Customer:</strong> ${customerName} (${customerEmail})</p>
-                             <p><strong>Amount:</strong> $${order.totalAmount.toFixed(2)}</p>
-                             <p><strong>Payment Method:</strong> ${(order as any).paymentMethod?.name}</p>
-                             <p>Login to your admin dashboard to view full details.</p>
+                        <div style="background-color: #0c0c0c; color: #ffffff; font-family: 'Inter', Arial, sans-serif; padding: 30px;">
+                            <div style="max-width: 600px; margin: 0 auto; background: #141414; border-radius: 10px; border: 2px solid #a855f7; overflow: hidden;">
+                                <div style="background: #a855f7; padding: 20px; text-align: center;">
+                                    <h2 style="margin: 0; color: #ffffff; font-size: 18px; text-transform: uppercase; letter-spacing: 2px;">NEW ORDER ALERT 💰</h2>
+                                </div>
+                                <div style="padding: 30px;">
+                                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                        <div>
+                                            <p style="margin: 0 0 5px; color: #888; font-size: 11px; text-transform: uppercase;">Customer</p>
+                                            <p style="margin: 0; font-size: 16px; font-weight: 700;">${customerName}</p>
+                                            <p style="margin: 0; color: #a855f7; font-size: 13px;">${customerEmail}</p>
+                                        </div>
+                                        <div style="text-align: right;">
+                                            <p style="margin: 0 0 5px; color: #888; font-size: 11px; text-transform: uppercase;">Total Value</p>
+                                            <p style="margin: 0; font-size: 20px; font-weight: 900; color: #a855f7;">$${order.totalAmount.toFixed(2)}</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div style="background: #0c0c0c; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+                                        <p style="margin: 0 0 10px; color: #888; font-size: 11px; text-transform: uppercase;">Order Items (${order.items.length})</p>
+                                        ${order.items.map((item: any) => `
+                                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #222; padding-bottom: 8px;">
+                                                <span style="color: #eee;">${item.quantity}x ${item.productName}</span>
+                                                <span style="color: #fff; font-weight: 700;">$${item.price.toFixed(2)}</span>
+                                            </div>
+                                        `).join('')}
+                                    </div>
+
+                                    <div style="margin-bottom: 30px;">
+                                        <p style="margin: 0 0 5px; color: #888; font-size: 11px; text-transform: uppercase;">Payment Strategy</p>
+                                        <p style="margin: 0; color: #ffffff;">${(order as any).paymentMethod?.name}</p>
+                                    </div>
+
+                                    <div style="text-align: center;">
+                                        <a href="https://officialfusionshroombar.com/admin" style="display: inline-block; background: #ffffff; color: #a855f7; text-decoration: none; padding: 14px 28px; border-radius: 6px; font-weight: 900; font-size: 13px; text-transform: uppercase;">Open Admin Panel</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     `,
                 });
