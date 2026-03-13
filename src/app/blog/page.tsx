@@ -1,6 +1,8 @@
 import styles from './page.module.css';
 import prisma from '@/lib/prisma';
 import Image from 'next/image';
+export const dynamic = 'force-dynamic';
+
 import Link from 'next/link';
 
 export default async function BlogPage() {

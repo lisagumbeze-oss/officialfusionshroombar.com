@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import prisma from '@/lib/prisma';
 import styles from './admin.module.css';
 import { TrendingUp, DollarSign, Clock, Package } from 'lucide-react';

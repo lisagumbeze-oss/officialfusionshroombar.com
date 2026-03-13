@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma';
 import styles from '../page.module.css';
 import Image from 'next/image';
+export const dynamic = 'force-dynamic';
 import { notFound } from 'next/navigation';
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
