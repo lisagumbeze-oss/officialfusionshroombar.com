@@ -174,14 +174,14 @@ export default function BlogManagement() {
     // --- RENDER DASHBOARD (LIST VIEW) ---
     if (view === 'list') {
         return (
-            <div className="flex flex-col min-h-screen w-full bg-[#f7f5f8] dark:bg-[#1b1022] text-slate-900 dark:text-slate-100 font-sans">
+            <div className="flex flex-col min-h-screen w-full bg-[#1b1022] text-slate-100 font-sans">
                 {/* Unified Header */}
-                <header className="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 bg-[#f7f5f8] dark:bg-[#1b1022] sticky top-0 z-50">
+                <header className="flex items-center justify-between border-b border-primary/20 px-6 py-4 lg:px-20 bg-[#1b1022]/80 backdrop-blur-md sticky top-0 z-50">
                     <div className="flex items-center gap-4">
                         <div className="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
                             <Brain size={18} />
                         </div>
-                        <h2 className="text-xl font-bold tracking-tight">Fusion CMS</h2>
+                        <h2 className="text-xl font-bold tracking-tight text-white">Fusion CMS</h2>
                     </div>
                     <div className="flex flex-1 justify-end gap-6 items-center">
                         <nav className="hidden md:flex items-center gap-8">
@@ -210,42 +210,42 @@ export default function BlogManagement() {
 
                     {/* Dashboard Stats */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                        <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="p-2 rounded-lg bg-primary/10 text-primary"><Layers size={20} /></span>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Total</span>
+                                <span className="text-xs font-bold text-primary/40 uppercase tracking-widest leading-none">Total</span>
                             </div>
-                            <div className="text-3xl font-black">{posts.length}</div>
-                            <div className="text-xs text-slate-400 mt-2 font-medium">Stories Recorded</div>
+                            <div className="text-3xl font-black text-white">{posts.length}</div>
+                            <div className="text-xs text-primary/30 mt-2 font-medium">Stories Recorded</div>
                         </div>
-                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                        <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="p-2 rounded-lg bg-green-500/10 text-green-500"><CheckCircle2 size={20} /></span>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Active</span>
+                                <span className="text-xs font-bold text-primary/40 uppercase tracking-widest leading-none">Active</span>
                             </div>
                             <div className="text-3xl font-black text-green-500">{posts.filter(p => p.isPublic).length}</div>
-                            <div className="text-xs text-slate-400 mt-2 font-medium">Publicly Visible</div>
+                            <div className="text-xs text-primary/30 mt-2 font-medium">Publicly Visible</div>
                         </div>
-                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                        <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="p-2 rounded-lg bg-amber-500/10 text-amber-500"><Clock size={20} /></span>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Drafts</span>
+                                <span className="text-xs font-bold text-primary/40 uppercase tracking-widest leading-none">Drafts</span>
                             </div>
                             <div className="text-3xl font-black text-amber-500">{posts.filter(p => !p.isPublic).length}</div>
-                            <div className="text-xs text-slate-400 mt-2 font-medium">Pending Review</div>
+                            <div className="text-xs text-primary/30 mt-2 font-medium">Pending Review</div>
                         </div>
-                        <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
+                        <div className="bg-primary/5 border border-primary/20 rounded-xl p-6 shadow-sm">
                             <div className="flex items-center justify-between mb-2">
                                 <span className="p-2 rounded-lg bg-purple-500/10 text-purple-500"><MessageSquare size={20} /></span>
-                                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest leading-none">Engage</span>
+                                <span className="text-xs font-bold text-primary/40 uppercase tracking-widest leading-none">Engage</span>
                             </div>
-                            <div className="text-3xl font-black">Live</div>
-                            <div className="text-xs text-slate-400 mt-2 font-medium">Comments Active</div>
+                            <div className="text-3xl font-black text-white">Live</div>
+                            <div className="text-xs text-primary/30 mt-2 font-medium">Comments Active</div>
                         </div>
                     </div>
 
                     {/* Table Section */}
-                    <div className="bg-white dark:bg-primary/5 border border-primary/20 rounded-xl overflow-hidden shadow-sm">
+                    <div className="bg-primary/5 border border-primary/20 rounded-xl overflow-hidden shadow-sm">
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center py-20 gap-4">
                             <div className="size-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>

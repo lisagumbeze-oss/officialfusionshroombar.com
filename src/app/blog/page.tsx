@@ -20,10 +20,10 @@ export default async function BlogPage() {
     }
 
     return (
-        <div className="min-h-screen bg-[#f7f5f8] dark:bg-[#1b1022] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+        <div className="min-h-screen bg-[#1b1022] text-slate-100 font-sans transition-colors duration-300">
             {/* Header / Hero */}
             <header className="py-24 px-6 lg:px-20 text-center relative overflow-hidden">
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-primary/5 -skew-y-3 origin-top-left -z-10"></div>
+                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full bg-primary/10 -skew-y-3 origin-top-left -z-10"></div>
                 <div className="max-w-4xl mx-auto">
                     <p className="text-primary font-black uppercase tracking-[0.3em] text-xs mb-4">Fusion Latest Updates</p>
                     <h1 className="text-5xl lg:text-7xl font-black tracking-tighter mb-6 bg-gradient-to-r from-primary to-purple-400 bg-clip-text text-transparent">
@@ -48,7 +48,7 @@ export default async function BlogPage() {
                     <>
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                             {posts.map((post: any) => (
-                                <article key={post.id} className="group relative flex flex-col bg-white dark:bg-primary/5 rounded-3xl overflow-hidden border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-primary/10">
+                                <article key={post.id} className="group relative flex flex-col bg-primary/5 rounded-3xl overflow-hidden border border-primary/10 hover:border-primary/30 transition-all duration-500 shadow-sm hover:shadow-2xl hover:shadow-primary/10">
                                     <div className="aspect-[16/10] relative overflow-hidden">
                                         {post.image ? (
                                             <Image 

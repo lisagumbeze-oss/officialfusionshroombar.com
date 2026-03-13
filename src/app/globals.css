@@ -8,17 +8,17 @@
 
 
 :root {
-  --background: #050505;
+  --background: #1b1022;
   --foreground: #ffffff;
-  --primary: #af53ff; /* Accent Purple */
+  --primary: #a01ef1; /* Fusion Purple */
   --secondary: #ff4b4b; /* Accent Red */
-  --surface: #121212;
-  --surface-border: #2a2a2a;
-  --text-muted: #a0a0a0;
-  --glass: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --surface: #24162d;
+  --surface-border: rgba(160, 30, 241, 0.2);
+  --text-muted: #948b9b;
+  --glass: rgba(160, 30, 241, 0.05);
+  --glass-border: rgba(160, 30, 241, 0.1);
   --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Montserrat', sans-serif;
+  --font-heading: 'Inter', sans-serif;
 }
 
 * {

@@ -31,7 +31,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     ];
 
     return (
-        <main className="min-h-screen bg-[#f7f5f8] dark:bg-[#1b1022] text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+        <main className="min-h-screen bg-[#1b1022] text-slate-100 font-sans transition-colors duration-300">
             {/* Hero Section */}
             <div className="relative w-full h-[60vh] lg:h-[70vh] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1b1022] via-[#1b1022]/40 to-transparent z-10"></div>
