@@ -12,6 +12,7 @@ export default function ShopFilters({ categories }: { categories: string[] }) {
 
     const handleCategoryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const params = new URLSearchParams(searchParams.toString());
+        params.delete('page'); // Reset to page 1
         if (e.target.value === 'All Products') {
             params.delete('category');
         } else {
@@ -22,6 +23,7 @@ export default function ShopFilters({ categories }: { categories: string[] }) {
 
     const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const params = new URLSearchParams(searchParams.toString());
+        params.delete('page'); // Reset to page 1
         if (e.target.value === 'default') {
             params.delete('sort');
         } else {

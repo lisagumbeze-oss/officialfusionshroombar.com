@@ -198,3 +198,52 @@
         gap: 1.5rem;
     }
 }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 5rem;
+    padding-top: 3rem;
+    border-top: 1px solid var(--surface-border);
+}
+
+.pageNumbers {
+    display: flex;
+    gap: 0.75rem;
+}
+
+.pageNumber, .pageBtn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    background: var(--surface);
+    border: 1px solid var(--surface-border);
+    color: var(--foreground);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+}
+
+.pageNumber:hover, .pageBtn:hover:not(:disabled) {
+    border-color: var(--primary);
+    background: rgba(175, 83, 255, 0.1);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(175, 83, 255, 0.2);
+}
+
+.activePage {
+    background: var(--primary) !important;
+    color: white !important;
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 20px rgba(175, 83, 255, 0.4);
+}
+
+.pageBtn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+}
