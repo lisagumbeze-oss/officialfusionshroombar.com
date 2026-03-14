@@ -1,8 +1,18 @@
+import type { Metadata } from 'next';
+import { getPageMetadata } from '@/lib/metadata-utils';
 export const dynamic = 'force-dynamic';
 
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './shop.module.css';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const fallback: Metadata = {
+        title: 'Shop Official Fusion Shroom Bars | Authentic Mushroom Chocolate',
+        description: 'The official shop for Fusion Shroom Bars and Neau Tropics. Explore our full collection of authentic psilocybin-infused Belgian chocolate and gummies.',
+    };
+    return await getPageMetadata("/shop", fallback);
+}
 import prisma from '@/lib/prisma';
 import ShopFilters from './ShopFilters';
 import AddToCartButton from '@/components/AddToCartButton';

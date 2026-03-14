@@ -4,7 +4,43 @@ import { notFound } from 'next/navigation';
 import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, Calendar, Clock } from 'lucide-react';
 import Link from 'next/link';
 
+import type { Metadata } from 'next';
+
 export const dynamic = 'force-dynamic';
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const { slug } = await params;
+    const post = await (prisma as any).blogPost.findUnique({
+        where: { slug, isPublic: true }
+    });
+
+    if (!post) {
+        return {
+            title: 'Post Not Found | Fusion Shroom Bars',
+        };
+    }
+
+    return {
+        title: post.seoTitle || `${post.title} | Official Fusion Shroom Bars`,
+        description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
+        keywords: post.seoKeywords || undefined,
+        openGraph: {
+            title: post.seoTitle || post.title,
+            description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
+            images: post.image ? [post.image] : [],
+            type: 'article',
+            publishedTime: post.createdAt.toISOString(),
+            authors: ['Fusion Team'],
+            tags: post.tags ? JSON.parse(post.tags) : []
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: post.seoTitle || post.title,
+            description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
+            images: post.image ? [post.image] : [],
+        }
+    };
+}
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
@@ -23,6 +59,25 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
     if (!post) notFound();
 
+    const jsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "headline": post.title,
+        "image": post.image,
+        "datePublished": post.createdAt.toISOString(),
+        "dateModified": post.updatedAt.toISOString(),
+        "author": [{
+            "@type": "Organization",
+            "name": "Fusion Shroom Bars",
+            "url": "https://officialfusionshroombar.com"
+        }],
+        "description": post.excerpt || post.content.substring(0, 160),
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": `https://officialfusionshroombar.com/blog/${post.slug}`
+        }
+    };
+
     // Mock related posts for the "Recommended" section
     const relatedPosts = [
         { id: 1, title: 'The Science of Lion\'s Mane', category: 'Science', image: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?q=80&w=1000&auto=format&fit=crop', excerpt: 'How this powerful fungus helps with neurogenesis and cognitive performance.' },
@@ -32,13 +87,17 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
     return (
         <main className="min-h-screen bg-[#1b1022] text-slate-100 font-sans transition-colors duration-300">
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
             {/* Hero Section */}
             <div className="relative w-full h-[60vh] lg:h-[70vh] overflow-hidden">
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1b1022] via-[#1b1022]/40 to-transparent z-10"></div>
                 {post.image ? (
                     <Image 
                         src={post.image} 
-                        alt={post.title} 
+                        alt={post.imageAlt || post.title} 
                         fill 
                         className="object-cover" 
                         priority

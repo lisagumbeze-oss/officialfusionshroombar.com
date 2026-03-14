@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
 import { cookies } from 'next/headers';
+import { generateSEO } from '@/lib/seo-utils';
 
 export const dynamic = 'force-dynamic';
 
@@ -31,6 +32,8 @@ export async function POST(req: Request) {
         
         const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
         
+        const seo = generateSEO(title, excerpt || '', body.category || 'Wellness & Microdosing');
+        
         const post = await (prisma as any).blogPost.create({
             data: { 
                 title, 
@@ -41,7 +44,13 @@ export async function POST(req: Request) {
                 category: body.category || 'Wellness & Microdosing',
                 tags: JSON.stringify(body.tags || []),
                 isPublic: body.isPublic ?? true,
-                allowComments: body.allowComments ?? true
+                allowComments: body.allowComments ?? true,
+                // Automatic SEO
+                targetKeyword: seo.targetKeyword,
+                seoKeywords: seo.seoKeywords,
+                seoTitle: seo.seoTitle,
+                seoDescription: seo.seoDescription,
+                imageAlt: seo.imageAlt
             }
         });
         
@@ -65,6 +74,8 @@ export async function PUT(req: Request) {
         
         const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
         
+        const seo = generateSEO(title, excerpt || '', body.category || 'Wellness & Microdosing');
+        
         const post = await (prisma as any).blogPost.update({
             where: { id },
             data: { 
@@ -76,7 +87,13 @@ export async function PUT(req: Request) {
                 category: body.category,
                 tags: JSON.stringify(body.tags),
                 isPublic: body.isPublic,
-                allowComments: body.allowComments
+                allowComments: body.allowComments,
+                // Automatic SEO Update
+                targetKeyword: seo.targetKeyword,
+                seoKeywords: seo.seoKeywords,
+                seoTitle: seo.seoTitle,
+                seoDescription: seo.seoDescription,
+                imageAlt: seo.imageAlt
             }
         });
         

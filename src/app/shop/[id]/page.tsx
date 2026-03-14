@@ -13,8 +13,23 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     if (!product) return { title: 'Product Not Found' };
 
     return {
-        title: `${product.name} | Fusion Shroom Bars`,
-        description: product.description,
+        title: product.seoTitle || `${product.name} | Official Fusion Shroom Bars`,
+        description: product.seoDescription || product.description.substring(0, 160),
+        keywords: product.seoKeywords || undefined,
+        openGraph: {
+            title: product.seoTitle || `${product.name} | Official Fusion Shroom Bars`,
+            description: product.seoDescription || product.description.substring(0, 160),
+            images: product.image ? [product.image] : [],
+            type: 'website',
+            url: `https://officialfusionshroombar.com/shop/${product.slug}`,
+            siteName: 'Official Fusion Shroom Bars',
+        },
+        twitter: {
+            card: 'summary_large_image',
+            title: product.seoTitle || product.name,
+            description: product.seoDescription || product.description.substring(0, 160),
+            images: product.image ? [product.image] : [],
+        },
     };
 }
 
@@ -49,14 +64,20 @@ export default async function ProductPage({
         "@context": "https://schema.org",
         "@type": "Product",
         "name": product.name,
-        "image": `https://officialfusionshroombar.com${product.image}`, // Fallback to reference if local missing
+        "image": product.image.startsWith('http') ? product.image : `https://officialfusionshroombar.com${product.image}`,
         "description": product.description,
+        "sku": product.id.toString(),
+        "brand": {
+            "@type": "Brand",
+            "name": "Fusion Shroom Bars"
+        },
         "offers": {
             "@type": "Offer",
             "url": `https://officialfusionshroombar.com/shop/${product.slug}`,
             "priceCurrency": "USD",
             "price": product.price,
-            "availability": "https://schema.org/InStock"
+            "availability": "https://schema.org/InStock",
+            "priceValidUntil": new Date(new Date().getFullYear() + 1, 0, 1).toISOString().split('T')[0]
         }
     };
 
@@ -71,7 +92,13 @@ export default async function ProductPage({
                 {/* Left: Images */}
                 <div className={styles.imageGallery}>
                     <div className={styles.mainImagePlaceholder}>
-                        <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} priority />
+                        <Image 
+                            src={product.image} 
+                            alt={product.imageAlt || product.name} 
+                            fill 
+                            style={{ objectFit: 'cover' }} 
+                            priority 
+                        />
                         {product.regularPrice && product.regularPrice > product.price && (
                             <span className={styles.saleTag}>SALE</span>
                         )}

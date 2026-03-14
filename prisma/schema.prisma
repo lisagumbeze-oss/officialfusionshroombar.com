@@ -68,6 +68,11 @@ model Product {
   gallery      String?    // Store as JSON stringified array of URLs (up to 5)
   dosage       String?
   isActive     Boolean    @default(true)
+  seoTitle     String?
+  seoDescription String?
+  targetKeyword String?
+  seoKeywords  String?    // Comma-separated
+  imageAlt     String?
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   
@@ -96,6 +101,22 @@ model BlogPost {
   isPublic      Boolean  @default(true)
   allowComments Boolean  @default(true)
   author        String   @default("Fusion Shroom Bars")
+  seoTitle      String?
+  seoDescription String?
+  targetKeyword String?
+  seoKeywords   String?  // Comma-separated
+  imageAlt      String?
   createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model PageMetadata {
+  id            String   @id @default(cuid())
+  path          String   @unique // e.g., "/", "/about", "/shop"
+  title         String?
+  description   String?
+  targetKeyword String?
+  seoKeywords   String?  // Comma-separated
+  imageAlt      String?
   updatedAt     DateTime @updatedAt
 }

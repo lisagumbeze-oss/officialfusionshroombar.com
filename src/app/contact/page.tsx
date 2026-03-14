@@ -1,4 +1,5 @@
 'use client';
+// This file will remain 'use client'. I will create a layout.tsx for metadata.
 
 import React from 'react';
 import styles from './page.module.css';

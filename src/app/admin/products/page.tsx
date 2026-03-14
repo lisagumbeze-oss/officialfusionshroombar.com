@@ -3,6 +3,7 @@ export const dynamic = 'force-dynamic';
 import prisma from '@/lib/prisma';
 import styles from '../admin.module.css';
 import { revalidatePath } from 'next/cache';
+import { generateSEO } from '@/lib/seo-utils';
 import ProductsTable from './ProductsTable';
 
 export const metadata = {
@@ -41,6 +42,8 @@ export default async function ProductsPage() {
             if (url) gallery.push(url);
         }
 
+        const seo = generateSEO(name, description, category);
+
         await (prisma as any).product.update({
             where: { id },
             data: { 
@@ -51,7 +54,13 @@ export default async function ProductsPage() {
                 image, 
                 description, 
                 isActive,
-                gallery: JSON.stringify(gallery)
+                gallery: JSON.stringify(gallery),
+                // Automatic SEO Update
+                targetKeyword: seo.targetKeyword,
+                seoKeywords: seo.seoKeywords,
+                seoTitle: seo.seoTitle,
+                seoDescription: seo.seoDescription,
+                imageAlt: seo.imageAlt
             },
         });
         
@@ -79,6 +88,8 @@ export default async function ProductsPage() {
             if (url) gallery.push(url);
         }
 
+        const seo = generateSEO(name, description, category);
+
         await (prisma as any).product.create({
             data: { 
                 name, 
@@ -89,7 +100,13 @@ export default async function ProductsPage() {
                 image, 
                 description, 
                 isActive,
-                gallery: JSON.stringify(gallery)
+                gallery: JSON.stringify(gallery),
+                // Automatic SEO
+                targetKeyword: seo.targetKeyword,
+                seoKeywords: seo.seoKeywords,
+                seoTitle: seo.seoTitle,
+                seoDescription: seo.seoDescription,
+                imageAlt: seo.imageAlt
             },
         });
         

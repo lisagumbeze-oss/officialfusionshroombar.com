@@ -2,6 +2,17 @@ import prisma from '@/lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Tag, Calendar, ArrowRight, Info } from 'lucide-react';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'The Psychedelic Guide | Fusion Shroom Bars Blog',
+    description: 'Insights, news, and education from the world of premium psilocybin. Discover the science and soul behind every official Fusion Shroom Bar.',
+    openGraph: {
+        title: 'The Psychedelic Guide | Fusion Shroom Bars',
+        description: 'Explore our latest articles on wellness, microdosing, and the science of psilocybin.',
+        images: ['/og-blog.jpg'], // Assuming a generic blog OG image exists or will be added
+    }
+};
 
 export const dynamic = 'force-dynamic';
 

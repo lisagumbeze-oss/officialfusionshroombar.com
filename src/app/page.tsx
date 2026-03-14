@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+import { getPageMetadata } from '@/lib/metadata-utils';
 import Image from 'next/image';
 import styles from './page.module.css';
 export const dynamic = 'force-dynamic';
@@ -6,6 +8,32 @@ import Link from 'next/link';
 import prisma from '@/lib/prisma';
 import AddToCartButton from '@/components/AddToCartButton';
 import { Reveal } from '@/components/Reveal';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const fallback: Metadata = {
+    title: "Official Fusion Shroom Bars | Authentic Mushroom Chocolate",
+    description: "The official home of Fusion Shroom Bars and Neau Tropics. Shop authentic Fusion Chocolate Bars for focus, energy, and wellness. Premium psilocybin edibles for the USA, UK, Canada, and Australia.",
+    openGraph: {
+      title: "Official Fusion Shroom Bars | Premium Authentic Fusion Edibles",
+      description: "Shop authentic Fusion mushroom-infused chocolate and gummies. Experience the gold standard of focus and calm energy.",
+      images: ["/images/hero-fusion.png"],
+    },
+  };
+
+  return await getPageMetadata("/", fallback);
+}
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Official Fusion Shroom Bars",
+  "url": "https://officialfusionshroombar.com",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://officialfusionshroombar.com/shop?query={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+};
 
 export default async function Home() {
   let bestsellers = [];
@@ -23,6 +51,10 @@ export default async function Home() {
 
   return (
     <div className={styles.home}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
       {/* Hero Section */}
       <section className={styles.hero}>
         <Image src="/images/hero-fusion.png" alt="Fusion Hero" fill style={{ objectFit: 'cover' }} className={styles.heroImg} />
@@ -59,22 +91,22 @@ export default async function Home() {
         <Reveal delay={0.2}>
           <div className={styles.badge}>
             <span className={styles.badgeIcon}>🔬</span>
-            <h3>PURE PSILOCYBIN</h3>
-            <p>Clean extraction for a pure experience.</p>
+            <h3>FOCUS & CLARITY</h3>
+            <p>Precise blends for mental performance.</p>
           </div>
         </Reveal>
         <Reveal delay={0.4}>
           <div className={styles.badge}>
-            <span className={styles.badgeIcon}>🍫</span>
-            <h3>BELGIAN CHOCOLATE</h3>
-            <p>Hand-crafted with gourmet ingredients.</p>
+            <span className={styles.badgeIcon}>🧘</span>
+            <h3>CALM ENERGY</h3>
+            <p>Stable, grounding effects for wellness.</p>
           </div>
         </Reveal>
         <Reveal delay={0.6}>
           <div className={styles.badge}>
-            <span className={styles.badgeIcon}>🚀</span>
-            <h3>ELEVATED JOURNEY</h3>
-            <p>Perfect for micro or macro dosing.</p>
+            <span className={styles.badgeIcon}>🍫</span>
+            <h3>AUTHENTIC FUSION</h3>
+            <p>The original gold standard shroom bar.</p>
           </div>
         </Reveal>
       </section>

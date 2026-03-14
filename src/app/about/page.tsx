@@ -1,7 +1,17 @@
+import type { Metadata } from 'next';
+import { getPageMetadata } from '@/lib/metadata-utils';
 import styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Reveal } from '@/components/Reveal';
+
+export async function generateMetadata(): Promise<Metadata> {
+    const fallback: Metadata = {
+        title: 'About Official Fusion Shroom Bars | Our Story & Standards',
+        description: 'Learn the authentic story of Fusion Shroom Bars. Discover our commitment to precision science, artisanal craftsmanship, and the industry standard for psilocybin wellness.',
+    };
+    return await getPageMetadata("/about", fallback);
+}
 
 export default function AboutPage() {
     return (

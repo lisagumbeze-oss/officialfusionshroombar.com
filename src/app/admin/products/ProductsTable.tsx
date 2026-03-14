@@ -196,6 +196,28 @@ export default function ProductsTable({
                                 </label>
                             </div>
 
+                            <details style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                <summary style={{ cursor: 'pointer', fontWeight: 'bold', color: '#ffcc00' }}>Search Engine Optimization (SEO)</summary>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                                    <div className={styles.inputGroup}>
+                                        <label>Target Keyword</label>
+                                        <input type="text" name="targetKeyword" defaultValue={selectedProduct.targetKeyword || ''} placeholder="e.g. Raspberry Fusion Bar" />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>SEO Title</label>
+                                        <input type="text" name="seoTitle" defaultValue={selectedProduct.seoTitle || ''} placeholder="Custom SEO Title" />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>SEO Description</label>
+                                        <textarea name="seoDescription" defaultValue={selectedProduct.seoDescription || ''} rows={3} placeholder="Custom SEO Description"></textarea>
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>Image Alt Text</label>
+                                        <input type="text" name="imageAlt" defaultValue={selectedProduct.imageAlt || ''} placeholder="Description of product image" />
+                                    </div>
+                                </div>
+                            </details>
+
                             <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
                                 Save Changes
                             </button>
@@ -271,6 +293,28 @@ export default function ProductsTable({
                                     <span>Product is Active (Visible on site)</span>
                                 </label>
                             </div>
+
+                            <details style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }}>
+                                <summary style={{ cursor: 'pointer', fontWeight: 'bold', color: '#ffcc00' }}>Search Engine Optimization (SEO)</summary>
+                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                                    <div className={styles.inputGroup}>
+                                        <label>Target Keyword</label>
+                                        <input type="text" name="targetKeyword" placeholder="e.g. Raspberry Fusion Bar" />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>SEO Title</label>
+                                        <input type="text" name="seoTitle" placeholder="Custom SEO Title" />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>SEO Description</label>
+                                        <textarea name="seoDescription" rows={3} placeholder="Custom SEO Description"></textarea>
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>Image Alt Text</label>
+                                        <input type="text" name="imageAlt" placeholder="Description of product image" />
+                                    </div>
+                                </div>
+                            </details>
 
                             <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
                                 Create Product

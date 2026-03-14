@@ -25,7 +25,12 @@ export default function BlogManagement() {
         category: 'Wellness & Microdosing',
         tags: ['Fusion Bars'],
         isPublic: true,
-        allowComments: true
+        allowComments: true,
+        // SEO Fields
+        targetKeyword: '',
+        seoTitle: '',
+        seoDescription: '',
+        imageAlt: ''
     });
     const [tagInput, setTagInput] = useState('');
 
@@ -123,7 +128,11 @@ export default function BlogManagement() {
                 category: post.category || 'Wellness & Microdosing',
                 tags: parsedTags,
                 isPublic: post.isPublic ?? true,
-                allowComments: post.allowComments ?? true
+                allowComments: post.allowComments ?? true,
+                targetKeyword: post.targetKeyword || '',
+                seoTitle: post.seoTitle || '',
+                seoDescription: post.seoDescription || '',
+                imageAlt: post.imageAlt || ''
             });
         } else {
             setEditingPost(null);
@@ -135,7 +144,11 @@ export default function BlogManagement() {
                 category: 'Wellness & Microdosing',
                 tags: ['Fusion Bars'],
                 isPublic: true,
-                allowComments: true
+                allowComments: true,
+                targetKeyword: '',
+                seoTitle: '',
+                seoDescription: '',
+                imageAlt: ''
             });
         }
         setView('editor');
@@ -406,7 +419,7 @@ export default function BlogManagement() {
                             <div className="flex flex-col gap-2">
                                 <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">Post Title</label>
                                 <input 
-                                    className="w-full rounded-xl text-lg font-bold border border-primary/20 bg-white dark:bg-primary/5 focus:border-primary focus:ring-1 focus:ring-primary h-14 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600" 
+                                    className="w-full rounded-xl text-lg font-bold border border-primary/20 bg-white dark:bg-primary/5 focus:border-primary focus:ring-1 focus:ring-primary h-14 px-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none" 
                                     placeholder="Enter a descriptive title..."
                                     value={formData.title}
                                     onChange={(e) => setFormData({...formData, title: e.target.value})}
@@ -414,27 +427,37 @@ export default function BlogManagement() {
                             </div>
                             
                             <div className="flex flex-col gap-2">
+                                <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">Excerpt / Summary</label>
+                                <textarea 
+                                    className="w-full rounded-xl text-base border border-primary/20 bg-white dark:bg-primary/5 focus:border-primary focus:ring-1 focus:ring-primary h-24 p-4 placeholder:text-slate-400 dark:placeholder:text-slate-600 outline-none resize-none" 
+                                    placeholder="Give a brief summary for SEO and lists..."
+                                    value={formData.excerpt}
+                                    onChange={(e) => setFormData({...formData, excerpt: e.target.value})}
+                                />
+                            </div>
+                            
+                            <div className="flex flex-col gap-2">
                                 <label className="text-sm font-semibold uppercase tracking-wider text-slate-500">Content</label>
                                 <div className="rounded-xl border border-primary/20 bg-white dark:bg-primary/5 overflow-hidden flex flex-col min-h-[500px]">
                                     <div className="flex items-center gap-1 p-2 border-b border-primary/10 bg-slate-50 dark:bg-primary/10">
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('**', '**')}><Bold size={18} /></button>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('*', '*')}><Italic size={18} /></button>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('<u>', '</u>')}><Underline size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('**', '**')} title="Bold"><Bold size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('*', '*')} title="Italic"><Italic size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('<u>', '</u>')} title="Underline"><Underline size={18} /></button>
                                         <div className="w-px h-6 bg-primary/20 mx-1"></div>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n- ')}><List size={18} /></button>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n1. ')}><ListOrdered size={18} /></button>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n> ')}><Quote size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n- ')} title="Bullet List"><List size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n1. ')} title="Numbered List"><ListOrdered size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('\n> ')} title="Quote"><Quote size={18} /></button>
                                         <div className="w-px h-6 bg-primary/20 mx-1"></div>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('[', '](url)')}><LinkIcon size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('[', '](url)')} title="Link"><LinkIcon size={18} /></button>
                                         <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => {
                                             const url = prompt('Enter Image URL:');
                                             if (url) insertMarkdown('![alt text](', url + ')');
-                                        }}><ImageIcon size={18} /></button>
-                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('`', '`')}><Code size={18} /></button>
+                                        }} title="Image"><ImageIcon size={18} /></button>
+                                        <button className="p-2 hover:bg-primary/10 rounded text-slate-600 dark:text-slate-300" onClick={() => insertMarkdown('`', '`')} title="Code"><Code size={18} /></button>
                                     </div>
                                     <textarea 
                                         id="blog-content-editor"
-                                        className="flex-1 w-full p-6 bg-transparent border-none focus:ring-0 resize-none text-base leading-relaxed placeholder:text-slate-600 text-slate-800 dark:text-slate-100" 
+                                        className="flex-1 w-full p-6 bg-transparent border-none focus:ring-0 resize-none text-base leading-relaxed placeholder:text-slate-600 text-slate-800 dark:text-slate-100 outline-none" 
                                         placeholder="Start writing your magical story here..."
                                         value={formData.content}
                                         onChange={(e) => setFormData({...formData, content: e.target.value})}
@@ -469,7 +492,7 @@ export default function BlogManagement() {
                                 )}
                             </div>
                             <input 
-                                className="w-full text-xs rounded-lg border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-10 px-3" 
+                                className="w-full text-xs rounded-lg border border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-10 px-3 outline-none" 
                                 placeholder="Or enter Image URL..."
                                 value={formData.image}
                                 onChange={(e) => setFormData({...formData, image: e.target.value})}
@@ -479,15 +502,15 @@ export default function BlogManagement() {
                         <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
                             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Category</h3>
                             <select 
-                                className="w-full rounded-lg border-primary/20 bg-transparent text-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary h-12 px-3 appearance-none"
+                                className="w-full rounded-lg border border-primary/20 bg-transparent text-slate-800 dark:text-slate-200 focus:border-primary focus:ring-primary h-12 px-3 appearance-none outline-none cursor-pointer"
                                 value={formData.category}
                                 onChange={(e) => setFormData({...formData, category: e.target.value})}
                             >
-                                <option>Wellness & Microdosing</option>
-                                <option>Product Launch</option>
-                                <option>Science & Research</option>
-                                <option>Community Stories</option>
-                                <option>Lifestyle</option>
+                                <option className="bg-background-dark">Wellness & Microdosing</option>
+                                <option className="bg-background-dark">Product Launch</option>
+                                <option className="bg-background-dark">Science & Research</option>
+                                <option className="bg-background-dark">Community Stories</option>
+                                <option className="bg-background-dark">Lifestyle</option>
                             </select>
                         </div>
 
@@ -502,12 +525,54 @@ export default function BlogManagement() {
                                 ))}
                             </div>
                             <input 
-                                className="w-full text-sm rounded-lg border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-12 px-4 shadow-sm" 
+                                className="w-full text-sm rounded-lg border border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-12 px-4 shadow-sm outline-none" 
                                 placeholder="Add a tag and press Enter..."
                                 value={tagInput}
                                 onChange={(e) => setTagInput(e.target.value)}
                                 onKeyDown={(e) => e.key === 'Enter' && addTag()}
                             />
+                        </div>
+
+                        <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
+                            <h3 className="text-sm font-semibold uppercase tracking-wider text-primary">SEO & Optimization</h3>
+                            <div className="space-y-4">
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Target Keyword</label>
+                                    <input 
+                                        className="w-full text-sm rounded-lg border border-primary/20 bg-transparent px-3 h-10 outline-none focus:border-primary" 
+                                        placeholder="Target Keyword..."
+                                        value={formData.targetKeyword}
+                                        onChange={(e) => setFormData({...formData, targetKeyword: e.target.value})}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">SEO Title</label>
+                                    <input 
+                                        className="w-full text-sm rounded-lg border border-primary/20 bg-transparent px-3 h-10 outline-none focus:border-primary" 
+                                        placeholder="Custom Meta Title..."
+                                        value={formData.seoTitle}
+                                        onChange={(e) => setFormData({...formData, seoTitle: e.target.value})}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">SEO Description</label>
+                                    <textarea 
+                                        className="w-full text-sm rounded-lg border border-primary/20 bg-transparent p-3 h-20 outline-none focus:border-primary resize-none" 
+                                        placeholder="Custom Meta Description..."
+                                        value={formData.seoDescription}
+                                        onChange={(e) => setFormData({...formData, seoDescription: e.target.value})}
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-1">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-slate-500">Image Alt Text</label>
+                                    <input 
+                                        className="w-full text-sm rounded-lg border border-primary/20 bg-transparent px-3 h-10 outline-none focus:border-primary" 
+                                        placeholder="Alt text for accessibility..."
+                                        value={formData.imageAlt}
+                                        onChange={(e) => setFormData({...formData, imageAlt: e.target.value})}
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
