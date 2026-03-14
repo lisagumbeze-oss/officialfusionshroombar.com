@@ -148,6 +148,24 @@ export default function BlogManagement() {
         }
     };
 
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Basic validation
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file.');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            const result = event.target?.result as string;
+            setFormData(prev => ({ ...prev, image: result }));
+        };
+        reader.readAsDataURL(file);
+    };
+
     const removeTag = (tagToRemove: string) => {
         setFormData({ ...formData, tags: formData.tags.filter(t => t !== tagToRemove) });
     };
@@ -430,25 +448,29 @@ export default function BlogManagement() {
                     <div className="space-y-6">
                         <div className="p-6 rounded-xl border border-primary/20 bg-white dark:bg-primary/5 space-y-4 shadow-sm">
                             <h3 className="text-sm font-semibold uppercase tracking-wider text-slate-500">Featured Image</h3>
+                            <input 
+                                type="file" 
+                                id="blog-image-upload" 
+                                className="hidden" 
+                                accept="image/*"
+                                onChange={handleImageUpload}
+                            />
                             <div 
                                 className="aspect-video w-full rounded-lg border-2 border-dashed border-primary/30 flex flex-col items-center justify-center gap-2 hover:bg-primary/5 transition-colors cursor-pointer group relative overflow-hidden"
-                                onClick={() => {
-                                    const url = prompt('Cover Image URL:');
-                                    if (url) setFormData({...formData, image: url});
-                                }}
+                                onClick={() => document.getElementById('blog-image-upload')?.click()}
                             >
                                 {formData.image ? (
                                     <img src={formData.image} alt="Preview" className="absolute inset-0 w-full h-full object-cover" />
                                 ) : (
                                     <>
                                         <ImageIcon size={32} className="text-primary/40 group-hover:text-primary transition-colors" />
-                                        <p className="text-xs text-slate-500">Upload cover (1200x630px)</p>
+                                        <p className="text-xs text-slate-500">Click to upload cover (1200x630px)</p>
                                     </>
                                 )}
                             </div>
                             <input 
                                 className="w-full text-xs rounded-lg border-primary/20 bg-transparent placeholder:text-slate-600 focus:border-primary focus:ring-primary h-10 px-3" 
-                                placeholder="Image URL..."
+                                placeholder="Or enter Image URL..."
                                 value={formData.image}
                                 onChange={(e) => setFormData({...formData, image: e.target.value})}
                             />
