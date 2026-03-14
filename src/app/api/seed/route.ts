@@ -8,36 +8,29 @@ export async function GET() {
     try {
         let count = 0;
         for (const product of products) {
-            // Upsert by slug so we don't duplicate on multiple hits
-            await prisma.product.upsert({
-                where: { slug: product.id },
-                update: {
-                    name: product.name,
-                    price: product.price,
-                    regularPrice: product.regularPrice || null,
-                    category: product.category,
-                    description: product.description,
-                    image: product.image,
-                    weight: product.attributes?.weight || null,
-                    effects: product.attributes?.effects ? JSON.stringify(product.attributes.effects) : null,
-                    ingredients: product.attributes?.ingredients ? JSON.stringify(product.attributes.ingredients) : null,
-                    dosage: product.attributes?.dosage || null,
-                },
-                create: {
-                    slug: product.id,
-                    name: product.name,
-                    price: product.price,
-                    regularPrice: product.regularPrice || null,
-                    category: product.category,
-                    description: product.description,
-                    image: product.image,
-                    weight: product.attributes?.weight || null,
-                    effects: product.attributes?.effects ? JSON.stringify(product.attributes.effects) : null,
-                    ingredients: product.attributes?.ingredients ? JSON.stringify(product.attributes.ingredients) : null,
-                    dosage: product.attributes?.dosage || null,
-                }
+            // Additive only: Check if slug exists, skip if it does
+            const existing = await prisma.product.findUnique({
+                where: { slug: product.id }
             });
-            count++;
+
+            if (!existing) {
+                await prisma.product.create({
+                    data: {
+                        slug: product.id,
+                        name: product.name,
+                        price: product.price,
+                        regularPrice: product.regularPrice || null,
+                        category: product.category,
+                        description: product.description,
+                        image: product.image,
+                        weight: product.attributes?.weight || null,
+                        effects: product.attributes?.effects ? JSON.stringify(product.attributes.effects) : null,
+                        ingredients: product.attributes?.ingredients ? JSON.stringify(product.attributes.ingredients) : null,
+                        dosage: product.attributes?.dosage || null,
+                    }
+                });
+                count++;
+            }
         }
         
         // --- BLOG POST SEEDING ---
@@ -62,12 +55,16 @@ export async function GET() {
 
         let blogCount = 0;
         for (const post of samplePosts) {
-            await prisma.blogPost.upsert({
-                where: { slug: post.slug },
-                update: post,
-                create: post
+            const existingBlog = await prisma.blogPost.findUnique({
+                where: { slug: post.slug }
             });
-            blogCount++;
+
+            if (!existingBlog) {
+                await prisma.blogPost.create({
+                    data: post
+                });
+                blogCount++;
+            }
         }
         
         return NextResponse.json({ 
