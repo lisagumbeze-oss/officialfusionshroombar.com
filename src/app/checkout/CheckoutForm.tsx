@@ -51,7 +51,7 @@ export default function CheckoutForm({
             shippingMethod: shippingOption.name,
             shippingPrice: shippingOption.price,
             totalAmount: total,
-            paymentMethodId: selectedMethod,
+            paymentMethodId: selectedMethod === 'CRYPTO' ? 'CRYPTO' : selectedMethod,
             items: cart.map(item => ({
                 productId: item.id,
                 productName: item.name,
@@ -69,8 +69,28 @@ export default function CheckoutForm({
 
             if (res.ok) {
                 const data = await res.json();
-                clearCart();
-                router.push(`/checkout/success?orderId=${data.id}`);
+                
+                if (selectedMethod === 'CRYPTO') {
+                    // Create Plisio Invoice
+                    const cryptoRes = await fetch('/api/checkout/crypto-payment', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ orderId: data.id }),
+                    });
+                    
+                    if (cryptoRes.ok) {
+                        const cryptoData = await cryptoRes.json();
+                        clearCart();
+                        window.location.href = cryptoData.invoiceUrl;
+                        return;
+                    } else {
+                        const cryptoErr = await cryptoRes.json();
+                        alert(cryptoErr.error || 'Failed to initiate crypto payment.');
+                    }
+                } else {
+                    clearCart();
+                    router.push(`/checkout/success?orderId=${data.id}`);
+                }
             } else {
                 const errData = await res.json();
                 alert(errData.error || 'Failed to place order. Please try again.');
@@ -208,6 +228,23 @@ export default function CheckoutForm({
                         <p className={styles.errorText}>No payment methods active. Please contact support.</p>
                     ) : (
                         <div className={styles.methodOptions}>
+                            {/* Hardcoded Cryptocurrency Option */}
+                            <label className={`${styles.methodOption} ${selectedMethod === 'CRYPTO' ? styles.selected : ''}`}>
+                                <input
+                                    type="radio"
+                                    name="paymentMethod"
+                                    value="CRYPTO"
+                                    checked={selectedMethod === 'CRYPTO'}
+                                    onChange={(e) => setSelectedMethod(e.target.value)}
+                                    required
+                                    form="checkout-form"
+                                />
+                                <div className={styles.methodInfo}>
+                                    <strong>Cryptocurrency (BTC, ETH, LTC, USDT, etc.)</strong>
+                                    <span style={{ fontSize: '0.75rem', color: 'var(--primary)', marginLeft: '0.5rem' }}>Powered by Plisio</span>
+                                </div>
+                            </label>
+
                             {dbPaymentMethods.map((method) => (
                                 <label key={method.id} className={`${styles.methodOption} ${selectedMethod === method.id ? styles.selected : ''}`}>
                                     <input
@@ -232,6 +269,13 @@ export default function CheckoutForm({
                             <p><strong>Pay to:</strong> {selectedPaymentInfo.details}</p>
                             {selectedPaymentInfo.instructions && <p>{selectedPaymentInfo.instructions}</p>}
                             <p className={styles.noticeText}><em>Please place your order first, then send the payment to the address above. Your order will be processed once payment is confirmed.</em></p>
+                        </div>
+                    )}
+
+                    {selectedMethod === 'CRYPTO' && (
+                        <div className={styles.paymentInstructions} style={{ borderLeftColor: 'var(--primary)' }}>
+                            <p><strong>Crypto Payment:</strong> You will be redirected to Plisio's secure gateway after clicking "PLACE ORDER" to complete your payment with the cryptocurrency of your choice.</p>
+                            <p className={styles.noticeText}><em>Real-time exchange rates will be applied.</em></p>
                         </div>
                     )}
                 </div>

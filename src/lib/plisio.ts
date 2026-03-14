@@ -1,0 +1,51 @@
+
+const PLISIO_SECRET_KEY = 'XLOB9heHLHEOdjAUGOM0T8VmKBR7Tqb82tZemm3Mv19l11hBhAja2a8PFFV4GO-F';
+const PLISIO_API_URL = 'https://plisio.net/api/v1';
+
+export interface PlisioInvoiceResponse {
+    status: string;
+    data: {
+        txn_id: string;
+        invoice_url: string;
+        amount: string;
+        currency: string;
+        order_number: string;
+    };
+}
+
+export async function createPlisioInvoice(order: {
+    id: string;
+    totalAmount: number;
+    customerEmail: string;
+}) {
+    // Note: In production, NEXT_PUBLIC_BASE_URL should be set in .env
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'https://officialfusionshroombar.com';
+    const callbackUrl = `${baseUrl}/api/checkout/crypto-callback`;
+    const successUrl = `${baseUrl}/orders/confirmation?id=${order.id}`;
+    
+    const params = new URLSearchParams({
+        api_key: PLISIO_SECRET_KEY,
+        order_number: order.id,
+        order_name: `Order #${order.id} from Fusion Shroom Bars`,
+        amount: order.totalAmount.toString(),
+        currency: 'USD',
+        email: order.customerEmail,
+        callback_url: callbackUrl,
+        success_url: successUrl,
+        expire_min: '60'
+    });
+
+    const response = await fetch(`${PLISIO_API_URL}/invoices/new?${params.toString()}`);
+    const data = await response.json();
+
+    if (data.status === 'error') {
+        throw new Error(data.data.message || 'Failed to create Plisio invoice');
+    }
+
+    return data as PlisioInvoiceResponse;
+}
+
+export async function getPlisioInvoiceStatus(txnId: string) {
+    const response = await fetch(`${PLISIO_API_URL}/operations/${txnId}?api_key=${PLISIO_SECRET_KEY}`);
+    return await response.json();
+}
