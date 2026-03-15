@@ -39,29 +39,34 @@
 }
 
 .title {
-  font-size: 4rem;
+  font-size: clamp(2rem, 10vw, 4rem);
   line-height: 1.1;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   margin-bottom: 2rem;
   background: linear-gradient(90deg, #fff, rgba(255,255,255,0.5));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .heroText {
-  font-size: 1.25rem;
+  font-size: clamp(1rem, 4vw, 1.25rem);
   color: #ccc;
-  line-height: 1.8;
+  line-height: 1.6;
   margin-bottom: 3rem;
   max-width: 700px;
   margin: 0 auto 3rem;
+  padding: 0 1rem;
 }
 
 .buttons {
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .button {

@@ -200,6 +200,28 @@
     box-shadow: none;
 }
 
+.minimumOrderWarning {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(255, 75, 75, 0.1);
+    border: 1px solid var(--secondary);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--secondary);
+    font-size: 0.9rem;
+}
+
+.minimumOrderWarning span {
+    font-size: 1.5rem;
+}
+
+.minimumOrderWarning p {
+    margin: 0;
+    line-height: 1.4;
+}
+
 .emptyCart {
     text-align: center;
     padding: 5rem 0;

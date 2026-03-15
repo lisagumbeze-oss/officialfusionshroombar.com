@@ -27,6 +27,7 @@ export default function Header() {
         <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}>
           <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)}>SHOP</Link>
           <Link href="/about" onClick={() => setIsMobileMenuOpen(false)}>ABOUT US</Link>
+          <Link href="/faq" onClick={() => setIsMobileMenuOpen(false)}>FAQ</Link>
           <Link href="/blog" onClick={() => setIsMobileMenuOpen(false)}>BLOG</Link>
           <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>CONTACT US</Link>
         </nav>

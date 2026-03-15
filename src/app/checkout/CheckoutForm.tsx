@@ -307,10 +307,16 @@ export default function CheckoutForm({
                     form="checkout-form"
                     type="submit"
                     className={`${styles.placeOrderBtn} premium-gradient`}
-                    disabled={isSubmitting || !selectedMethod || !shippingOption}
+                    disabled={isSubmitting || !selectedMethod || !shippingOption || total < 100}
                 >
                     {isSubmitting ? 'PROCESSING...' : 'PLACE ORDER'}
                 </button>
+                {total < 100 && (
+                    <div className={styles.minimumOrderWarning}>
+                        <span className="material-symbols-outlined">warning</span>
+                        <p>Minimum order amount is <strong>$100.00</strong> (including shipping). Please add more items to your cart to proceed.</p>
+                    </div>
+                )}
             </div>
         </div>
     );

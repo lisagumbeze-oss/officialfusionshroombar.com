@@ -23,6 +23,7 @@ export default function Footer() {
                 </div>
                 <div className={styles.column}>
                     <h4>SUPPORT</h4>
+                    <Link href="/faq" className={styles.footerLink}>Frequently Asked Questions</Link>
                     <p>order@officialfusionshroombar.com</p>
                     <p>23563 Baxter Rd, Wildomar, CA, 92595</p>
                 </div>

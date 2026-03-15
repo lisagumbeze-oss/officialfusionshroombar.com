@@ -99,9 +99,34 @@
   gap: 2rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 968px) {
+  .hero {
+    padding: 6rem 1rem;
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 8vw, 3rem);
+    letter-spacing: 2px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
   .valuesGrid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .centeredTitle {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+  .contentSection, .values {
+    padding: 4rem 1rem;
+  }
+  .imageBlock {
+    height: 300px;
+  }
+  .cta h2 {
+    font-size: 1.8rem;
   }
 }
 
