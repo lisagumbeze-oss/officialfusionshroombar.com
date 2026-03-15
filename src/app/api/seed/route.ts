@@ -67,8 +67,25 @@ export async function GET() {
             }
         }
         
+        // --- PAYMENT METHOD SEEDING ---
+        const cryptoMethod = await prisma.manualPaymentMethod.findUnique({
+            where: { id: 'CRYPTO' }
+        });
+
+        if (!cryptoMethod) {
+            await prisma.manualPaymentMethod.create({
+                data: {
+                    id: 'CRYPTO',
+                    name: 'Cryptocurrency',
+                    details: 'Automated via Plisio',
+                    instructions: 'Pay with BTC, ETH, LTC, USDT and more.',
+                    isActive: true
+                }
+            });
+        }
+        
         return NextResponse.json({ 
-            message: `Successfully seeded ${count} products and ${blogCount} blog posts.` 
+            message: `Successfully seeded ${count} products, ${blogCount} blog posts, and ensured Crypto payment method exists.` 
         });
     } catch (error: any) {
         console.error('Seeding error:', error);
