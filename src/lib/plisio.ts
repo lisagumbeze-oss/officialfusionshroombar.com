@@ -36,9 +36,18 @@ export async function createPlisioInvoice(order: {
     });
 
     const response = await fetch(`${PLISIO_API_URL}/invoices/new?${params.toString()}`);
-    const data = await response.json();
+    const resText = await response.text();
+    
+    let data;
+    try {
+        data = JSON.parse(resText);
+    } catch (e) {
+        console.error('[Plisio] Failed to parse response as JSON:', resText);
+        throw new Error('Invalid response from Plisio API');
+    }
 
     if (data.status === 'error') {
+        console.error('[Plisio] API Error:', data);
         throw new Error(data.data.message || 'Failed to create Plisio invoice');
     }
 

@@ -68,7 +68,16 @@ export default function CheckoutForm({
             });
 
             if (res.ok) {
-                const data = await res.json();
+                let data;
+                try {
+                    data = await res.json();
+                } catch (e) {
+                    const text = await res.text();
+                    console.error('Failed to parse order response as JSON:', text);
+                    alert('Server returned an invalid response. Please check the console for details.');
+                    setIsSubmitting(false);
+                    return;
+                }
                 
                 if (selectedMethod === 'CRYPTO') {
                     // Create Plisio Invoice
@@ -79,12 +88,26 @@ export default function CheckoutForm({
                     });
                     
                     if (cryptoRes.ok) {
-                        const cryptoData = await cryptoRes.json();
+                        let cryptoData;
+                        try {
+                            cryptoData = await cryptoRes.json();
+                        } catch (e) {
+                            const text = await cryptoRes.text();
+                            console.error('Failed to parse crypto response as JSON:', text);
+                            alert('Payment system returned an invalid response. Please check the console for details.');
+                            setIsSubmitting(false);
+                            return;
+                        }
                         clearCart();
                         window.location.href = cryptoData.invoiceUrl;
                         return;
                     } else {
-                        const cryptoErr = await cryptoRes.json();
+                        let cryptoErr;
+                        try {
+                            cryptoErr = await cryptoRes.json();
+                        } catch (e) {
+                            cryptoErr = { error: 'Failed to initiate crypto payment (and could not parse error response).' };
+                        }
                         alert(cryptoErr.error || 'Failed to initiate crypto payment.');
                     }
                 } else {
