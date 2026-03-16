@@ -101,7 +101,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Wholesale",
         "description": "Fusion X Whole Melt 50 stacks box",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/fusion-x-whole-melt-50-stacks-box-2000mg-per-disposable-2.jpeg",
+        "image": "/images/products/syrup.png",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -116,14 +116,40 @@ export const products: Product[] = [
         "price": 3750,
         "regularPrice": null,
         "category": "Wholesale",
-        "description": "Get the Fusion X Whole Melt Wholesale 2000 MG Vaporizer at wholesale price — powerful, portable, and infused with premium whole melt extracts. Fusion Shroom Bars approved. Fusion X Whole Melt Wholesale 2000 MG Vaporizer,fusion x whole melt extracts,whole melt x fusion,whole melt fusion,whole melts fusion,fusion x whole melt,whole melts x fusion,Whole Melt Extracts,Fusion Mushroom Bars,Fusion Shroom Bars,whole melts,wholemelt,whole melt extracts live resin sugar,whole melt extracts live resin,whole melts gelato edition,fusion x whole melts,fusion bar,fusion bars,fusion magic gummies,fusion chocolates,fusion mushroom gummies,fusion mushroom chocolate,fusion chocolate bars,fusion gummies mushroom,fusion magic chocolate,verify fusion.com,fusion shroom gummies,verify fusion,fusion gummies,fusion bars mushroom,fusion shroom bar,fusion mushroom bar,fusion mushroom chocolate bar,fusion chocolate mushroom bar,fusion candy bar,fusion chocolate,Whole Melt Disposable,Whole Melts Carts,whole melt carts,whole melts disposables,whole melt v6",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/fusion-x-whole-melt-wholesale-price-2000-mg-vaporizer-2.jpeg",
+        "description": "Get the Fusion X Whole Melt Wholesale 2000 MG Vaporizer at wholesale price — powerful, portable, and infused with premium whole melt extracts. Fusion Shroom Bars approved.",
+        "image": "/images/products/syrup.png",
         "attributes": {
-            "weight": "6g",
+            "weight": "2g",
             "effects": [
                 "Euphoria",
                 "Relaxation"
             ]
+        }
+    },
+    {
+        "id": "almond-crush-fusion-magic-mushroom-bar",
+        "name": "Almond Crush Fusion Magic Mushroom Bar",
+        "price": 29.99,
+        "regularPrice": 34.99,
+        "category": "Chocolate Bars",
+        "description": "Fusion Bars Almond Crush is a masterpiece of Belgian confectionery and psilocybin extraction. Pure and potent.",
+        "image": "/images/products/almond-crush.png",
+        "attributes": {
+            "weight": "6g",
+            "effects": ["Euphoria", "Focus"]
+        }
+    },
+    {
+        "id": "birthday-cake-fusion-magic-mushroom-bar",
+        "name": "Birthday Cake Fusion Magic Mushroom Bar",
+        "price": 29.99,
+        "regularPrice": null,
+        "category": "Chocolate Bars",
+        "description": "Sweet and celebratory. Fusion Birthday Cake bars are the perfect way to elevate any occasion.",
+        "image": "/images/products/birthday-cake.webp",
+        "attributes": {
+            "weight": "6g",
+            "effects": ["Happiness", "Social"]
         }
     },
     {

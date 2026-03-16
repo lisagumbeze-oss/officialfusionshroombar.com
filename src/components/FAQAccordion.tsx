@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { Plus, Minus } from 'lucide-react';
 import styles from './FAQAccordion.module.css';
 
 interface FAQAccordionProps {
@@ -19,8 +20,8 @@ export function FAQAccordion({ question, answer }: FAQAccordionProps) {
                 aria-expanded={isOpen}
             >
                 <span>{question}</span>
-                <span className={`material-symbols-outlined ${styles.icon}`}>
-                    {isOpen ? 'remove' : 'add'}
+                <span className={styles.icon}>
+                    {isOpen ? <Minus size={20} /> : <Plus size={20} />}
                 </span>
             </button>
             <div className={styles.answerWrapper}>

@@ -1,9 +1,8 @@
 import prisma from '@/lib/prisma';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, Calendar, Clock } from 'lucide-react';
+import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
-
 import type { Metadata } from 'next';
 
 export const dynamic = 'force-dynamic';
@@ -15,9 +14,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     });
 
     if (!post) {
-        return {
-            title: 'Post Not Found | Fusion Shroom Bars',
-        };
+        return { title: 'Post Not Found | Fusion Shroom Bars' };
     }
 
     return {
@@ -48,16 +45,23 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
     try {
         post = await (prisma as any).blogPost.findUnique({
-            where: { 
-                slug,
-                isPublic: true
-            }
+            where: { slug, isPublic: true }
         });
     } catch (error) {
         console.error('[BlogPost] Database error:', error);
     }
 
     if (!post) notFound();
+
+    // Fetch related posts from DB
+    let relatedPosts: any[] = [];
+    try {
+        relatedPosts = await (prisma as any).blogPost.findMany({
+            where: { isPublic: true, slug: { not: slug } },
+            take: 3,
+            orderBy: { createdAt: 'desc' },
+        });
+    } catch (e) {}
 
     const jsonLd = {
         "@context": "https://schema.org",
@@ -78,172 +82,348 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
         }
     };
 
-    // Mock related posts for the "Recommended" section
-    const relatedPosts = [
-        { id: 1, title: 'The Science of Lion\'s Mane', category: 'Science', image: 'https://images.unsplash.com/photo-1504544750208-dc0358e63f7f?q=80&w=1000&auto=format&fit=crop', excerpt: 'How this powerful fungus helps with neurogenesis and cognitive performance.' },
-        { id: 2, title: 'Microdosing Rituals', category: 'Lifestyle', image: 'https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?q=80&w=1000&auto=format&fit=crop', excerpt: 'A beginner\'s guide to creating a morning ritual that sets the tone for your day.' },
-        { id: 3, title: 'Inside the Mint Crunch Release', category: 'Product', image: 'https://images.unsplash.com/photo-1511381939415-e44015466834?q=80&w=1000&auto=format&fit=crop', excerpt: 'An exclusive look behind the scenes of our newest flavor profile.' },
-    ];
+    // Styles constants
+    const purple = '#7c3aed';
+    const bg = '#0a0510';
 
     return (
-        <main className="min-h-screen bg-[#1b1022] text-slate-100 font-sans transition-colors duration-300">
+        <main style={{ minHeight: '100vh', background: bg, color: '#fff', fontFamily: "'Inter', sans-serif" }}>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
             />
-            {/* Hero Section */}
-            <div className="relative w-full h-[60vh] lg:h-[70vh] overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1b1022] via-[#1b1022]/40 to-transparent z-10"></div>
+
+            {/* =================== HERO =================== */}
+            <header style={{
+                position: 'relative',
+                width: '100%',
+                minHeight: '550px',
+                overflow: 'hidden',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'flex-end',
+            }}>
+                {/* Background image */}
                 {post.image ? (
-                    <Image 
-                        src={post.image} 
-                        alt={post.imageAlt || post.title} 
-                        fill 
-                        className="object-cover" 
+                    <Image
+                        src={post.image}
+                        alt={post.imageAlt || post.title}
+                        fill
+                        className="object-cover"
                         priority
+                        style={{ zIndex: 1 }}
                     />
                 ) : (
-                    <div className="w-full h-full bg-primary/20 flex items-center justify-center">
-                        <span className="text-4xl font-bold text-primary opacity-20 italic">FUSION</span>
-                    </div>
+                    <div style={{
+                        position: 'absolute', inset: 0, zIndex: 1,
+                        background: 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(10,5,16,0.8))',
+                    }} />
                 )}
-                
-                <div className="absolute inset-0 z-20 flex flex-col justify-end pb-12 sm:pb-20">
-                    <div className="max-w-4xl mx-auto px-4 sm:px-6 w-full">
-                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 border border-primary/30 text-primary text-xs font-bold uppercase tracking-widest mb-6">
-                            <span className="size-2 rounded-full bg-primary animate-pulse"></span>
-                            {post.category || 'Wellness Guide'}
+
+                {/* Gradient overlays */}
+                <div style={{
+                    position: 'absolute', inset: 0, zIndex: 2,
+                    background: 'linear-gradient(to top, #0a0510 0%, rgba(10,5,16,0.5) 50%, rgba(10,5,16,0.15) 100%)',
+                }} />
+
+                {/* Hero content */}
+                <div style={{
+                    position: 'relative', zIndex: 10,
+                    maxWidth: '1200px', width: '100%',
+                    margin: '0 auto',
+                    padding: '0 24px 48px',
+                }}>
+                    {/* Back link */}
+                    <Link href="/blog" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        color: purple, fontSize: '10px', fontWeight: 800,
+                        textTransform: 'uppercase', letterSpacing: '0.15em',
+                        marginBottom: '20px', textDecoration: 'none',
+                    }}>
+                        <ChevronLeft size={14} /> Back to Insights
+                    </Link>
+
+                    {/* Category tag */}
+                    <div style={{ marginBottom: '16px' }}>
+                        <span style={{
+                            display: 'inline-block',
+                            padding: '5px 14px',
+                            borderRadius: '999px',
+                            background: purple,
+                            fontSize: '9px',
+                            fontWeight: 800,
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.12em',
+                        }}>
+                            {post.category || 'Wellness & Science'}
+                        </span>
+                    </div>
+
+                    {/* Title */}
+                    <h1 style={{
+                        fontSize: 'clamp(2rem, 5vw, 3.5rem)',
+                        fontWeight: 900,
+                        lineHeight: 1.05,
+                        marginBottom: '24px',
+                        maxWidth: '700px',
+                        fontStyle: 'italic',
+                    }}>
+                        {post.title}
+                    </h1>
+
+                    {/* Author + metadata row */}
+                    <div style={{
+                        display: 'flex', flexWrap: 'wrap',
+                        alignItems: 'center', gap: '24px',
+                    }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                            <div style={{
+                                width: '40px', height: '40px', borderRadius: '50%',
+                                background: 'rgba(124,58,237,0.2)',
+                                border: '2px solid rgba(124,58,237,0.3)',
+                                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            }}>
+                                <User size={18} style={{ color: purple }} />
+                            </div>
+                            <div>
+                                <p style={{ fontSize: '13px', fontWeight: 700 }}>Julien Sterling</p>
+                                <p style={{ fontSize: '10px', fontWeight: 600, color: purple }}>Fusion Nutritionist</p>
+                            </div>
                         </div>
-                        <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white leading-tight tracking-tight mb-8">
-                            {post.title}
-                        </h1>
-                        
-                        <div className="flex flex-wrap items-center gap-6 text-slate-400">
-                            <div className="flex items-center gap-3">
-                                <div className="size-12 rounded-full border-2 border-primary/20 bg-primary/10 flex items-center justify-center">
-                                    <User size={24} className="text-primary" />
-                                </div>
-                                <div>
-                                    <p className="text-white font-semibold">Fusion Team</p>
-                                    <p className="text-xs">Expert Mycologist</p>
-                                </div>
-                            </div>
-                            <div className="h-10 w-px bg-primary/20 hidden sm:block"></div>
-                            <div className="flex flex-col">
-                                <span className="text-xs uppercase tracking-tighter flex items-center gap-1"><Calendar size={10} /> Published</span>
-                                <span className="text-slate-200 text-sm font-medium">{new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-xs uppercase tracking-tighter flex items-center gap-1"><Clock size={10} /> Read Time</span>
-                                <span className="text-slate-200 text-sm font-medium">5 min read</span>
-                            </div>
+                        <div>
+                            <p style={{ fontSize: '10px', fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Published</p>
+                            <p style={{ fontSize: '12px', fontWeight: 700 }}>{new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                        </div>
+                        <div>
+                            <p style={{ fontSize: '10px', fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Read Time</p>
+                            <p style={{ fontSize: '12px', fontWeight: 700 }}>8 min read</p>
                         </div>
                     </div>
                 </div>
+            </header>
+
+            {/* =================== CONTENT AREA =================== */}
+            <div style={{
+                maxWidth: '1200px', margin: '0 auto',
+                padding: '48px 24px',
+                display: 'flex', gap: '48px',
+            }}>
+                {/* Floating sidebar */}
+                <aside style={{
+                    width: '48px', flexShrink: 0,
+                    display: 'flex', flexDirection: 'column', gap: '12px',
+                    position: 'sticky', top: '120px', alignSelf: 'flex-start',
+                }}>
+                    {[
+                        { icon: <Share2 size={18} />, hoverColor: purple },
+                        { icon: <Heart size={18} />, hoverColor: '#ec4899' },
+                        { icon: <Bookmark size={18} />, hoverColor: '#eab308' },
+                    ].map((item, i) => (
+                        <button key={i} style={{
+                            width: '44px', height: '44px', borderRadius: '12px',
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.06)',
+                            color: '#666',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            cursor: 'pointer', transition: 'all 0.2s',
+                        }}>
+                            {item.icon}
+                        </button>
+                    ))}
+                </aside>
+
+                {/* Main article */}
+                <article style={{ flex: 1, maxWidth: '760px' }}>
+                    {/* Blockquote / excerpt */}
+                    {post.excerpt && (
+                        <div style={{
+                            padding: '28px 32px',
+                            borderRadius: '16px',
+                            background: 'rgba(255,255,255,0.03)',
+                            borderLeft: `4px solid ${purple}`,
+                            marginBottom: '40px',
+                        }}>
+                            <p style={{
+                                fontSize: '16px', fontStyle: 'italic',
+                                color: '#bbb', lineHeight: 1.7,
+                            }}>
+                                &ldquo;{post.excerpt}&rdquo;
+                            </p>
+                        </div>
+                    )}
+
+                    {/* Article content */}
+                    <div style={{ color: '#999', fontSize: '15px', lineHeight: 1.85 }}>
+                        {post.content.split('\n').map((para: string, i: number) => {
+                            if (!para.trim()) return <br key={i} />;
+
+                            if (para.startsWith('# ')) return (
+                                <h2 key={i} style={{
+                                    fontSize: '28px', fontWeight: 900, color: '#fff',
+                                    marginTop: '48px', marginBottom: '16px', lineHeight: 1.2,
+                                }}>
+                                    {para.substring(2)}
+                                </h2>
+                            );
+                            if (para.startsWith('## ')) return (
+                                <h3 key={i} style={{
+                                    fontSize: '22px', fontWeight: 800, color: '#fff',
+                                    marginTop: '40px', marginBottom: '14px', lineHeight: 1.2,
+                                }}>
+                                    {para.substring(3)}
+                                </h3>
+                            );
+                            if (para.startsWith('### ')) return (
+                                <h4 key={i} style={{
+                                    fontSize: '18px', fontWeight: 800,
+                                    color: purple,
+                                    marginTop: '32px', marginBottom: '12px',
+                                }}>
+                                    {para.substring(4)}
+                                </h4>
+                            );
+
+                            if (para.startsWith('> ')) return (
+                                <blockquote key={i} style={{
+                                    margin: '32px 0',
+                                    padding: '24px 28px',
+                                    borderRadius: '16px',
+                                    background: `linear-gradient(135deg, rgba(124,58,237,0.1), transparent)`,
+                                    borderLeft: `4px solid ${purple}`,
+                                    fontStyle: 'italic',
+                                    color: '#ccc',
+                                    fontSize: '16px',
+                                }}>
+                                    {para.substring(2)}
+                                </blockquote>
+                            );
+
+                            if (para.startsWith('- ')) return (
+                                <div key={i} style={{
+                                    display: 'flex', alignItems: 'flex-start', gap: '12px',
+                                    margin: '12px 0',
+                                }}>
+                                    <CheckCircle2 size={16} style={{ color: purple, marginTop: '3px', flexShrink: 0 }} />
+                                    <span style={{ color: '#bbb' }}>{para.substring(2)}</span>
+                                </div>
+                            );
+
+                            return <p key={i} style={{ marginBottom: '20px' }}>{para}</p>;
+                        })}
+                    </div>
+
+                    {/* Share section at bottom */}
+                    <div style={{
+                        marginTop: '48px', paddingTop: '28px',
+                        borderTop: '1px solid rgba(255,255,255,0.06)',
+                        display: 'flex', flexWrap: 'wrap',
+                        alignItems: 'center', gap: '12px',
+                    }}>
+                        <span style={{
+                            fontSize: '10px', fontWeight: 800,
+                            textTransform: 'uppercase', letterSpacing: '0.15em',
+                            color: '#555',
+                        }}>
+                            Share This Guide:
+                        </span>
+                        {['Facebook', 'Twitter', 'LinkedIn'].map(platform => (
+                            <button key={platform} style={{
+                                padding: '8px 20px', borderRadius: '999px',
+                                background: 'transparent',
+                                border: `1px solid ${purple}`,
+                                color: purple,
+                                fontSize: '11px', fontWeight: 700,
+                                cursor: 'pointer', transition: 'all 0.2s',
+                            }}>
+                                {platform}
+                            </button>
+                        ))}
+                    </div>
+                </article>
             </div>
 
-            {/* Article Content */}
-            <article className="max-w-4xl mx-auto px-4 sm:px-6 py-16">
-                <div className="flex flex-col lg:flex-row gap-12">
-                    {/* Share Sidebar */}
-                    <aside className="lg:w-16 flex lg:flex-col gap-4 order-2 lg:order-1 justify-center lg:justify-start">
-                        <button className="size-12 rounded-full border border-primary/20 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-sm">
-                            <Share2 size={20} />
-                        </button>
-                        <button className="size-12 rounded-full border border-primary/20 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-sm">
-                            <Heart size={20} />
-                        </button>
-                        <button className="size-12 rounded-full border border-primary/20 flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white transition-all shadow-sm">
-                            <Bookmark size={20} />
-                        </button>
-                        <div className="hidden lg:block h-20 w-px bg-primary/10 mx-auto my-4"></div>
-                    </aside>
-
-                    {/* Body Text */}
-                    <div className="flex-1 order-1 lg:order-2">
-                        {post.excerpt && (
-                            <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-light mb-10 italic border-l-4 border-primary pl-6 py-2">
-                                {post.excerpt}
-                            </p>
-                        )}
-                        
-                        <div className="prose prose-invert prose-primary max-w-none text-slate-600 dark:text-slate-400 text-lg leading-relaxed">
-                            {post.content.split('\n').map((para: string, i: number) => {
-                                if (!para.trim()) return <br key={i} />;
-                                
-                                if (para.startsWith('# ')) return <h1 key={i} className="text-4xl font-bold text-slate-900 dark:text-white mt-12 mb-6">{para.substring(2)}</h1>;
-                                if (para.startsWith('## ')) return <h2 key={i} className="text-3xl font-bold text-slate-900 dark:text-white mt-10 mb-5">{para.substring(3)}</h2>;
-                                if (para.startsWith('### ')) return <h3 key={i} className="text-2xl font-semibold text-primary mt-8 mb-4">{para.substring(4)}</h3>;
-                                
-                                if (para.startsWith('> ')) return (
-                                    <blockquote key={i} className="border-l-4 border-primary bg-primary/5 p-6 rounded-r-xl my-8 text-xl italic text-slate-700 dark:text-slate-200">
-                                        {para.substring(2)}
-                                    </blockquote>
-                                );
-
-                                if (para.startsWith('- ')) return (
-                                    <div key={i} className="flex items-start gap-4 my-4">
-                                        <CheckCircle2 size={20} className="text-primary mt-1 shrink-0" />
-                                        <span className="text-slate-600 dark:text-slate-300">{para.substring(2)}</span>
-                                    </div>
-                                );
-
-                                return <p key={i} className="mb-6">{para}</p>;
-                            })}
-                        </div>
-
-                        {/* Social Share Bottom */}
-                        <div className="mt-16 pt-8 border-t border-primary/10">
-                            <div className="flex flex-wrap items-center gap-4">
-                                <p className="text-sm font-bold uppercase tracking-widest text-slate-500">Share this guide:</p>
-                                <div className="flex gap-2">
-                                    {['Facebook', 'Twitter', 'LinkedIn'].map((platform) => (
-                                        <button key={platform} className="px-4 py-2 rounded-lg bg-primary/10 text-primary font-medium hover:bg-primary hover:text-white transition-colors text-sm">
-                                            {platform}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+            {/* =================== RECOMMENDED FOR YOU =================== */}
+            <section style={{
+                maxWidth: '1200px', margin: '0 auto',
+                padding: '48px 24px 96px',
+            }}>
+                <div style={{
+                    display: 'flex', justifyContent: 'space-between',
+                    alignItems: 'flex-end', marginBottom: '32px',
+                    flexWrap: 'wrap', gap: '16px',
+                }}>
+                    <div>
+                        <h2 style={{
+                            fontSize: 'clamp(1.4rem, 3vw, 2rem)',
+                            fontWeight: 800, marginBottom: '6px',
+                        }}>
+                            Recommended for You
+                        </h2>
+                        <p style={{ color: '#666', fontSize: '13px' }}>
+                            Continue your journey into functional wellness.
+                        </p>
                     </div>
+                    <Link href="/blog" style={{
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        color: purple, fontSize: '12px', fontWeight: 700,
+                        textDecoration: 'none',
+                    }}>
+                        View All Posts <ArrowRight size={14} />
+                    </Link>
                 </div>
-            </article>
 
-            {/* Related Posts Section */}
-            <section className="bg-primary/5 py-24">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6">
-                    <div className="flex items-center justify-between mb-12">
-                        <div>
-                            <h2 className="text-3xl font-bold text-white mb-2">Recommended for You</h2>
-                            <p className="text-slate-400">Continue your journey into functional wellness.</p>
-                        </div>
-                        <Link href="/blog" className="hidden sm:flex items-center gap-2 text-primary font-bold hover:gap-3 transition-all">
-                            View All Posts <ArrowRight size={20} />
-                        </Link>
-                    </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {relatedPosts.map((rPost) => (
-                            <div key={rPost.id} className="group cursor-pointer">
-                                <div className="relative aspect-[4/3] rounded-xl overflow-hidden mb-4 border border-primary/10">
-                                    <Image 
-                                        src={rPost.image} 
-                                        alt={rPost.title} 
-                                        fill 
-                                        className="object-cover group-hover:scale-110 transition-transform duration-500" 
-                                    />
-                                    <div className="absolute top-4 left-4 bg-[#1b1022]/80 backdrop-blur px-3 py-1 rounded text-xs text-primary font-bold">
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+                    gap: '20px',
+                }}>
+                    {relatedPosts.map((rPost: any) => (
+                        <Link href={`/blog/${rPost.slug}`} key={rPost.id} style={{
+                            textDecoration: 'none', color: 'inherit',
+                            borderRadius: '16px', overflow: 'hidden',
+                            background: 'rgba(255,255,255,0.03)',
+                            border: '1px solid rgba(255,255,255,0.06)',
+                            transition: 'transform 0.3s',
+                        }}>
+                            <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
+                                <Image
+                                    src={rPost.image || '/blog-placeholder.jpg'}
+                                    alt={rPost.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                                {rPost.category && (
+                                    <span style={{
+                                        position: 'absolute', top: '10px', left: '10px',
+                                        padding: '4px 10px', borderRadius: '999px',
+                                        background: purple,
+                                        fontSize: '8px', fontWeight: 800,
+                                        textTransform: 'uppercase', letterSpacing: '0.1em',
+                                        color: '#fff',
+                                    }}>
                                         {rPost.category}
-                                    </div>
-                                </div>
-                                <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors mb-2">
+                                    </span>
+                                )}
+                            </div>
+                            <div style={{ padding: '16px 20px' }}>
+                                <h3 style={{
+                                    fontSize: '15px', fontWeight: 800,
+                                    lineHeight: 1.3, marginBottom: '6px',
+                                }}>
                                     {rPost.title}
                                 </h3>
-                                <p className="text-slate-400 text-sm line-clamp-2">
+                                <p style={{
+                                    fontSize: '12px', color: '#777', lineHeight: 1.5,
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 2,
+                                    WebkitBoxOrient: 'vertical' as const,
+                                    overflow: 'hidden',
+                                }}>
                                     {rPost.excerpt}
                                 </p>
                             </div>
-                        ))}
-                    </div>
+                        </Link>
+                    ))}
                 </div>
             </section>
         </main>

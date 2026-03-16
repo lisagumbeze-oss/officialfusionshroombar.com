@@ -7,17 +7,18 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "primary": "#a01ef1",
+        "primary": "#9b4dff",
         "background-light": "#f7f5f8",
-        "background-dark": "#1b1022",
+        "background-dark": "#0d0a14",
       },
       fontFamily: {
         "display": ["Inter", "sans-serif"]
       },
       borderRadius: {
-        "DEFAULT": "0.25rem",
-        "lg": "0.5rem",
-        "xl": "0.75rem",
+        "DEFAULT": "0.5rem",
+        "lg": "1rem",
+        "xl": "1.5rem",
+        "2xl": "2.5rem",
         "full": "9999px"
       },
     },
