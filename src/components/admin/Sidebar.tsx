@@ -36,7 +36,7 @@ const contentItems: NavItem[] = [
     { label: 'Comments', href: '/admin/comments', icon: MessageSquare, badge: '12' },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () => void }) {
     const pathname = usePathname();
 
     const renderNavItems = (items: typeof storeItems) => {
@@ -49,6 +49,9 @@ export default function Sidebar() {
                     key={item.href} 
                     href={item.href} 
                     className={`${styles.navLink} ${isActive ? styles.active : ''}`}
+                    onClick={() => {
+                        if (onClose) onClose();
+                    }}
                 >
                     <Icon size={18} />
                     <span>{item.label}</span>
@@ -59,12 +62,17 @@ export default function Sidebar() {
     };
 
     return (
-        <aside className={styles.sidebar}>
+        <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
             <div className={styles.logoContainer}>
                 <div className={styles.logoIcon}>
                     <Package size={20} />
                 </div>
                 <span className={styles.logoText}>Fusion Admin</span>
+                {onClose && (
+                    <button className={styles.mobileClose} onClick={onClose}>
+                        <LogOut size={20} style={{ transform: 'rotate(180deg)' }} />
+                    </button>
+                )}
             </div>
 
             <div className={styles.sectionLabel}>STORE MANAGEMENT</div>

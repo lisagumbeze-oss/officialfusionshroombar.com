@@ -31,8 +31,49 @@
 @media (max-width: 768px) {
     .mainContent {
         margin-left: 0;
-        padding: 4rem 1rem 1rem 1rem;
+        padding: 1rem;
     }
+
+    .mobileHeader {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #0d0814;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        position: sticky;
+        top: 0;
+        z-index: 999;
+    }
+
+    .menuToggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(168, 85, 247, 0.1);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        color: #a855f7;
+        padding: 8px;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .mobileLogo {
+        font-weight: 700;
+        font-size: 1.1rem;
+    }
+
+    .sidebarBackdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.6);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+    }
+}
+
+.mobileHeader {
+    display: none;
 }
 
 .adminHeader {

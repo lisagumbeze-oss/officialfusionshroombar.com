@@ -9,7 +9,18 @@
     display: flex;
     flex-direction: column;
     padding: 24px 16px;
-    z-index: 50;
+    z-index: 1001; /* Ensure above backdrop and other content */
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
 }
 
 .logoContainer {
@@ -36,6 +47,28 @@
     font-weight: 800;
     color: white;
     letter-spacing: -0.02em;
+    flex: 1;
+}
+
+.mobileClose {
+    display: none;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.mobileClose:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+@media (max-width: 768px) {
+    .mobileClose {
+        display: block;
+    }
 }
 
 .sectionLabel {
