@@ -16,27 +16,59 @@ export const metadata: Metadata = {
 
 export const dynamic = 'force-dynamic';
 
-export default async function BlogPage() {
+export default async function BlogPage({
+    searchParams
+}: {
+    searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}) {
+    const params = await searchParams;
+    const search = typeof params.search === 'string' ? params.search : '';
+    const category = typeof params.category === 'string' ? params.category : 'All Stories';
+    const page = typeof params.page === 'string' ? parseInt(params.page) : 1;
+    const limit = 6;
+    const skip = (page - 1) * limit;
+
     let posts: any[] = [];
+    let totalPosts = 0;
     let dbError = false;
 
     try {
-        posts = await (prisma as any).blogPost.findMany({
-            where: { isPublic: true },
-            orderBy: { createdAt: 'desc' }
-        });
+        const where: any = { isPublic: true };
+        
+        if (category !== 'All Stories') {
+            where.category = category;
+        }
+
+        if (search) {
+            where.OR = [
+                { title: { contains: search, mode: 'insensitive' } },
+                { content: { contains: search, mode: 'insensitive' } },
+                { excerpt: { contains: search, mode: 'insensitive' } },
+            ];
+        }
+
+        [posts, totalPosts] = await Promise.all([
+            (prisma as any).blogPost.findMany({
+                where,
+                orderBy: { createdAt: 'desc' },
+                skip,
+                take: limit,
+            }),
+            (prisma as any).blogPost.count({ where })
+        ]);
     } catch (error) {
         console.error('[BlogPage] Database error:', error);
         dbError = true;
     }
 
-    const featuredPost = posts[0];
-    const remainingPosts = posts.slice(1);
-    const categories = ['All Stories', 'Wellness', 'Lifestyle', 'Recipes', 'Science'];
+    const totalPages = Math.ceil(totalPosts / limit);
+    const featuredPost = page === 1 && !search && category === 'All Stories' ? posts[0] : null;
+    const displayPosts = featuredPost ? posts.slice(1) : posts;
+    const categories = ['All Stories', 'Wellness & Microdosing', 'Product Launch', 'Science & Research', 'Community Stories', 'Lifestyle'];
 
     return (
         <div className="min-h-screen" style={{ background: '#0a0510', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
-            <main style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 24px 60px' }}>
+            <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 24px 60px' }}>
 
                 {/* =================== HERO FEATURED SECTION =================== */}
                 {featuredPost && (
@@ -82,7 +114,7 @@ export default async function BlogPage() {
                                 letterSpacing: '0.15em',
                                 marginBottom: '16px',
                             }}>
-                                Featured Science
+                                Featured Story
                             </span>
                             <h2 style={{
                                 fontSize: 'clamp(1.8rem, 4vw, 2.8rem)',
@@ -100,7 +132,7 @@ export default async function BlogPage() {
                                 marginBottom: '20px',
                                 maxWidth: '480px',
                             }}>
-                                {featuredPost.excerpt || 'Discover how functional fungi are revolutionizing the world of mood-enhancing confections and what the latest research says about...'}
+                                {featuredPost.excerpt || 'Discover the latest insights and research on functional mushroom bars.'}
                             </p>
                             <Link
                                 href={`/blog/${featuredPost.slug}`}
@@ -136,9 +168,10 @@ export default async function BlogPage() {
                     marginBottom: '40px',
                 }}>
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
-                        {categories.map((cat, i) => (
-                            <button
+                        {categories.map((cat) => (
+                            <Link
                                 key={cat}
+                                href={`/blog?category=${encodeURIComponent(cat)}${search ? `&search=${encodeURIComponent(search)}` : ''}`}
                                 style={{
                                     padding: '8px 20px',
                                     borderRadius: '999px',
@@ -146,21 +179,24 @@ export default async function BlogPage() {
                                     fontWeight: 700,
                                     textTransform: 'uppercase',
                                     letterSpacing: '0.08em',
-                                    cursor: 'pointer',
-                                    transition: 'all 0.2s',
-                                    border: i === 0 ? '2px solid #7c3aed' : '2px solid rgba(255,255,255,0.12)',
-                                    background: i === 0 ? '#7c3aed' : 'transparent',
+                                    border: category === cat ? '2px solid #7c3aed' : '2px solid rgba(255,255,255,0.12)',
+                                    background: category === cat ? '#7c3aed' : 'transparent',
                                     color: '#fff',
+                                    textDecoration: 'none',
+                                    transition: 'all 0.2s',
                                 }}
                             >
                                 {cat}
-                            </button>
+                            </Link>
                         ))}
                     </div>
-                    <div style={{ position: 'relative', width: '260px', maxWidth: '100%' }}>
+                    <form action="/blog" method="GET" style={{ position: 'relative', width: '260px', maxWidth: '100%' }}>
+                        {category !== 'All Stories' && <input type="hidden" name="category" value={category} />}
                         <Search style={{ position: 'absolute', left: '14px', top: '50%', transform: 'translateY(-50%)', color: '#555' }} size={16} />
                         <input
                             type="text"
+                            name="search"
+                            defaultValue={search}
                             placeholder="Search insights..."
                             style={{
                                 width: '100%',
@@ -173,7 +209,7 @@ export default async function BlogPage() {
                                 outline: 'none',
                             }}
                         />
-                    </div>
+                    </form>
                 </div>
 
                 {/* =================== LATEST INSIGHTS GRID =================== */}
@@ -185,149 +221,164 @@ export default async function BlogPage() {
                             fontWeight: 900,
                             letterSpacing: '-0.01em',
                         }}>
-                            Latest Insights
+                            {search ? `Search results for "${search}"` : category !== 'All Stories' ? `${category} Insights` : 'Latest Insights'}
                         </h3>
                     </div>
 
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
-                        gap: '24px',
-                    }}>
-                        {(remainingPosts.length > 0 ? remainingPosts : posts).map((post: any) => (
-                            <article key={post.id} style={{
-                                borderRadius: '16px',
-                                overflow: 'hidden',
-                                background: 'rgba(255,255,255,0.03)',
-                                border: '1px solid rgba(255,255,255,0.06)',
-                                transition: 'transform 0.3s, border-color 0.3s',
-                            }}>
-                                <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
-                                    <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden' }}>
-                                        <Image
-                                            src={post.image || '/blog-placeholder.jpg'}
-                                            alt={post.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                        {post.category && (
+                    {displayPosts.length > 0 ? (
+                        <div style={{
+                            display: 'grid',
+                            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+                            gap: '24px',
+                        }}>
+                            {displayPosts.map((post: any) => (
+                                <article key={post.id} style={{
+                                    borderRadius: '16px',
+                                    overflow: 'hidden',
+                                    background: 'rgba(255,255,255,0.03)',
+                                    border: '1px solid rgba(255,255,255,0.06)',
+                                    transition: 'transform 0.3s, border-color 0.3s',
+                                }}>
+                                    <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+                                        <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden' }}>
+                                            <Image
+                                                src={post.image || '/blog-placeholder.jpg'}
+                                                alt={post.title}
+                                                fill
+                                                className="object-cover"
+                                            />
+                                            {post.category && (
+                                                <span style={{
+                                                    position: 'absolute',
+                                                    top: '12px',
+                                                    left: '12px',
+                                                    padding: '4px 12px',
+                                                    borderRadius: '999px',
+                                                    background: '#7c3aed',
+                                                    fontSize: '9px',
+                                                    fontWeight: 800,
+                                                    textTransform: 'uppercase',
+                                                    letterSpacing: '0.1em',
+                                                }}>
+                                                    {post.category}
+                                                </span>
+                                            )}
+                                        </div>
+                                        <div style={{ padding: '20px' }}>
+                                            <div style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px',
+                                                fontSize: '10px',
+                                                fontWeight: 600,
+                                                color: '#666',
+                                                textTransform: 'uppercase',
+                                                letterSpacing: '0.06em',
+                                                marginBottom: '10px',
+                                            }}>
+                                                <span>{new Date(post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                                                <span style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#444' }} />
+                                                <span>5 min read</span>
+                                            </div>
+                                            <h4 style={{
+                                                fontSize: '17px',
+                                                fontWeight: 800,
+                                                lineHeight: 1.3,
+                                                marginBottom: '8px',
+                                            }}>
+                                                {post.title}
+                                            </h4>
+                                            <p style={{
+                                                color: '#888',
+                                                fontSize: '13px',
+                                                lineHeight: 1.6,
+                                                marginBottom: '16px',
+                                                display: '-webkit-box',
+                                                WebkitLineClamp: 3,
+                                                WebkitBoxOrient: 'vertical' as const,
+                                                overflow: 'hidden',
+                                            }}>
+                                                {post.excerpt}
+                                            </p>
                                             <span style={{
-                                                position: 'absolute',
-                                                top: '12px',
-                                                left: '12px',
-                                                padding: '4px 12px',
-                                                borderRadius: '999px',
-                                                background: '#7c3aed',
-                                                fontSize: '9px',
+                                                display: 'inline-flex',
+                                                alignItems: 'center',
+                                                gap: '6px',
+                                                fontSize: '11px',
                                                 fontWeight: 800,
                                                 textTransform: 'uppercase',
-                                                letterSpacing: '0.1em',
+                                                letterSpacing: '0.08em',
+                                                color: '#fff',
                                             }}>
-                                                {post.category}
+                                                Read More <ArrowRight size={12} style={{ color: '#7c3aed' }} />
                                             </span>
-                                        )}
-                                    </div>
-                                    <div style={{ padding: '20px' }}>
-                                        <div style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '8px',
-                                            fontSize: '10px',
-                                            fontWeight: 600,
-                                            color: '#666',
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.06em',
-                                            marginBottom: '10px',
-                                        }}>
-                                            <span>{new Date(post.createdAt).toLocaleDateString(undefined, { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                                            <span style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#444' }} />
-                                            <span>5 min read</span>
                                         </div>
-                                        <h4 style={{
-                                            fontSize: '17px',
-                                            fontWeight: 800,
-                                            lineHeight: 1.3,
-                                            marginBottom: '8px',
-                                        }}>
-                                            {post.title}
-                                        </h4>
-                                        <p style={{
-                                            color: '#888',
-                                            fontSize: '13px',
-                                            lineHeight: 1.6,
-                                            marginBottom: '16px',
-                                            display: '-webkit-box',
-                                            WebkitLineClamp: 3,
-                                            WebkitBoxOrient: 'vertical' as const,
-                                            overflow: 'hidden',
-                                        }}>
-                                            {post.excerpt}
-                                        </p>
-                                        <span style={{
-                                            display: 'inline-flex',
-                                            alignItems: 'center',
-                                            gap: '6px',
-                                            fontSize: '11px',
-                                            fontWeight: 800,
-                                            textTransform: 'uppercase',
-                                            letterSpacing: '0.08em',
-                                            color: '#fff',
-                                        }}>
-                                            Read More <ArrowRight size={12} style={{ color: '#7c3aed' }} />
-                                        </span>
-                                    </div>
-                                </Link>
-                            </article>
-                        ))}
-                    </div>
+                                    </Link>
+                                </article>
+                            ))}
+                        </div>
+                    ) : (
+                        <div style={{ textAlign: 'center', padding: '100px 0', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '20px' }}>
+                            <p style={{ color: '#555', fontSize: '18px', fontWeight: 700 }}>No stories found matching your criteria.</p>
+                            <Link href="/blog" style={{ color: '#7c3aed', textDecoration: 'underline', marginTop: '10px', display: 'inline-block' }}>Clear all filters</Link>
+                        </div>
+                    )}
 
                     {/* Pagination */}
-                    <div style={{
-                        marginTop: '48px',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        gap: '6px',
-                    }}>
-                        <button style={{
-                            width: '36px', height: '36px', borderRadius: '8px',
-                            background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
-                            color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            cursor: 'pointer',
+                    {totalPages > 1 && (
+                        <div style={{
+                            marginTop: '48px',
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            gap: '6px',
                         }}>
-                            <ChevronLeft size={16} />
-                        </button>
-                        {[1, 2, 3].map(n => (
-                            <button key={n} style={{
-                                width: '36px', height: '36px', borderRadius: '8px',
-                                background: n === 1 ? '#7c3aed' : 'transparent',
-                                border: n === 1 ? '1px solid #7c3aed' : '1px solid rgba(255,255,255,0.1)',
-                                color: '#fff', fontSize: '13px', fontWeight: 700,
-                                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                cursor: 'pointer',
-                            }}>
-                                {n}
-                            </button>
-                        ))}
-                        <span style={{ color: '#555', padding: '0 4px' }}>...</span>
-                        <button style={{
-                            width: '36px', height: '36px', borderRadius: '8px',
-                            background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
-                            color: '#fff', fontSize: '13px', fontWeight: 700,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            cursor: 'pointer',
-                        }}>
-                            12
-                        </button>
-                        <button style={{
-                            width: '36px', height: '36px', borderRadius: '8px',
-                            background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
-                            color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            cursor: 'pointer',
-                        }}>
-                            <ChevronRight size={16} />
-                        </button>
-                    </div>
+                            {page > 1 && (
+                                <Link 
+                                    href={`/blog?page=${page - 1}${search ? `&search=${encodeURIComponent(search)}` : ''}${category !== 'All Stories' ? `&category=${encodeURIComponent(category)}` : ''}`}
+                                    style={{
+                                        width: '36px', height: '36px', borderRadius: '8px',
+                                        background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
+                                        color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    <ChevronLeft size={16} />
+                                </Link>
+                            )}
+                            
+                            {Array.from({ length: totalPages }, (_, i) => i + 1).map(n => (
+                                <Link 
+                                    key={n} 
+                                    href={`/blog?page=${n}${search ? `&search=${encodeURIComponent(search)}` : ''}${category !== 'All Stories' ? `&category=${encodeURIComponent(category)}` : ''}`}
+                                    style={{
+                                        width: '36px', height: '36px', borderRadius: '8px',
+                                        background: n === page ? '#7c3aed' : 'transparent',
+                                        border: n === page ? '1px solid #7c3aed' : '1px solid rgba(255,255,255,0.1)',
+                                        color: '#fff', fontSize: '13px', fontWeight: 700,
+                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    {n}
+                                </Link>
+                            ))}
+
+                            {page < totalPages && (
+                                <Link 
+                                    href={`/blog?page=${page + 1}${search ? `&search=${encodeURIComponent(search)}` : ''}${category !== 'All Stories' ? `&category=${encodeURIComponent(category)}` : ''}`}
+                                    style={{
+                                        width: '36px', height: '36px', borderRadius: '8px',
+                                        background: 'transparent', border: '1px solid rgba(255,255,255,0.1)',
+                                        color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                        textDecoration: 'none',
+                                    }}
+                                >
+                                    <ChevronRight size={16} />
+                                </Link>
+                            )}
+                        </div>
+                    )}
                 </section>
 
                 {/* =================== NEWSLETTER SECTION =================== */}
@@ -397,7 +448,7 @@ export default async function BlogPage() {
                         </button>
                     </form>
                 </section>
-            </main>
+                </div>
         </div>
     );
 }

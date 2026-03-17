@@ -6,6 +6,7 @@ import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
 import { CartProvider } from "@/context/CartContext";
 import Script from "next/script";
+import LayoutWrapper from "@/components/LayoutWrapper";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
@@ -99,9 +100,9 @@ export default function RootLayout({
       </head>
       <body className="bg-background-dark text-white">
         <CartProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
+          <LayoutWrapper>
+            {children}
+          </LayoutWrapper>
         </CartProvider>
         
         {/* Smartsupp Live Chat script */}

@@ -87,7 +87,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     const bg = '#0a0510';
 
     return (
-        <main style={{ minHeight: '100vh', background: bg, color: '#fff', fontFamily: "'Inter', sans-serif" }}>
+        <div style={{ minHeight: '100vh', background: bg, color: '#fff', fontFamily: "'Inter', sans-serif" }}>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -253,64 +253,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     )}
 
                     {/* Article content */}
-                    <div style={{ color: '#999', fontSize: '15px', lineHeight: 1.85 }}>
-                        {post.content.split('\n').map((para: string, i: number) => {
-                            if (!para.trim()) return <br key={i} />;
-
-                            if (para.startsWith('# ')) return (
-                                <h2 key={i} style={{
-                                    fontSize: '28px', fontWeight: 900, color: '#fff',
-                                    marginTop: '48px', marginBottom: '16px', lineHeight: 1.2,
-                                }}>
-                                    {para.substring(2)}
-                                </h2>
-                            );
-                            if (para.startsWith('## ')) return (
-                                <h3 key={i} style={{
-                                    fontSize: '22px', fontWeight: 800, color: '#fff',
-                                    marginTop: '40px', marginBottom: '14px', lineHeight: 1.2,
-                                }}>
-                                    {para.substring(3)}
-                                </h3>
-                            );
-                            if (para.startsWith('### ')) return (
-                                <h4 key={i} style={{
-                                    fontSize: '18px', fontWeight: 800,
-                                    color: purple,
-                                    marginTop: '32px', marginBottom: '12px',
-                                }}>
-                                    {para.substring(4)}
-                                </h4>
-                            );
-
-                            if (para.startsWith('> ')) return (
-                                <blockquote key={i} style={{
-                                    margin: '32px 0',
-                                    padding: '24px 28px',
-                                    borderRadius: '16px',
-                                    background: `linear-gradient(135deg, rgba(124,58,237,0.1), transparent)`,
-                                    borderLeft: `4px solid ${purple}`,
-                                    fontStyle: 'italic',
-                                    color: '#ccc',
-                                    fontSize: '16px',
-                                }}>
-                                    {para.substring(2)}
-                                </blockquote>
-                            );
-
-                            if (para.startsWith('- ')) return (
-                                <div key={i} style={{
-                                    display: 'flex', alignItems: 'flex-start', gap: '12px',
-                                    margin: '12px 0',
-                                }}>
-                                    <CheckCircle2 size={16} style={{ color: purple, marginTop: '3px', flexShrink: 0 }} />
-                                    <span style={{ color: '#bbb' }}>{para.substring(2)}</span>
-                                </div>
-                            );
-
-                            return <p key={i} style={{ marginBottom: '20px' }}>{para}</p>;
-                        })}
-                    </div>
+                    <div 
+                        className="blog-content-body"
+                        dangerouslySetInnerHTML={{ __html: post.content }}
+                    />
 
                     {/* Share section at bottom */}
                     <div style={{
@@ -426,6 +372,6 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     ))}
                 </div>
             </section>
-        </main>
+        </div>
     );
 }
