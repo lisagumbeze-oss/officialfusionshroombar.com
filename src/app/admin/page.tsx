@@ -29,7 +29,7 @@ export default async function AdminDashboard() {
 
     return (
         <div className={styles.adminContainer}>
-            <header className={styles.adminHeader} style={{ textAlign: 'left' }}>
+            <header className={styles.adminHeader}>
                 <h1>Overview Dashboard</h1>
                 <p>Welcome back, here's what's happening today.</p>
             </header>
