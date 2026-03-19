@@ -226,6 +226,62 @@ export default async function Home() {
         </div>
       </section>
 
+      {/* Customer Reviews Section */}
+      <section className={styles.bestsellers} style={{ paddingTop: '2rem', paddingBottom: '0' }}>
+        <Reveal>
+          <div className={styles.sectionHeader}>
+            <div className={styles.headerTitle}>
+              <p>TRUSTED WORLDWIDE</p>
+              <h2>WHAT OUR CUSTOMERS SAY</h2>
+            </div>
+          </div>
+        </Reveal>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', padding: '1rem 0' }}>
+          <Reveal delay={0.1}>
+            <div style={{ padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ color: '#c9a44a', marginBottom: '1rem', display: 'flex', gap: '4px' }}>
+                {"\u2605\u2605\u2605\u2605\u2605"}
+              </div>
+              <p style={{ color: '#eaeaea', fontStyle: 'italic', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                "I've tried a lot of brands, but Fusion is by far the most consistent. The dosage is incredibly precise, and the Belgian chocolate actually tastes gourmet. Highly recommend the Cookies and Cream."
+              </p>
+              <div>
+                <strong style={{ display: 'block', fontSize: '1rem' }}>Michael T.</strong>
+                <span style={{ fontSize: '0.8rem', color: '#999' }}>Verified Buyer &middot; Los Angeles, CA</span>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <div style={{ padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ color: '#c9a44a', marginBottom: '1rem', display: 'flex', gap: '4px' }}>
+                {"\u2605\u2605\u2605\u2605\u2605"}
+              </div>
+              <p style={{ color: '#eaeaea', fontStyle: 'italic', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                "Absolutely life-changing for my microdosing routine. 1-2 squares a day has done more for my anxiety and focus than anything else. 10/10 customer support and fast stealth shipping."
+              </p>
+              <div>
+                <strong style={{ display: 'block', fontSize: '1rem' }}>Sarah L.</strong>
+                <span style={{ fontSize: '0.8rem', color: '#999' }}>Verified Buyer &middot; Austin, TX</span>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <div style={{ padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ color: '#c9a44a', marginBottom: '1rem', display: 'flex', gap: '4px' }}>
+                {"\u2605\u2605\u2605\u2605\u2605"}
+              </div>
+              <p style={{ color: '#eaeaea', fontStyle: 'italic', lineHeight: 1.6, marginBottom: '1.5rem' }}>
+                "Ordered Neau Tropics initially but they were out, so the team recommended Fusion Dark Chocolate. Honestly? Even better. Cleanest trip I've ever had, absolutely zero stomach issues."
+              </p>
+              <div>
+                <strong style={{ display: 'block', fontSize: '1rem' }}>David K.</strong>
+                <span style={{ fontSize: '0.8rem', color: '#999' }}>Verified Buyer &middot; New York, NY</span>
+              </div>
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
       {/* Final CTA */}
       <Reveal>
         <section className={styles.finalCta}>

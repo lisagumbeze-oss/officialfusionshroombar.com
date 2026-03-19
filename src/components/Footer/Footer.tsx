@@ -42,14 +42,6 @@ export default function Footer() {
                     <p>order@officialfusionshroombar.com</p>
                     <p>23563 Baxter Rd, Wildomar, CA, 92595</p>
                 </div>
-                <div className={styles.column}>
-                    <h4>NEWSLETTER</h4>
-                    <p>Join the future of psychedelics.</p>
-                    <form className={styles.newsletter} action="https://formspree.io/f/mqakvjnd" method="POST">
-                        <input type="email" name="email" placeholder="Email address" required />
-                        <button type="submit" className="premium-gradient">JOIN</button>
-                    </form>
-                </div>
             </div>
             <div className={styles.bottom}>
                 <p>&copy; {new Date().getFullYear()} Official Fusion Mushroom Bars. All rights reserved.</p>
