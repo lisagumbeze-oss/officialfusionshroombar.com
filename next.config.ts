@@ -2,8 +2,12 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // unoptimized: true, // Disabled to allow Next.js image optimization (WebP/AVIF) for better SEO performance
+    unoptimized: true, // Bypass 502 proxy errors for external WordPress CDN images
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+      },
       {
         protocol: 'https',
         hostname: 'officialfusionshroombars.com',
