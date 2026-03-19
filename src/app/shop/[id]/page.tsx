@@ -6,6 +6,7 @@ import styles from './product.module.css';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import AddToCartSection from './AddToCartSection';
+import Link from 'next/link';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const { id } = await params;
@@ -16,6 +17,9 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
         title: product.seoTitle || `${product.name} | Official Fusion Shroom Bars`,
         description: product.seoDescription || product.description.substring(0, 160),
         keywords: product.seoKeywords || undefined,
+        alternates: {
+            canonical: `https://officialfusionshroombar.com/shop/${product.slug}`,
+        },
         openGraph: {
             title: product.seoTitle || `${product.name} | Official Fusion Shroom Bars`,
             description: product.seoDescription || product.description.substring(0, 160),
@@ -81,11 +85,26 @@ export default async function ProductPage({
         }
     };
 
+    const breadcrumbJsonLd = {
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://officialfusionshroombar.com" },
+            { "@type": "ListItem", "position": 2, "name": "Shop", "item": "https://officialfusionshroombar.com/shop" },
+            { "@type": "ListItem", "position": 3, "name": product.category, "item": `https://officialfusionshroombar.com/shop?category=${encodeURIComponent(product.category)}` },
+            { "@type": "ListItem", "position": 4, "name": product.name }
+        ]
+    };
+
     return (
         <div className={styles.productContainer}>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
             />
             {/* Product Presentation */}
             <div className={styles.productGrid}>
@@ -107,7 +126,15 @@ export default async function ProductPage({
 
                 {/* Right: Info */}
                 <div className={styles.productInfo}>
-                    <p className={styles.breadcrumbs}>Home / Shop / {product.category} / {product.name}</p>
+                <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
+                    <Link href="/" style={{ color: '#c9a44a', textDecoration: 'none' }}>Home</Link>
+                    <span> / </span>
+                    <Link href="/shop" style={{ color: '#c9a44a', textDecoration: 'none' }}>Shop</Link>
+                    <span> / </span>
+                    <Link href={`/shop?category=${encodeURIComponent(product.category)}`} style={{ color: '#c9a44a', textDecoration: 'none' }}>{product.category}</Link>
+                    <span> / </span>
+                    <span>{product.name}</span>
+                </nav>
                     <h1 className={styles.title}>{product.name}</h1>
 
                     <div className={styles.priceContainer}>
@@ -160,6 +187,21 @@ export default async function ProductPage({
                         </>
                     )}
                 </div>
+            </div>
+
+            {/* Internal Cross-Links Section */}
+            <div style={{ marginTop: '3rem', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
+                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: '#ccc' }}>Need Help With Your Order?</h3>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+                    <Link href="/faq" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read our FAQ</Link>
+                    <Link href="/contact" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Contact Support 24/7</Link>
+                    <Link href="/about" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>About Fusion Shroom Bars</Link>
+                    <Link href="/blog" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read the Blog</Link>
+                    <Link href="/shop" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Browse All Products</Link>
+                </div>
+                <p style={{ marginTop: '1rem', color: '#777', fontSize: '0.8rem', lineHeight: 1.6 }}>
+                    All Fusion products are made with <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>psilocybin</a> extract infused into premium Belgian chocolate. Lab-tested for purity and consistency.
+                </p>
             </div>
         </div>
     );

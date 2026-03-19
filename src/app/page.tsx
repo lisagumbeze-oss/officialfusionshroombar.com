@@ -57,7 +57,7 @@ export default async function Home() {
       />
       {/* Hero Section */}
       <section className={styles.hero}>
-        <Image src="/images/hero-fusion.png" alt="Fusion Hero" fill style={{ objectFit: 'cover' }} className={styles.heroImg} />
+        <Image src="/images/hero-fusion.png" alt="Official Fusion Shroom Bars - Premium Psilocybin Mushroom Chocolate Bars" fill style={{ objectFit: 'cover' }} className={styles.heroImg} />
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <Reveal delay={0.2}>
@@ -70,7 +70,7 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.6}>
             <p className={styles.heroText}>
-              Fusion Shroom Bars are the highest quality Belgian chocolate psilocybin bars on the market. Experience a clean, pure, and elevated journey with our precisely dosed gourmet collection.
+              Fusion Shroom Bars are the highest quality Belgian chocolate psilocybin bars on the market. Buy authentic magic mushroom chocolate bars online with precise dosing, lab-tested purity, and discreet worldwide shipping to the USA, UK, Canada, and Australia.
             </p>
           </Reveal>
           <Reveal delay={0.8}>
@@ -126,7 +126,7 @@ export default async function Home() {
               </Reveal>
               <Reveal delay={0.4}>
                 <p>
-                  Our mission at Fusion is to provide a safe, consistent, and undeniably delicious way to explore the world of psilocybin. Each bar is a masterpiece of Belgian confectionery expertise and modern extraction science.
+                  Our mission at Fusion is to provide a safe, consistent, and undeniably delicious way to explore the world of psilocybin. Each bar is a masterpiece of <a href="https://en.wikipedia.org/wiki/Belgian_chocolate" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a', textDecoration: 'underline' }}>Belgian confectionery</a> expertise and modern extraction science.
                 </p>
               </Reveal>
               <Reveal delay={0.5}>
@@ -191,6 +191,38 @@ export default async function Home() {
               </div>
             </Reveal>
           ))}
+        </div>
+      </section>
+
+      {/* Internal Links Section - SEO Cross-linking */}
+      <section className={styles.bestsellers} style={{ paddingTop: '2rem', paddingBottom: '0' }}>
+        <Reveal>
+          <div className={styles.sectionHeader}>
+            <div className={styles.headerTitle}>
+              <p>LEARN MORE</p>
+              <h2>EXPLORE FUSION</h2>
+            </div>
+          </div>
+        </Reveal>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1.5rem', padding: '1rem 0' }}>
+          <Reveal delay={0.1}>
+            <Link href="/blog" style={{ display: 'block', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit', transition: 'border-color 0.3s' }}>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>📖 Fusion Blog</h3>
+              <p style={{ color: '#999', fontSize: '0.85rem', lineHeight: 1.6 }}>Read about psilocybin science, microdosing guides, and wellness insights from the Fusion team.</p>
+            </Link>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <Link href="/faq" style={{ display: 'block', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit', transition: 'border-color 0.3s' }}>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>❓ FAQ</h3>
+              <p style={{ color: '#999', fontSize: '0.85rem', lineHeight: 1.6 }}>Have questions about authenticity, shipping, or dosing? Find answers to the most common queries here.</p>
+            </Link>
+          </Reveal>
+          <Reveal delay={0.3}>
+            <Link href="/contact" style={{ display: 'block', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textDecoration: 'none', color: 'inherit', transition: 'border-color 0.3s' }}>
+              <h3 style={{ fontSize: '1.1rem', marginBottom: '0.5rem' }}>📬 Contact Us</h3>
+              <p style={{ color: '#999', fontSize: '0.85rem', lineHeight: 1.6 }}>Our 24/7 support team is ready to assist you with orders, product questions, and more.</p>
+            </Link>
+          </Reveal>
         </div>
       </section>
 

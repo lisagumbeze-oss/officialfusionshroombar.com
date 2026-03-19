@@ -7,6 +7,9 @@ import type { Metadata } from 'next';
 export const metadata: Metadata = {
     title: 'Blog | Fusion Shroom Bars',
     description: 'Insights, news, and education from the world of premium psilocybin. Discover the science and soul behind every official Fusion Shroom Bar.',
+    alternates: {
+        canonical: 'https://officialfusionshroombar.com/blog',
+    },
     openGraph: {
         title: 'Blog | Fusion Shroom Bars',
         description: 'Explore our latest articles on wellness, microdosing, and the science of psilocybin.',
@@ -69,6 +72,7 @@ export default async function BlogPage({
     return (
         <div className="min-h-screen" style={{ background: '#0a0510', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 24px 60px' }}>
+                <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '32px', lineHeight: 1.1 }}>Fusion Shroom Bars Blog: Psilocybin Science, Wellness &amp; Microdosing Insights</h1>
 
                 {/* =================== HERO FEATURED SECTION =================== */}
                 {featuredPost && (

@@ -52,6 +52,10 @@
     letter-spacing: 0.05em;
     color: var(--text-muted);
     transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    min-height: 44px; /* Better tap target */
+    padding: 0.5rem; /* Better tap target */
 }
 
 .nav a:hover {

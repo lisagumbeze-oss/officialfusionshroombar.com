@@ -54,17 +54,24 @@
     gap: 1rem;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 968px) {
     .container {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
+        box-sizing: border-box;
     }
     .hero {
-        padding: 6rem 0 3rem;
+        padding: 6rem 1rem 3rem;
+        text-align: center;
     }
     .faqPage h1 {
-        font-size: 2rem;
+        font-size: 2.22rem;
+        overflow-wrap: break-word;
     }
     .categoryBlock {
         margin-bottom: 3rem;
+        text-align: center;
+    }
+    .faqSection {
+        padding: 4rem 1rem 8rem;
     }
 }

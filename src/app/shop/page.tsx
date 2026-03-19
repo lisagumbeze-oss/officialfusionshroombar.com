@@ -71,8 +71,8 @@ export default async function Shop({
     return (
         <div className={styles.shopContainer}>
             <header className={styles.shopHeader}>
-                <h1>Premium Shop</h1>
-                <p>Explore our exclusive collection of gourmet mushroom-infused edibles.</p>
+                <h1>Shop Fusion Shroom Bars &amp; Mushroom Chocolate Online</h1>
+                <p>Buy authentic Fusion mushroom chocolate bars, Neau Tropics, and psilocybin gummies. Lab-tested premium edibles with discreet worldwide shipping.</p>
             </header>
 
             <ShopFilters categories={categories as string[]} />

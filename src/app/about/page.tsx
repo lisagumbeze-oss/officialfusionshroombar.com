@@ -64,11 +64,12 @@ export default function AboutPage() {
                             <Reveal delay={0.3}>
                                 <Image 
                                     src="/images/fusion-boxes.jpg" 
-                                    alt="Fusion Collection" 
+                                    alt="Fusion Shroom Bars Collection - Premium Belgian Psilocybin Mushroom Chocolate Bars and Gummies" 
                                     width={600} 
                                     height={600} 
                                     style={{ objectFit: 'cover', borderRadius: '15px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }} 
                                 />
+
                             </Reveal>
                         </div>
                     </div>
@@ -113,6 +114,14 @@ export default function AboutPage() {
                     <div className={styles.container}>
                         <h2>Ready to start your journey?</h2>
                         <Link href="/shop" className="premium-gradient">EXPLORE THE SHOP</Link>
+                        <div style={{ marginTop: '2rem', display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center' }}>
+                            <Link href="/faq" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read our FAQ</Link>
+                            <Link href="/contact" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Contact Us 24/7</Link>
+                            <Link href="/blog" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Visit the Blog</Link>
+                        </div>
+                        <p style={{ marginTop: '1.5rem', color: '#888', fontSize: '0.8rem', maxWidth: '600px', margin: '1.5rem auto 0', lineHeight: 1.6 }}>
+                            Our products use organic <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>psilocybin</a> extract, precision-infused into world-class <a href="https://en.wikipedia.org/wiki/Belgian_chocolate" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>Belgian chocolate</a>.
+                        </p>
                     </div>
                 </section>
             </Reveal>

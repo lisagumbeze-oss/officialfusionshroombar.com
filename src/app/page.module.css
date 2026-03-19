@@ -375,8 +375,19 @@
 }
 
 @media (max-width: 968px) {
-  .hero h1 { font-size: 2.5rem; }
-  .trustBadges { grid-template-columns: 1fr; margin-top: 2rem; padding: 2rem; }
-  .teaserGrid { grid-template-columns: 1fr; }
-  .teaserImage { height: 300px; }
+  .container { padding: 0 1rem; }
+  .hero h1 { font-size: 2.2rem; line-height: 1.2; overflow-wrap: break-word; }
+  .heroContent { padding: 4rem 1rem; text-align: center; width: 100%; box-sizing: border-box; }
+  .trustBadges { grid-template-columns: 1fr; margin-top: 2rem; padding: 2rem 1rem; gap: 1.5rem; text-align: center; }
+  .teaserGrid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
+  .teaserImage { height: 300px; width: 100%; }
+  .teaserText h2 { font-size: 1.8rem; text-align: center; overflow-wrap: break-word; }
+  .teaserText p { text-align: center; margin-left: auto; margin-right: auto; max-width: 100%; }
+  .teaserText ul { display: inline-block; text-align: left; margin: 0 auto 3rem; }
+  .aboutTeaser { padding: 4rem 1rem; }
+  .bestsellers { padding: 4rem 1rem; }
+  .sectionHeader { flex-direction: column; align-items: center; gap: 1rem; margin-bottom: 2rem; text-align: center; }
+  .finalCta { padding: 6rem 1rem; }
+  .buttons { flex-direction: column; width: 100%; align-items: center; }
+  .button { width: 100%; display: flex; justify-content: center; }
 }

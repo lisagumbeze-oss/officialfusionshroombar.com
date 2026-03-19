@@ -4,6 +4,7 @@
 import React from 'react';
 import styles from './page.module.css';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function ContactPage() {
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -77,6 +78,19 @@ export default function ContactPage() {
                         </div>
                         <button type="submit" className="premium-gradient">SEND MESSAGE</button>
                     </form>
+                </div>
+            </div>
+
+            {/* Internal Cross-Links */}
+            <div style={{ marginTop: '3rem', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', textAlign: 'center' }}>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.5rem' }}>Looking for something else?</h3>
+                <p style={{ color: '#999', marginBottom: '1.5rem', fontSize: '0.85rem' }}>Check out these helpful resources before reaching out.</p>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', justifyContent: 'center' }}>
+                    <Link href="/faq" style={{ padding: '0.6rem 1.2rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}>❓ FAQ</Link>
+                    <Link href="/shop" style={{ padding: '0.6rem 1.2rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}>🛒 Shop Products</Link>
+                    <Link href="/blog" style={{ padding: '0.6rem 1.2rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}>📖 Read the Blog</Link>
+                    <Link href="/about" style={{ padding: '0.6rem 1.2rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}>🔬 About Us</Link>
+                    <Link href="/" style={{ padding: '0.6rem 1.2rem', borderRadius: '999px', border: '1px solid rgba(255,255,255,0.2)', color: '#fff', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600 }}>🏠 Home</Link>
                 </div>
             </div>
         </div>

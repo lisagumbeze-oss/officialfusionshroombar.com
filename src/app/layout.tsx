@@ -22,7 +22,11 @@ export const metadata: Metadata = {
     "fusion chocolate bars", "fusion chocolates", "fusion mushroom chocolate bar",
     "fusion mushroom chocolate bars", "fusion bar", "fusion mushroom bar", 
     "fusion shroom chocolate", "fusion bars mushroom", "where to buy fusion bars",
-    "magic mushroom chocolate", "psilocybin edibles", "mushroom gummies", "buy shroom bars online"
+    "magic mushroom chocolate", "psilocybin edibles", "mushroom gummies", "buy shroom bars online",
+    "microdosing chocolate", "psilocybin chocolate bar", "mushroom chocolate bar for sale",
+    "lab tested mushroom chocolate", "discreet mushroom shipping", "buy psilocybin online",
+    "magic mushroom edibles", "shroom chocolate", "psychedelic chocolate bar",
+    "mushroom extract chocolate", "functional mushroom bar", "premium shroom bars"
   ],
   authors: [{ name: "Fusion Team" }],
   creator: "Fusion Shroom Bars",
@@ -64,6 +68,9 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
+  },
+  alternates: {
+    canonical: 'https://officialfusionshroombar.com',
   },
 };
 

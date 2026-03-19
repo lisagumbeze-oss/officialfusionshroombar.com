@@ -1,0 +1,17 @@
+{
+  "skill_name": "seo-optimizer",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "Optimize my codebase's SEO. Let's pretend my main competitor is https://anthropic.com and I want to rank for 'AI Assistants'. My codebase is located at c:\\Users\\User\\Downloads\\SEO\\fusion-site\\src\\app\\.",
+      "expected_output": "The skill should run both scraping and onpage analysis scripts, apply edits to the codebase, and generate the seo_report.md, keyword_gaps.csv, and backlink_outreach.md files.",
+      "files": []
+    },
+    {
+      "id": 1,
+      "prompt": "I run a local bakery here in town. The competitor is https://levainbakery.com. Can you scan them, figure out my keyword gaps, and write up some outreach emails I can send for backlinks?",
+      "expected_output": "The skill should identify the lack of a codebase path (none provided) but still run the scraping script, and generate the seo_report.md, keyword_gaps.csv, and backlink_outreach.md files with a bakery-related context.",
+      "files": []
+    }
+  ]
+}
