@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import styles from './Header.module.css';
 import CartDropdown from './CartDropdown';
 import { Menu, X } from 'lucide-react';
@@ -21,8 +22,15 @@ export default function Header() {
   return (
     <header className={`${styles.header} ${isScrolled ? styles.scrolled : ''} glass-morphism`}>
       <div className={styles.container}>
-        <Link href="/" className={styles.logo}>
-          FUSION<span>SHROOMBARS</span>
+        <Link href="/" className={styles.logoWrapper}>
+          <Image 
+            src="/logo.png" 
+            alt="Fusion Shroom Bars Logo" 
+            width={180} 
+            height={45} 
+            className={styles.brandLogo}
+            priority
+          />
         </Link>
         <nav className={`${styles.nav} ${isMobileMenuOpen ? styles.mobileNavOpen : ''}`}>
           <Link href="/shop" onClick={() => setIsMobileMenuOpen(false)}>SHOP</Link>

@@ -84,7 +84,7 @@ export default async function BlogPage({
                         minHeight: '420px',
                     }}>
                         <Image
-                            src={featuredPost.image || '/blog-placeholder.jpg'}
+                            src={featuredPost.image || '/images/art-fusion.png'}
                             alt={featuredPost.title}
                             fill
                             className="object-cover"
@@ -246,7 +246,7 @@ export default async function BlogPage({
                                     <Link href={`/blog/${post.slug}`} style={{ textDecoration: 'none', color: 'inherit' }}>
                                         <div style={{ position: 'relative', aspectRatio: '16/10', overflow: 'hidden' }}>
                                             <Image
-                                                src={post.image || '/blog-placeholder.jpg'}
+                                                src={post.image || '/images/art-fusion.png'}
                                                 alt={post.title}
                                                 fill
                                                 className="object-cover"
