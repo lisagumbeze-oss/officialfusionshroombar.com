@@ -24,6 +24,13 @@ export default function Footer() {
                     <Link href="/contact" className={styles.footerLink}>Contact Us</Link>
                 </div>
                 <div className={styles.column}>
+                    <h4>GUIDES & REVIEWS</h4>
+                    <Link href="/mushroom-chocolate-bars" className={styles.footerLink}>Mushroom Chocolate Guide</Link>
+                    <Link href="/buy-shroom-bars" className={styles.footerLink}>How to Buy Shroom Bars</Link>
+                    <Link href="/microdosing-chocolate" className={styles.footerLink}>Microdosing Protocol</Link>
+                    <Link href="/neau-tropics" className={styles.footerLink}>Neau Tropics Review</Link>
+                </div>
+                <div className={styles.column}>
                     <h4>LEGAL</h4>
                     <button onClick={() => setLegalType('terms')} className={styles.legalBtn}>Terms & Conditions</button>
                     <button onClick={() => setLegalType('privacy')} className={styles.legalBtn}>Privacy Policy</button>
