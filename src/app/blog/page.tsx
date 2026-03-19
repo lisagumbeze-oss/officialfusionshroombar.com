@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     }
 };
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Incrementally regenerate page every hour
 
 export default async function BlogPage({
     searchParams

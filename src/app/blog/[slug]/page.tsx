@@ -5,7 +5,7 @@ import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, ChevronLeft } 
 import Link from 'next/link';
 import type { Metadata } from 'next';
 
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Incrementally regenerate page every hour
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;

@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { getPageMetadata } from '@/lib/metadata-utils';
 import Image from 'next/image';
 import styles from './page.module.css';
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Incrementally regenerate page every hour
 
 import Link from 'next/link';
 import prisma from '@/lib/prisma';

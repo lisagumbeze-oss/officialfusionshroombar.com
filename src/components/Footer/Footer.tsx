@@ -16,6 +16,14 @@ export default function Footer() {
                     <p>Official Fusion Shroom Bars. Gourmet psychedelic edibles infused with high-quality magic mushrooms.</p>
                 </div>
                 <div className={styles.column}>
+                    <h4>QUICK LINKS</h4>
+                    <Link href="/shop" className={styles.footerLink}>Shop Products</Link>
+                    <Link href="/about" className={styles.footerLink}>About Us</Link>
+                    <Link href="/blog" className={styles.footerLink}>Read the Blog</Link>
+                    <Link href="/faq" className={styles.footerLink}>FAQ</Link>
+                    <Link href="/contact" className={styles.footerLink}>Contact Us</Link>
+                </div>
+                <div className={styles.column}>
                     <h4>LEGAL</h4>
                     <button onClick={() => setLegalType('terms')} className={styles.legalBtn}>Terms & Conditions</button>
                     <button onClick={() => setLegalType('privacy')} className={styles.legalBtn}>Privacy Policy</button>

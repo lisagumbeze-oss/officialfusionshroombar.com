@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // Incrementally regenerate page every hour
 
 import type { Metadata } from 'next';
 import Image from 'next/image';

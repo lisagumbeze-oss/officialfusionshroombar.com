@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true, // Bypass 502 proxy errors for external WordPress CDN images
+    // unoptimized: true, // Disabled to allow Next.js image optimization (WebP/AVIF) for better SEO performance
     remotePatterns: [
       {
         protocol: 'https',
