@@ -57,7 +57,16 @@ export default async function Home() {
       />
       {/* Hero Section */}
       <section className={styles.hero}>
-        <Image src="/images/hero-fusion.png" alt="Official Fusion Shroom Bars - Premium Psilocybin Mushroom Chocolate Bars" fill style={{ objectFit: 'cover' }} className={styles.heroImg} />
+        <div className={styles.heroImgWrapper}>
+          <Image 
+            src="/images/hero-fusion.png" 
+            alt="Official Fusion Shroom Bars - Premium Psilocybin Mushroom Chocolate Bars" 
+            fill 
+            style={{ objectFit: 'cover' }} 
+            className={styles.heroImg} 
+            priority
+          />
+        </div>
         <div className={styles.heroOverlay}></div>
         <div className={styles.heroContent}>
           <Reveal delay={0.2}>
@@ -75,10 +84,10 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.8}>
             <div className={styles.buttons}>
-              <Link href="/shop" className={`${styles.button} ${styles.primaryBtn}`}>
+              <Link href="/shop" className={`${styles.button} ${styles.primaryBtn}`} spellCheck={false}>
                 BROWSE COLLECTION
               </Link>
-              <Link href="/about" className={`${styles.button} ${styles.secondaryBtn} glass-morphism`}>
+              <Link href="/about" className={`${styles.button} ${styles.secondaryBtn} glass-morphism`} spellCheck={false}>
                 THE FUSION STORY
               </Link>
             </div>
