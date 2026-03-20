@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import CommentForm from '@/components/CommentForm';
 
 export const revalidate = 3600; // Incrementally regenerate page every hour
 
@@ -302,6 +303,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                 <p style={{ color: '#555', fontSize: '14px', fontStyle: 'italic' }}>No discussion yet. Be the first to share your thoughts!</p>
                             )}
                         </div>
+
+                        {post && <CommentForm blogPostId={post.id} />}
                     </section>
                 </article>
             </div>
