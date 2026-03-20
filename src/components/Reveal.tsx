@@ -20,7 +20,10 @@ export const Reveal = ({ children, width = '100%', delay = 0 }: RevealProps) => 
                     setIsVisible(true);
                 }
             },
-            { threshold: 0.1 }
+            { 
+                threshold: 0.05,
+                rootMargin: '20px'
+            }
         );
 
         if (ref.current) {
