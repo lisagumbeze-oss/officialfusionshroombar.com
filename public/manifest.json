@@ -1,0 +1,21 @@
+{
+  "name": "Official Fusion Shroom Bars",
+  "short_name": "Fusion Bars",
+  "description": "Authentic Fusion Shroom Bars and Neau Tropics. Premium psilocybin-infused Belgian chocolate.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0d0a14",
+  "theme_color": "#9b4dff",
+  "icons": [
+    {
+      "src": "/images.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

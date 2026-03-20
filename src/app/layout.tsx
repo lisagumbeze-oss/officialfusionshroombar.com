@@ -7,9 +7,11 @@ import Footer from "@/components/Footer/Footer";
 import { CartProvider } from "@/context/CartContext";
 import Script from "next/script";
 import LayoutWrapper from "@/components/LayoutWrapper";
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
+  manifest: '/manifest.json',
   title: {
     default: "Official Fusion Shroom Bars | Authentic Fusion Mushroom Chocolate",
     template: "%s | Official Fusion Shroom Bars"
@@ -106,6 +108,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-background-dark text-white">
+        <GoogleAnalytics ga_id="G-403953413" />
         <CartProvider>
           <LayoutWrapper>
             {children}
