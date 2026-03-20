@@ -7,6 +7,10 @@ import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
 import AddToCartSection from './AddToCartSection';
 import Link from 'next/link';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
+import RelatedProducts from '@/components/RelatedProducts';
+import AddToCartButton from '@/components/AddToCartButton';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const { id } = await params;
@@ -43,7 +47,8 @@ export default async function ProductPage({
     params: Promise<{ id: string }> 
 }) {
     const { id } = await params;
-    let product = null;
+    let product: any = null;
+    let relatedProducts: any[] = [];
 
     try {
         product = await (prisma as any).product.findUnique({
@@ -54,6 +59,17 @@ export default async function ProductPage({
                 }
             }
         });
+
+        if (product) {
+            relatedProducts = await (prisma as any).product.findMany({
+                where: {
+                    category: product.category,
+                    isActive: true,
+                    NOT: { id: product.id }
+                },
+                take: 8
+            });
+        }
     } catch (error) {
         console.error('[ProductPage] Database error:', error);
     }
@@ -199,8 +215,10 @@ export default async function ProductPage({
                 </div>
             </div>
 
+            <RelatedProducts products={relatedProducts} />
+
             {/* Customer Reviews */}
-            <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '2rem' }}>
+            <div style={{ marginTop: '4rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Customer Reviews</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
                     {product.reviews && product.reviews.length > 0 ? (
