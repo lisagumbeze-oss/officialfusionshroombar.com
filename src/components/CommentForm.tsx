@@ -26,7 +26,7 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         
-        if (!token && SITE_KEY !== '1x00000000000000000000AA') {
+        if (!token) {
             setStatus('error');
             setMessage('Please complete the spam verification.');
             return;
@@ -37,7 +37,7 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
             const res = await fetch('/api/comments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, content, blogPostId, turnstileToken: token || 'test-token' }),
+                body: JSON.stringify({ name, content, blogPostId, turnstileToken: token }),
             });
 
             if (res.ok) {
