@@ -47,7 +47,12 @@ export default async function ProductPage({
 
     try {
         product = await (prisma as any).product.findUnique({
-            where: { slug: id }
+            where: { slug: id },
+            include: {
+                reviews: {
+                    orderBy: { createdAt: 'desc' },
+                }
+            }
         });
     } catch (error) {
         console.error('[ProductPage] Database error:', error);
@@ -198,16 +203,23 @@ export default async function ProductPage({
             <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '2rem' }}>
                 <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Customer Reviews</h3>
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                    <div style={{ padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ color: '#c9a44a', marginBottom: '0.5rem' }}>{"\u2605\u2605\u2605\u2605\u2605"}</div>
-                        <p style={{ color: '#ddd', fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>"Arrived extremely fast. The quality of the chocolate is fantastic. Half a bar was the perfect museum dose."</p>
-                        <div style={{ fontSize: '0.8rem', color: '#888' }}><strong>Alex M.</strong> - Verified Buyer</div>
-                    </div>
-                    <div style={{ padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                        <div style={{ color: '#c9a44a', marginBottom: '0.5rem' }}>{"\u2605\u2605\u2605\u2605\u2605"}</div>
-                        <p style={{ color: '#ddd', fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>"100% authentic {product.name}. Scanned the QR code, verified on the spot. Great for my microdosing schedule."</p>
-                        <div style={{ fontSize: '0.8rem', color: '#888' }}><strong>Jessica R.</strong> - Verified Buyer</div>
-                    </div>
+                    {product.reviews && product.reviews.length > 0 ? (
+                        product.reviews.map((r: any) => (
+                            <div key={r.id} style={{ padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                <div style={{ color: '#c9a44a', marginBottom: '0.5rem' }}>
+                                    {Array(r.rating).fill("\u2605").join("")}
+                                </div>
+                                <p style={{ color: '#ddd', fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>
+                                    "{r.content}"
+                                </p>
+                                <div style={{ fontSize: '0.8rem', color: '#888' }}>
+                                    <strong>{r.name}</strong> - Verified Buyer &middot; {new Date(r.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <p style={{ color: '#555', fontSize: '14px', fontStyle: 'italic' }}>No reviews yet for this product. Be the first to share your experience!</p>
+                    )}
                 </div>
             </div>
 
