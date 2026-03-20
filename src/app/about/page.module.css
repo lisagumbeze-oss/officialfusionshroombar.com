@@ -105,9 +105,11 @@
     padding: 6rem 1rem;
   }
   .hero h1 {
-    font-size: 2rem;
+    font-size: clamp(1.8rem, 8vw, 2.5rem);
     letter-spacing: 1px;
     overflow-wrap: break-word;
+    text-wrap: balance;
+    line-height: 1.1;
   }
   .grid {
     grid-template-columns: 1fr;
@@ -116,8 +118,11 @@
   }
   .textBlock h2 {
     text-align: center;
-    font-size: 1.75rem;
+    font-size: clamp(1.4rem, 6vw, 1.75rem);
     overflow-wrap: break-word;
+    text-wrap: balance;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
   }
   .textBlock p {
     text-align: center;
@@ -130,9 +135,11 @@
     gap: 1.5rem;
   }
   .centeredTitle {
-    font-size: 1.75rem;
+    font-size: clamp(1.4rem, 6vw, 1.75rem);
     margin-bottom: 2rem;
     overflow-wrap: break-word;
+    text-wrap: balance;
+    line-height: 1.2;
   }
   .contentSection, .values {
     padding: 4rem 1rem;
