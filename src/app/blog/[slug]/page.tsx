@@ -118,9 +118,12 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         src={post.image}
                         alt={post.imageAlt || post.title}
                         fill
-                        className="object-cover"
                         priority
-                        style={{ zIndex: 1 }}
+                        style={{ 
+                            zIndex: 1,
+                            objectFit: 'cover',
+                            objectPosition: 'center',
+                        }}
                     />
                 ) : (
                     <div style={{
@@ -133,6 +136,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 <div style={{
                     position: 'absolute', inset: 0, zIndex: 2,
                     background: 'linear-gradient(to top, #0a0510 0%, rgba(10,5,16,0.5) 50%, rgba(10,5,16,0.15) 100%)',
+                    pointerEvents: 'none'
                 }} />
 
                 {/* Hero content */}
