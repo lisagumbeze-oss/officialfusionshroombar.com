@@ -130,4 +130,8 @@
     .mobileNavOpen {
         display: flex;
     }
+
+    .container {
+        padding: 0 1rem;
+    }
 }

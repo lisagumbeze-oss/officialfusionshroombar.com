@@ -197,6 +197,23 @@
         align-items: flex-start;
         gap: 1.5rem;
     }
+
+    .productGrid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .shopContainer {
+        padding: 2rem 1rem;
+    }
+
+    .productCard {
+        padding: 1rem;
+    }
+
+    .productTitle {
+        font-size: 1rem;
+    }
 }
 
 .pagination {
