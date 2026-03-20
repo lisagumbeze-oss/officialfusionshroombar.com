@@ -124,7 +124,6 @@
     max-width: 100%;
     margin-left: auto;
     margin-right: auto;
-    padding: 0 1.5rem;
   }
   .valuesGrid {
     grid-template-columns: 1fr;
