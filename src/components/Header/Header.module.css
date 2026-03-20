@@ -35,8 +35,6 @@
 
 .brandLogo {
     object-fit: contain;
-    mix-blend-mode: screen;
-    filter: brightness(1.2) contrast(1.1) saturate(1.2);
     transition: transform 0.2s ease;
 }
 

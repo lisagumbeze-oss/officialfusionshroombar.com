@@ -65,7 +65,7 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.4}>
             <h1 className={styles.title}>
-              The Gold Standard of<br />Fusion Edibles
+              The Gold Standard of Fusion Edibles
             </h1>
           </Reveal>
           <Reveal delay={0.6}>
