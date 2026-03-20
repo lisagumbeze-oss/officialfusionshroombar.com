@@ -24,7 +24,7 @@ export default function Header() {
       <div className={styles.container}>
         <Link href="/" className={styles.logoWrapper}>
           <Image 
-            src="/logo.png" 
+            src="/images.png" 
             alt="Fusion Shroom Bars Logo" 
             width={180} 
             height={45} 
