@@ -378,8 +378,8 @@
 
 @media (max-width: 968px) {
   .container { padding: 0 1rem; }
-  .hero h1 { font-size: 2.2rem; line-height: 1.2; overflow-wrap: break-word; }
-  .heroContent { padding: 4rem 1rem; text-align: center; width: 100%; box-sizing: border-box; }
+  .hero h1 { font-size: 2.0rem; line-height: 1.2; overflow-wrap: break-word; text-wrap: balance; hyphens: auto; }
+  .heroContent { padding: 3rem 1rem; text-align: center; width: 100%; box-sizing: border-box; }
   .trustBadges { grid-template-columns: 1fr; margin-top: 2rem; padding: 2rem 1rem; gap: 1.5rem; text-align: center; }
   .teaserGrid { grid-template-columns: 1fr; gap: 3rem; text-align: center; }
   .teaserImage { height: 300px; width: 100%; }
