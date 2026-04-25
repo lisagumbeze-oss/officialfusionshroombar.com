@@ -94,6 +94,10 @@ const organizationJsonLd = {
   }
 };
 
+import { ToastProvider } from "@/context/ToastContext";
+import { WishlistProvider } from "@/context/WishlistContext";
+import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -109,11 +113,17 @@ export default function RootLayout({
       </head>
       <body className="bg-background-dark text-white">
         <GoogleAnalytics ga_id="G-403953413" />
-        <CartProvider>
-          <LayoutWrapper>
-            {children}
-          </LayoutWrapper>
-        </CartProvider>
+        <ToastProvider>
+          <RecentlyViewedProvider>
+            <WishlistProvider>
+              <CartProvider>
+                <LayoutWrapper>
+                  {children}
+                </LayoutWrapper>
+              </CartProvider>
+            </WishlistProvider>
+          </RecentlyViewedProvider>
+        </ToastProvider>
         
         {/* Smartsupp Live Chat script */}
         <Script id="smartsupp-chat" strategy="afterInteractive">

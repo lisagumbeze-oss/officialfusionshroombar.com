@@ -132,6 +132,50 @@
     margin: 1.5rem 0;
 }
 
+.discountRow {
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.couponSection {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.couponSection input {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+}
+
+.couponSection button {
+    padding: 0.7rem 1.25rem;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.couponSection button:hover {
+    background: var(--primary);
+}
+
+.couponError {
+    color: var(--secondary);
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    font-weight: 600;
+}
+
 .totalRow {
     margin-top: 1.5rem;
     padding-top: 1.5rem;

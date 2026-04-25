@@ -1,0 +1,114 @@
+.pageWrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mainContent {
+    flex: 1;
+    padding: 6rem 0;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 4rem;
+}
+
+.header h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #fff, var(--text-muted));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header p {
+    color: var(--text-muted);
+}
+
+.removeBtn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 100, 100, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 100, 100, 0.2);
+    color: #ff6b6b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+    z-index: 2;
+}
+
+.removeBtn:hover {
+    background: #ff6b6b;
+    color: white;
+    transform: scale(1.1);
+}
+
+.emptyState {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 24px;
+    border: 1px dashed var(--surface-border);
+}
+
+.emptyIcon {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+    background: rgba(155, 77, 255, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+}
+
+.emptyState h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.emptyState p {
+    color: var(--text-muted);
+    margin-bottom: 2rem;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.shopBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    color: white;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.shopBtn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(155, 77, 255, 0.3);
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 2rem;
+    }
+}

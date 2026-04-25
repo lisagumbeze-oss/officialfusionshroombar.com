@@ -31,7 +31,12 @@ model Order {
   shippingMethod  String?
   shippingPrice   Float    @default(0)
   totalAmount     Float
-  status          String   @default("PENDING") // PENDING, PROCESSING, COMPLETED, CANCELLED
+  status          String   @default("PENDING") // PENDING, PROCESSING, SHIPPED, COMPLETED, CANCELLED
+  
+  trackingNumber  String?
+  trackingUrl     String?
+  notes           String?  // Internal admin notes
+  customerNote    String?  // Note from customer during checkout
   
   paymentMethodId String
   paymentMethod   ManualPaymentMethod @relation(fields: [paymentMethodId], references: [id])
@@ -67,17 +72,89 @@ model Product {
   ingredients  String?    // Store as JSON string stringified array
   gallery      String?    // Store as JSON stringified array of URLs (up to 5)
   dosage       String?
+  
+  // Stock Management
+  sku             String?  @unique
+  stock           Int      @default(0)
+  lowStockThreshold Int    @default(5)
+  manageStock     Boolean  @default(true)
+  
   isActive     Boolean    @default(true)
+  
+  // SEO Fields
   seoTitle     String?
   seoDescription String?
   targetKeyword String?
   seoKeywords  String?    // Comma-separated
   imageAlt     String?
+  
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
   
+  variants     ProductVariant[]
   lineItems    LineItem[]
   reviews      Review[]
+}
+
+model ProductVariant {
+  id              String   @id @default(cuid())
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  
+  name            String   // e.g. "Size: M", "Flavor: Raspberry"
+  sku             String?  @unique
+  price           Float?   // Override price if needed
+  stock           Int      @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Coupon {
+  id              String   @id @default(cuid())
+  code            String   @unique
+  discountType    String   // "PERCENTAGE" or "FIXED"
+  discountValue   Float
+  minOrderAmount  Float    @default(0)
+  expiryDate      DateTime?
+  usageLimit      Int?
+  usageCount      Int      @default(0)
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model StoreSettings {
+  id                String   @id @default("global")
+  
+  // General
+  storeName         String   @default("Fusion Shroom Bars")
+  tagline           String?
+  storeDescription  String?
+  logoUrl           String?
+  faviconUrl        String?
+  
+  // Contact
+  email             String?
+  phone             String?
+  address           String?
+  
+  // SEO
+  siteTitleTemplate String   @default("%page_title% | %site_name%")
+  defaultMetaDescription String?
+  defaultOgImage    String?
+  robotsTxt         String?  @default("User-agent: *\nAllow: /")
+  googleAnalyticsId String?
+  
+  // Localization
+  currencyCode      String   @default("USD")
+  currencySymbol    String   @default("$")
+  
+  // System
+  maintenanceMode   Boolean  @default(false)
+  maintenanceMessage String? @default("Site is currently undergoing maintenance. Please check back soon!")
+  
+  updatedAt         DateTime @updatedAt
 }
 
 model Review {
@@ -106,18 +183,23 @@ model BlogPost {
   title         String
   slug          String   @unique
   excerpt       String
-  content       String
-  image         String?
-  category      String   @default("Wellness & Microdosing")
-  tags          String   @default("[]") // Store as JSON stringified array
+  content       String   @default("") // HTML content
+  image         String?  // Featured image URL
+  
+  status        String   @default("DRAFT") // DRAFT, PUBLISHED, ARCHIVED
+  author        String   @default("Admin")
+  category      String   @default("Uncategorized")
+  tags          String   @default("[]")    // JSON stringified array
   isPublic      Boolean  @default(true)
   allowComments Boolean  @default(true)
-  author        String   @default("Fusion Shroom Bars")
+  
+  // SEO
   seoTitle      String?
   seoDescription String?
   targetKeyword String?
   seoKeywords   String?  // Comma-separated
   imageAlt      String?
+  
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
   comments      Comment[]
@@ -142,4 +224,18 @@ model PageMetadata {
   seoKeywords   String?  // Comma-separated
   imageAlt      String?
   updatedAt     DateTime @updatedAt
+}
+
+model MediaAsset {
+  id               String   @id @default(cuid())
+  filename         String
+  originalFilename String
+  mimeType         String
+  size             Int      // bytes
+  url              String
+  altText          String?
+  caption          String?
+  uploadedBy       String   @default("Admin")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 }

@@ -18,10 +18,14 @@ export default function CheckoutForm({
     const [selectedMethod, setSelectedMethod] = useState('');
     const [region, setRegion] = useState('LOCAL'); // LOCAL (USA) or INTERNATIONAL
     const [shippingOption, setShippingOption] = useState<any>(null);
+    const [couponCode, setCouponCode] = useState('');
+    const [appliedCoupon, setAppliedCoupon] = useState<any>(null);
+    const [couponError, setCouponError] = useState('');
 
     const subtotal = cartTotal;
+    const discount = appliedCoupon ? appliedCoupon.discountAmount : 0;
     const shippingPrice = shippingOption ? shippingOption.price : 0;
-    const total = subtotal + shippingPrice;
+    const total = subtotal - discount + shippingPrice;
 
     // Get current region settings
     const currentShippingSettings = shippingSettings.find(s => s.type === region) || {
@@ -33,6 +37,27 @@ export default function CheckoutForm({
         { id: 'cat1', name: currentShippingSettings.category1Name, price: currentShippingSettings.category1Price },
         { id: 'cat2', name: currentShippingSettings.category2Name, price: currentShippingSettings.category2Price },
     ];
+
+    const handleApplyCoupon = async () => {
+        if (!couponCode) return;
+        setCouponError('');
+        try {
+            const res = await fetch('/api/coupons/validate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: couponCode, subtotal })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setAppliedCoupon(data);
+                setCouponCode('');
+            } else {
+                setCouponError(data.error);
+            }
+        } catch (e) {
+            setCouponError('Failed to validate coupon');
+        }
+    };
 
     async function handleSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault();
@@ -232,12 +257,30 @@ export default function CheckoutForm({
                             <span>Subtotal</span>
                             <span>${subtotal.toFixed(2)}</span>
                         </div>
+                        {appliedCoupon && (
+                            <div className={`${styles.summaryRow} ${styles.discountRow}`}>
+                                <span>Discount ({appliedCoupon.code})</span>
+                                <span>-${appliedCoupon.discountAmount.toFixed(2)}</span>
+                            </div>
+                        )}
                         {shippingOption && (
                             <div className={styles.summaryRow}>
                                 <span>Shipping ({shippingOption.name})</span>
                                 <span>${shippingOption.price.toFixed(2)}</span>
                             </div>
                         )}
+                        <div className={styles.couponSection}>
+                            <input 
+                                type="text" 
+                                placeholder="Promo Code" 
+                                value={couponCode}
+                                onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                            />
+                            <button type="button" onClick={handleApplyCoupon}>APPLY</button>
+                        </div>
+                        {couponError && <p className={styles.couponError}>{couponError}</p>}
+                        
+                        <div className={styles.summarySeparator} />
                         <div className={`${styles.summaryRow} ${styles.totalRow}`}>
                             <span>Total</span>
                             <span>${total.toFixed(2)}</span>

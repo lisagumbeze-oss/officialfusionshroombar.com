@@ -6,6 +6,7 @@ import { useCart } from '@/context/CartContext';
 import styles from './CartDropdown.module.css';
 import Image from 'next/image';
 import { ShoppingCart, X, Trash2 } from 'lucide-react';
+import UpsellList from '../UpsellList';
 
 export default function CartDropdown() {
   const { cart, cartCount, cartTotal, removeFromCart, updateQuantity } = useCart();
@@ -79,6 +80,8 @@ export default function CartDropdown() {
           </div>
 
           {cart.length > 0 && (
+            <>
+            <UpsellList />
             <div className={styles.footer}>
               <div className={styles.subtotal}>
                 <span>Subtotal</span>
@@ -93,6 +96,7 @@ export default function CartDropdown() {
                 </Link>
               </div>
             </div>
+            </>
           )}
         </div>
       )}

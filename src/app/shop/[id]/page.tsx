@@ -10,7 +10,10 @@ import Link from 'next/link';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
 import RelatedProducts from '@/components/RelatedProducts';
-import AddToCartButton from '@/components/AddToCartButton';
+import ProductTabs from './ProductTabs';
+import ProductGallery from './ProductGallery';
+import TrackRecentlyViewed from '@/components/TrackRecentlyViewed';
+import RecentlyViewedList from '@/components/RecentlyViewedList';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
     const { id } = await params;
@@ -124,6 +127,7 @@ export default async function ProductPage({
 
     return (
         <div className={styles.productContainer}>
+            <TrackRecentlyViewed product={product} />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -135,20 +139,11 @@ export default async function ProductPage({
             {/* Product Presentation */}
             <div className={styles.productGrid}>
                 {/* Left: Images */}
-                <div className={styles.imageGallery}>
-                    <div className={styles.mainImagePlaceholder}>
-                        <Image 
-                            src={product.image} 
-                            alt={product.imageAlt || product.name} 
-                            fill 
-                            style={{ objectFit: 'cover' }} 
-                            priority 
-                        />
-                        {product.regularPrice && product.regularPrice > product.price && (
-                            <span className={styles.saleTag}>SALE</span>
-                        )}
-                    </div>
-                </div>
+                <ProductGallery 
+                    mainImage={product.image} 
+                    gallery={product.gallery ? JSON.parse(product.gallery) : null} 
+                    name={product.name} 
+                />
 
                 {/* Right: Info */}
                 <div className={styles.productInfo}>
@@ -185,37 +180,15 @@ export default async function ProductPage({
             </div>
 
             {/* Details Tabs */}
-            <div className={styles.detailsTabs}>
-                <div className={styles.tabHeaders}>
-                    <button className={styles.activeTab}>Description</button>
-                    {ingredients && <button>Ingredients</button>}
-                    {effects && <button>Effects</button>}
-                </div>
-                <div className={styles.tabContent}>
-                    <h3>Product Overview</h3>
-                    <p>{product.description}</p>
-
-                    {effects && (
-                        <>
-                            <h4>Potential Effects:</h4>
-                            <ul>
-                                {effects.map((effect: string) => <li key={effect}>{effect}</li>)}
-                            </ul>
-                        </>
-                    )}
-
-                    {ingredients && (
-                        <>
-                            <h4>Ingredients:</h4>
-                            <ul>
-                                {ingredients.map((ing: string) => <li key={ing}>{ing}</li>)}
-                            </ul>
-                        </>
-                    )}
-                </div>
-            </div>
+            <ProductTabs 
+                description={product.description} 
+                ingredients={ingredients} 
+                effects={effects} 
+            />
 
             <RelatedProducts products={relatedProducts} />
+
+            <RecentlyViewedList excludeId={product.id} />
 
             {/* Customer Reviews */}
             <div style={{ marginTop: '4rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>

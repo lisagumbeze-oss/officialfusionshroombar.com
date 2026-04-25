@@ -34,6 +34,11 @@ export default async function ProductsPage() {
         const image = formData.get('image') as string;
         const description = formData.get('description') as string;
         const isActive = formData.get('isActive') === 'on';
+        
+        const sku = formData.get('sku') as string;
+        const stock = parseInt(formData.get('stock') as string) || 0;
+        const lowStockThreshold = parseInt(formData.get('lowStockThreshold') as string) || 5;
+        const manageStock = formData.get('manageStock') === 'on';
 
         // Handle gallery
         const gallery = [];
@@ -54,6 +59,10 @@ export default async function ProductsPage() {
                 image, 
                 description, 
                 isActive,
+                sku,
+                stock,
+                lowStockThreshold,
+                manageStock,
                 gallery: JSON.stringify(gallery),
                 // Automatic SEO Update
                 targetKeyword: seo.targetKeyword,
@@ -65,7 +74,7 @@ export default async function ProductsPage() {
         });
         
         revalidatePath('/admin/products');
-        revalidatePath('/shop'); // Revalidate storefront too
+        revalidatePath('/shop'); 
         revalidatePath('/');
     }
 
@@ -80,6 +89,11 @@ export default async function ProductsPage() {
         const image = formData.get('image') as string;
         const description = formData.get('description') as string;
         const isActive = formData.get('isActive') === 'on';
+
+        const sku = formData.get('sku') as string;
+        const stock = parseInt(formData.get('stock') as string) || 0;
+        const lowStockThreshold = parseInt(formData.get('lowStockThreshold') as string) || 5;
+        const manageStock = formData.get('manageStock') === 'on';
 
         // Handle gallery
         const gallery = [];
@@ -100,6 +114,10 @@ export default async function ProductsPage() {
                 image, 
                 description, 
                 isActive,
+                sku,
+                stock,
+                lowStockThreshold,
+                manageStock,
                 gallery: JSON.stringify(gallery),
                 // Automatic SEO
                 targetKeyword: seo.targetKeyword,

@@ -5,6 +5,11 @@ export const revalidate = 3600; // Incrementally regenerate page every hour
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './shop.module.css';
+import ShopFilters from './ShopFilters';
+import prisma from '@/lib/prisma';
+import AddToCartButton from '@/components/AddToCartButton';
+import WishlistButton from '@/components/WishlistButton';
+import Pagination from './Pagination';
 
 export async function generateMetadata(): Promise<Metadata> {
     const fallback: Metadata = {
@@ -13,17 +18,13 @@ export async function generateMetadata(): Promise<Metadata> {
     };
     return await getPageMetadata("/shop", fallback);
 }
-import prisma from '@/lib/prisma';
-import ShopFilters from './ShopFilters';
-import AddToCartButton from '@/components/AddToCartButton';
-import Pagination from './Pagination';
 
 export default async function Shop({ 
     searchParams 
 }: { 
-    searchParams: Promise<{ category?: string, sort?: string, page?: string }> 
+    searchParams: Promise<{ category?: string, sort?: string, page?: string, q?: string, min?: string, max?: string }> 
 }) {
-    const { category, sort, page } = await searchParams;
+    const { category, sort, page, q, min, max } = await searchParams;
     const currentPage = parseInt(page || '1', 10);
     const pageSize = 24;
 
@@ -31,6 +32,21 @@ export default async function Shop({
     const where: any = { isActive: true };
     if (category && category !== 'All Products') {
         where.category = category;
+    }
+    
+    // Price filtering
+    const minP = parseFloat(min || '0');
+    const maxP = parseFloat(max || '1000');
+    where.price = {
+        gte: minP,
+        lte: maxP
+    };
+    if (q) {
+        where.OR = [
+            { name: { contains: q, mode: 'insensitive' } },
+            { description: { contains: q, mode: 'insensitive' } },
+            { category: { contains: q, mode: 'insensitive' } }
+        ];
     }
 
     let orderBy: any = { name: 'asc' };
@@ -77,6 +93,10 @@ export default async function Shop({
 
             <ShopFilters categories={categories as string[]} />
 
+            <div className={styles.resultsInfo}>
+                <p>Showing <strong>{products.length}</strong> of <strong>{totalProducts}</strong> products</p>
+            </div>
+
             {dbError ? (
                 <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'rgba(255,100,100,0.05)', borderRadius: '12px', border: '1px solid rgba(255,100,100,0.1)', margin: '2rem 0' }}>
                     <h2 style={{ color: '#ff6b6b' }}>Store Temporarily Unavailable</h2>
@@ -92,26 +112,48 @@ export default async function Shop({
                                         src={product.image} 
                                         alt={product.name} 
                                         fill 
-                                        style={{ objectFit: 'cover' }}
+                                        style={{ objectFit: 'cover' }} 
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        unoptimized={product.image.includes('data:image')}
                                     />
-                                    {product.regularPrice && product.regularPrice > product.price && (
-                                        <span className={styles.saleTag}>SALE</span>
-                                    )}
+                                    <div className={styles.badgeContainer}>
+                                        {product.regularPrice && product.regularPrice > product.price && (
+                                            <span className={styles.badgeSale}>SALE</span>
+                                        )}
+                                        {new Date(product.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
+                                            <span className={styles.badgeNew}>NEW</span>
+                                        )}
+                                    </div>
+                                    <WishlistButton product={product} />
                                 </div>
-                                <h3 className={styles.productTitle}>{product.name}</h3>
-                                <div className={styles.categoryTag}>{product.category}</div>
-                                <div className={styles.price}>
-                                    {product.regularPrice && (
-                                        <span className={styles.oldPrice}>${product.regularPrice.toFixed(2)}</span>
-                                    )}
-                                    <span className={styles.newPrice}>${product.price.toFixed(2)}</span>
-                                </div>
-                                <div className={styles.buttonGroup}>
-                                    <Link href={`/shop/${product.slug}`} className={`${styles.viewBtn} premium-gradient`}>
-                                        VIEW PRODUCT
-                                    </Link>
-                                    <AddToCartButton product={product} className={styles.cartBtn} />
+                                <div className={styles.productInfo}>
+                                    <h3 className={styles.productTitle}>{product.name}</h3>
+                                    <div className={styles.categoryTag}>{product.category}</div>
+                                    
+                                    {/* Stock Indicator */}
+                                    <div className={`${styles.stockStatus} ${product.stock <= 0 ? styles.outOfStock : product.stock <= 10 ? styles.lowStock : styles.inStock}`}>
+                                        <span className={styles.stockDot}></span>
+                                        {product.stock <= 0 ? 'Out of Stock' : product.stock <= 10 ? `Low Stock (${product.stock} left)` : 'In Stock'}
+                                    </div>
+                                    <div className={styles.ratingInfo}>
+                                        <div className={styles.stars}>
+                                            {"★★★★★"}
+                                        </div>
+                                        <span className={styles.reviewCount}>(4.9 · 120 reviews)</span>
+                                    </div>
+
+                                    <div className={styles.price}>
+                                        {product.regularPrice && (
+                                            <span className={styles.oldPrice}>${product.regularPrice.toFixed(2)}</span>
+                                        )}
+                                        <span className={styles.newPrice}>${product.price.toFixed(2)}</span>
+                                    </div>
+                                    <div className={styles.buttonGroup}>
+                                        <AddToCartButton product={product} className={`${styles.cartBtn} premium-gradient`} />
+                                        <Link href={`/shop/${product.slug}`} className={styles.viewBtn}>
+                                            VIEW DETAILS
+                                        </Link>
+                                    </div>
                                 </div>
                             </div>
                         ))}

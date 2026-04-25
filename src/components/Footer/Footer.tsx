@@ -18,6 +18,7 @@ export default function Footer() {
                 <div className={styles.column}>
                     <h4>QUICK LINKS</h4>
                     <Link href="/shop" className={styles.footerLink}>Shop Products</Link>
+                    <Link href="/track" className={styles.footerLink}>Track Your Order</Link>
                     <Link href="/about" className={styles.footerLink}>About Us</Link>
                     <Link href="/blog" className={styles.footerLink}>Read the Blog</Link>
                     <Link href="/faq" className={styles.footerLink}>FAQ</Link>

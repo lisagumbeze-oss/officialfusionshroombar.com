@@ -1,4 +1,5 @@
 'use client';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
@@ -10,7 +11,11 @@ import {
     Package,
     ShoppingBag,
     Settings,
-    LogOut
+    LogOut,
+    Tag,
+    Users,
+    BarChart2,
+    Globe
 } from 'lucide-react';
 import { LucideIcon } from 'lucide-react';
 import styles from './Sidebar.module.css';
@@ -19,47 +24,67 @@ interface NavItem {
     label: string;
     href: string;
     icon: LucideIcon;
-    badge?: string;
+    badgeKey?: string;
 }
 
-const storeItems: NavItem[] = [
-    { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
-    { label: 'Products', href: '/admin/products', icon: Package },
-    { label: 'Orders', href: '/admin/orders', icon: ShoppingBag },
-    { label: 'Settings', href: '/admin/settings', icon: Settings },
-];
-
-const contentItems: NavItem[] = [
-    { label: 'All Posts', href: '/admin/blog', icon: FileText },
-    { label: 'Categories', href: '/admin/categories', icon: Layers },
-    { label: 'Media Library', href: '/admin/media', icon: ImageIcon },
-    { label: 'Comments', href: '/admin/comments', icon: MessageSquare, badge: '12' },
-];
+interface NavGroup {
+    label: string;
+    items: NavItem[];
+}
 
 export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose?: () => void }) {
     const pathname = usePathname();
+    const [pendingOrders, setPendingOrders] = useState<number>(0);
 
-    const renderNavItems = (items: typeof storeItems) => {
-        return items.map((item) => {
-            const Icon = item.icon;
-            const isActive = pathname === item.href || (pathname.startsWith(item.href) && item.href !== '/admin');
-            
-            return (
-                <Link 
-                    key={item.href} 
-                    href={item.href} 
-                    className={`${styles.navLink} ${isActive ? styles.active : ''}`}
-                    onClick={() => {
-                        if (onClose) onClose();
-                    }}
-                >
-                    <Icon size={18} />
-                    <span>{item.label}</span>
-                    {item.badge && <span className={styles.navBadge}>{item.badge}</span>}
-                </Link>
-            );
-        });
-    };
+    useEffect(() => {
+        const fetchPendingCount = async () => {
+            try {
+                const res = await fetch('/api/admin/orders?status=PENDING');
+                const data = await res.json();
+                setPendingOrders(data.length || 0);
+            } catch (error) {
+                console.error('Failed to fetch pending orders:', error);
+            }
+        };
+        fetchPendingCount();
+        const interval = setInterval(fetchPendingCount, 60000); // Update every minute
+        return () => clearInterval(interval);
+    }, []);
+
+    const navGroups: NavGroup[] = [
+        {
+            label: 'STORE MANAGEMENT',
+            items: [
+                { label: 'Dashboard', href: '/admin', icon: LayoutDashboard },
+                { label: 'Products', href: '/admin/products', icon: Package },
+                { label: 'Orders', href: '/admin/orders', icon: ShoppingBag, badgeKey: 'orders' },
+                { label: 'Customers', href: '/admin/customers', icon: Users },
+            ]
+        },
+        {
+            label: 'CONTENT MANAGEMENT',
+            items: [
+                { label: 'All Posts', href: '/admin/blog', icon: FileText },
+                { label: 'Categories', href: '/admin/categories', icon: Layers },
+                { label: 'Media Library', href: '/admin/media', icon: ImageIcon },
+                { label: 'Comments', href: '/admin/comments', icon: MessageSquare },
+            ]
+        },
+        {
+            label: 'MARKETING',
+            items: [
+                { label: 'Coupons', href: '/admin/coupons', icon: Tag },
+                { label: 'Analytics', href: '/admin/analytics', icon: BarChart2 },
+            ]
+        },
+        {
+            label: 'SYSTEM',
+            items: [
+                { label: 'Settings', href: '/admin/settings', icon: Settings },
+                { label: 'Live Site', href: '/', icon: Globe },
+            ]
+        },
+    ];
 
     return (
         <aside className={`${styles.sidebar} ${isOpen ? styles.open : ''}`}>
@@ -75,15 +100,34 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose
                 )}
             </div>
 
-            <div className={styles.sectionLabel}>STORE MANAGEMENT</div>
-            <nav className={styles.nav}>
-                {renderNavItems(storeItems)}
-            </nav>
+            {navGroups.map((group) => (
+                <div key={group.label}>
+                    <div className={styles.sectionLabel}>{group.label}</div>
+                    <nav className={styles.nav}>
+                        {group.items.map((item) => {
+                            const Icon = item.icon;
+                            const isActive = pathname === item.href || 
+                                (pathname.startsWith(item.href) && item.href !== '/admin' && item.href !== '/');
+                            
+                            const badge = item.badgeKey === 'orders' && pendingOrders > 0 ? pendingOrders.toString() : null;
 
-            <div className={styles.sectionLabel}>CONTENT MANAGEMENT</div>
-            <nav className={styles.nav}>
-                {renderNavItems(contentItems)}
-            </nav>
+                            return (
+                                <Link 
+                                    key={item.href} 
+                                    href={item.href} 
+                                    className={`${styles.navLink} ${isActive ? styles.active : ''}`}
+                                    onClick={() => { if (onClose) onClose(); }}
+                                    target={item.href === '/' ? '_blank' : undefined}
+                                >
+                                    <Icon size={18} />
+                                    <span>{item.label}</span>
+                                    {badge && <span className={styles.navBadge}>{badge}</span>}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+                </div>
+            ))}
 
             <div className={styles.footer}>
                 <div className={styles.storageCard}>

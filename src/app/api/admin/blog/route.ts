@@ -1,120 +1,30 @@
 import { NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { cookies } from 'next/headers';
-import { generateSEO } from '@/lib/seo-utils';
-
-export const dynamic = 'force-dynamic';
-
-// Helper to check admin session (simplified)
-async function checkAuth() {
-    const cookieStore = await cookies();
-    const session = cookieStore.get('admin_session');
-    return !!session;
-}
 
 export async function GET() {
     try {
-        const posts = await (prisma as any).blogPost.findMany({
-            orderBy: { createdAt: 'desc' }
+        const posts = await prisma.blogPost.findMany({
+            orderBy: { createdAt: 'desc' },
+            include: { _count: { select: { comments: true } } }
         });
         return NextResponse.json(posts);
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 });
+    } catch (error: any) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
 
 export async function POST(req: Request) {
-    if (!await checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
     try {
-        const body = await req.json();
-        const { title, content, excerpt, image } = body;
+        const data = await req.json();
+        if (!data.slug) {
+            data.slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+        }
         
-        const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-        
-        const seo = generateSEO(title, excerpt || '', body.category || 'Wellness & Microdosing');
-        
-        const post = await (prisma as any).blogPost.create({
-            data: { 
-                title, 
-                slug, 
-                content, 
-                excerpt, 
-                image,
-                category: body.category || 'Wellness & Microdosing',
-                tags: JSON.stringify(body.tags || []),
-                isPublic: body.isPublic ?? true,
-                allowComments: body.allowComments ?? true,
-                // Automatic SEO
-                targetKeyword: seo.targetKeyword,
-                seoKeywords: seo.seoKeywords,
-                seoTitle: seo.seoTitle,
-                seoDescription: seo.seoDescription,
-                imageAlt: seo.imageAlt
-            }
+        const post = await prisma.blogPost.create({
+            data: data
         });
-        
         return NextResponse.json(post);
     } catch (error: any) {
-        console.error('Blog POST error details:', error);
-        return NextResponse.json({ 
-            error: 'Failed to create post', 
-            details: error.message,
-            stack: error.stack 
-        }, { status: 500 });
-    }
-}
-
-export async function PUT(req: Request) {
-    if (!await checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
-    try {
-        const body = await req.json();
-        const { id, title, content, excerpt, image } = body;
-        
-        const slug = title.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
-        
-        const seo = generateSEO(title, excerpt || '', body.category || 'Wellness & Microdosing');
-        
-        const post = await (prisma as any).blogPost.update({
-            where: { id },
-            data: { 
-                title, 
-                slug, 
-                content, 
-                excerpt, 
-                image,
-                category: body.category,
-                tags: JSON.stringify(body.tags),
-                isPublic: body.isPublic,
-                allowComments: body.allowComments,
-                // Automatic SEO Update
-                targetKeyword: seo.targetKeyword,
-                seoKeywords: seo.seoKeywords,
-                seoTitle: seo.seoTitle,
-                seoDescription: seo.seoDescription,
-                imageAlt: seo.imageAlt
-            }
-        });
-        
-        return NextResponse.json(post);
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to update post' }, { status: 500 });
-    }
-}
-
-export async function DELETE(req: Request) {
-    if (!await checkAuth()) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
-
-    if (!id) return NextResponse.json({ error: 'Missing ID' }, { status: 400 });
-
-    try {
-        await (prisma as any).blogPost.delete({ where: { id } });
-        return NextResponse.json({ success: true });
-    } catch (error) {
-        return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 });
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

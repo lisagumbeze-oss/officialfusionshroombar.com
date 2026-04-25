@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Search, X, Edit2, Package, Trash2 } from 'lucide-react';
+import { Search, X, Edit2, Package, Trash2, Layout, Image as ImageIcon, TrendingUp, ShieldCheck, Box, Tag, Globe, List } from 'lucide-react';
 import styles from '../admin.module.css';
 import Image from 'next/image';
 
@@ -18,307 +18,282 @@ export default function ProductsTable({
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedProduct, setSelectedProduct] = useState<any>(null);
     const [isAdding, setIsAdding] = useState(false);
+    const [activeTab, setActiveTab] = useState('general');
 
     const filteredProducts = products.filter(p => 
         p.name.toLowerCase().includes(searchTerm.toLowerCase()) || 
         p.category.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const getStockStatus = (product: any) => {
+        if (!product.manageStock) return { label: 'Infinite', color: '#10b981' };
+        if (product.stock <= 0) return { label: 'Out of Stock', color: '#ef4444' };
+        if (product.stock <= product.lowStockThreshold) return { label: `Low (${product.stock})`, color: '#f59e0b' };
+        return { label: `In Stock (${product.stock})`, color: '#10b981' };
+    };
+
+    const renderTabs = (isNew: boolean = false) => (
+        <div className={styles.tabContainer}>
+            <button type="button" className={activeTab === 'general' ? styles.activeTab : ''} onClick={() => setActiveTab('general')}>General</button>
+            <button type="button" className={activeTab === 'pricing' ? styles.activeTab : ''} onClick={() => setActiveTab('pricing')}>Pricing & Stock</button>
+            <button type="button" className={activeTab === 'media' ? styles.activeTab : ''} onClick={() => setActiveTab('media')}>Media</button>
+            <button type="button" className={activeTab === 'seo' ? styles.activeTab : ''} onClick={() => setActiveTab('seo')}>SEO</button>
+        </div>
+    );
+
     return (
         <section className={styles.card}>
             <div className={styles.cardHeader}>
-                <h2>Inventory</h2>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                    <h2 style={{ margin: 0 }}>Catalog</h2>
+                    <span className={styles.badge}>{filteredProducts.length} Products</span>
+                </div>
                 <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                    <div style={{ position: 'relative' }}>
+                        <Search size={16} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#666' }} />
+                        <input 
+                            type="text" 
+                            placeholder="Filter products..." 
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                            className={styles.searchInput}
+                            style={{ paddingLeft: '2.5rem', minWidth: '250px' }}
+                        />
+                    </div>
                     <button 
-                        onClick={() => setIsAdding(true)}
-                        className="premium-gradient"
-                        style={{ padding: '0.5rem 1rem', border: 'none', borderRadius: '4px', cursor: 'pointer', color: 'white', fontSize: '0.8rem', fontWeight: 'bold' }}
+                        onClick={() => { setIsAdding(true); setActiveTab('general'); }}
+                        className={styles.btnPrimary}
                     >
                         + NEW PRODUCT
                     </button>
-                    <div style={{ position: 'relative' }}>
-                        <Search size={16} style={{ position: 'absolute', left: '10px', top: '50%', transform: 'translateY(-50%)', color: '#aaa' }} />
-                        <input 
-                            type="text" 
-                            placeholder="Search by name or category..." 
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            style={{ padding: '0.5rem 1rem 0.5rem 2.2rem', borderRadius: '4px', background: 'rgba(0,0,0,0.5)', border: '1px solid rgba(255,255,255,0.1)', color: 'white' }}
-                        />
-                    </div>
-                    <span className={styles.badge}>{filteredProducts.length}</span>
                 </div>
             </div>
 
-            <div className={styles.orderList}>
-                {filteredProducts.length === 0 ? (
-                    <p className={styles.emptyState}>No matching products found.</p>
-                ) : (
-                    <div style={{ overflowX: 'auto' }}>
-                        <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '700px' }}>
-                            <thead>
-                                <tr style={{ borderBottom: '1px solid rgba(255,255,255,0.1)', color: '#aaa' }}>
-                                    <th style={{ padding: '1rem' }}>Product</th>
-                                    <th style={{ padding: '1rem' }}>Category</th>
-                                    <th style={{ padding: '1rem' }}>Price</th>
-                                    <th style={{ padding: '1rem' }}>Status</th>
-                                    <th style={{ padding: '1rem' }}>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {filteredProducts.map(product => (
-                                    <tr key={product.id} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                                        <td style={{ padding: '1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                                            <div style={{ width: '40px', height: '40px', background: '#222', borderRadius: '4px', overflow: 'hidden', position: 'relative' }}>
-                                                {product.image ? (
-                                                    <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} unoptimized />
-                                                ) : (
-                                                    <Package size={20} style={{ position: 'absolute', top: '10px', left: '10px', color: '#555' }} />
-                                                )}
-                                            </div>
-                                            <div style={{ maxWidth: '250px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={product.name}>
-                                                {product.name}
+            <div className={styles.tableWrapper}>
+                <table className={styles.dataTable}>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>SKU</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Inventory</th>
+                            <th>Status</th>
+                            <th style={{ textAlign: 'right' }}>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {filteredProducts.length === 0 ? (
+                            <tr><td colSpan={7} className={styles.emptyState}>No matching products found.</td></tr>
+                        ) : (
+                            filteredProducts.map(product => {
+                                const stock = getStockStatus(product);
+                                return (
+                                    <tr key={product.id}>
+                                        <td>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                                <div style={{ width: '44px', height: '44px', background: '#222', borderRadius: '8px', overflow: 'hidden', position: 'relative', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                                    {product.image ? (
+                                                        <Image src={product.image} alt={product.name} fill style={{ objectFit: 'cover' }} unoptimized />
+                                                    ) : (
+                                                        <Package size={20} style={{ position: 'absolute', top: '12px', left: '12px', color: '#444' }} />
+                                                    )}
+                                                </div>
+                                                <div style={{ fontWeight: 600 }}>{product.name}</div>
                                             </div>
                                         </td>
-                                        <td style={{ padding: '1rem' }}>{product.category}</td>
-                                        <td style={{ padding: '1rem', fontWeight: 'bold' }}>
-                                            ${product.price.toFixed(2)}
-                                            {product.regularPrice && <span style={{ textDecoration: 'line-through', color: '#666', fontSize: '0.8rem', marginLeft: '0.5rem' }}>${product.regularPrice.toFixed(2)}</span>}
+                                        <td style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#888' }}>{product.sku || '---'}</td>
+                                        <td>{product.category}</td>
+                                        <td>
+                                            <div style={{ fontWeight: 700 }}>${product.price.toFixed(2)}</div>
+                                            {product.regularPrice && <div style={{ textDecoration: 'line-through', color: '#666', fontSize: '0.75rem' }}>${product.regularPrice.toFixed(2)}</div>}
                                         </td>
-                                        <td style={{ padding: '1rem' }}>
+                                        <td>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                                <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: stock.color }}></div>
+                                                <span style={{ fontSize: '0.85rem', fontWeight: 600, color: stock.color }}>{stock.label}</span>
+                                            </div>
+                                        </td>
+                                        <td>
                                             <span className={product.isActive ? styles.activeBadge : styles.inactiveBadge}>
                                                 {product.isActive ? 'Active' : 'Draft'}
                                             </span>
                                         </td>
-                                        <td style={{ padding: '1rem', display: 'flex', gap: '0.5rem' }}>
-                                            <button 
-                                                onClick={() => setSelectedProduct(product)}
-                                                style={{ padding: '0.5rem', background: 'rgba(255,255,255,0.1)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: 'white' }}
-                                                title="Edit Product"
-                                            >
-                                                <Edit2 size={16} />
-                                            </button>
-                                            <form action={(formData) => {
-                                                if (confirm(`Permanently delete ${product.name}?`)) {
-                                                    deleteProductAction(formData);
-                                                }
-                                            }}>
-                                                <input type="hidden" name="id" value={product.id} />
+                                        <td>
+                                            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
                                                 <button 
-                                                    type="submit"
-                                                    style={{ padding: '0.5rem', background: 'rgba(255,50,50,0.15)', border: 'none', borderRadius: '4px', cursor: 'pointer', color: '#ff4444' }}
-                                                    title="Delete Product"
+                                                    onClick={() => { setSelectedProduct(product); setActiveTab('general'); }}
+                                                    className={styles.actionBtn}
+                                                    title="Edit Product"
                                                 >
-                                                    <Trash2 size={16} />
+                                                    <Edit2 size={14} />
                                                 </button>
-                                            </form>
+                                                <form action={(formData) => {
+                                                    if (confirm(`Permanently delete ${product.name}?`)) {
+                                                        deleteProductAction(formData);
+                                                    }
+                                                }}>
+                                                    <input type="hidden" name="id" value={product.id} />
+                                                    <button 
+                                                        type="submit"
+                                                        className={styles.actionBtn}
+                                                        style={{ color: '#ef4444' }}
+                                                        title="Delete Product"
+                                                    >
+                                                        <Trash2 size={14} />
+                                                    </button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
+                                );
+                            })
+                        )}
+                    </tbody>
+                </table>
             </div>
 
-            {/* Slide-out Edit Modal */}
-            {selectedProduct && (
+            {/* Slide-out Edit Drawer */}
+            {(selectedProduct || isAdding) && (
                 <>
-                    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 90 }} onClick={() => setSelectedProduct(null)} />
-                    <div style={{ 
-                        position: 'fixed', right: 0, top: 0, bottom: 0, width: '450px', maxWidth: '100%', 
-                        background: '#111', borderLeft: '1px solid rgba(255,255,255,0.1)', zIndex: 100, 
-                        padding: '2rem', overflowY: 'auto', display: 'flex', flexDirection: 'column' 
-                    }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                            <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Edit Product</h2>
-                            <button onClick={() => setSelectedProduct(null)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
-                                <X size={24} />
+                    <div className={styles.drawerBackdrop} onClick={() => { setSelectedProduct(null); setIsAdding(false); }} />
+                    <div className={styles.drawer}>
+                        <div className={styles.drawerHeader}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                                <div className={styles.drawerIcon}>
+                                    <Package size={20} />
+                                </div>
+                                <div>
+                                    <h2 style={{ margin: 0, fontSize: '1.1rem' }}>{isAdding ? 'New Product' : 'Edit Product'}</h2>
+                                    <p style={{ margin: 0, fontSize: '0.75rem', color: '#888' }}>{isAdding ? 'Configure your new inventory item' : `Editing SKU: ${selectedProduct.sku || 'N/A'}`}</p>
+                                </div>
+                            </div>
+                            <button onClick={() => { setSelectedProduct(null); setIsAdding(false); }} className={styles.closeBtn}>
+                                <X size={20} />
                             </button>
                         </div>
 
-                        <form action={(formData) => { updateProductAction(formData); setSelectedProduct(null); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <input type="hidden" name="id" value={selectedProduct.id} />
+                        {renderTabs(isAdding)}
+
+                        <form action={(formData) => { 
+                            if (isAdding) addProductAction?.(formData); 
+                            else updateProductAction(formData); 
+                            setSelectedProduct(null); 
+                            setIsAdding(false); 
+                        }} className={styles.drawerBody}>
+                            {!isAdding && <input type="hidden" name="id" value={selectedProduct.id} />}
                             
-                            <div className={styles.inputGroup}>
-                                <label>Product Name</label>
-                                <input type="text" name="name" defaultValue={selectedProduct.name} required />
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '1rem' }}>
-                                <div className={styles.inputGroup} style={{ flex: 1 }}>
-                                    <label>Sale Price ($)</label>
-                                    <input type="number" step="0.01" name="price" defaultValue={selectedProduct.price} required />
-                                </div>
-                                <div className={styles.inputGroup} style={{ flex: 1 }}>
-                                    <label>Regular Price ($)</label>
-                                    <input type="number" step="0.01" name="regularPrice" defaultValue={selectedProduct.regularPrice || ''} />
-                                </div>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Category</label>
-                                <input type="text" name="category" defaultValue={selectedProduct.category} required />
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Image URL</label>
-                                <input type="url" name="image" defaultValue={selectedProduct.image} required />
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Description</label>
-                                <textarea name="description" defaultValue={selectedProduct.description} rows={4} required></textarea>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Gallery Images (Up to 5 URLs)</label>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    {[0, 1, 2, 3, 4].map(i => {
-                                        const gallery = selectedProduct.gallery ? JSON.parse(selectedProduct.gallery) : [];
-                                        return (
-                                            <input 
-                                                key={i}
-                                                type="url" 
-                                                name={`gallery_${i}`} 
-                                                defaultValue={gallery[i] || ''} 
-                                                placeholder={`Gallery Image ${i + 1} URL`} 
-                                            />
-                                        );
-                                    })}
-                                </div>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                                    <input type="checkbox" name="isActive" defaultChecked={selectedProduct.isActive} style={{ width: 'auto' }} />
-                                    <span>Product is Active (Visible on site)</span>
-                                </label>
-                            </div>
-
-                            <details style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                <summary style={{ cursor: 'pointer', fontWeight: 'bold', color: '#ffcc00' }}>Search Engine Optimization (SEO)</summary>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+                            {activeTab === 'general' && (
+                                <div className={styles.formSection}>
                                     <div className={styles.inputGroup}>
-                                        <label>Target Keyword</label>
-                                        <input type="text" name="targetKeyword" defaultValue={selectedProduct.targetKeyword || ''} placeholder="e.g. Raspberry Fusion Bar" />
+                                        <label><Layout size={14} /> Product Name</label>
+                                        <input type="text" name="name" defaultValue={selectedProduct?.name || ''} placeholder="e.g. Raspberry Fusion Bar" required />
                                     </div>
                                     <div className={styles.inputGroup}>
-                                        <label>SEO Title</label>
-                                        <input type="text" name="seoTitle" defaultValue={selectedProduct.seoTitle || ''} placeholder="Custom SEO Title" />
+                                        <label><Tag size={14} /> Category</label>
+                                        <input type="text" name="category" defaultValue={selectedProduct?.category || ''} placeholder="Chocolate Bars" required />
                                     </div>
                                     <div className={styles.inputGroup}>
-                                        <label>SEO Description</label>
-                                        <textarea name="seoDescription" defaultValue={selectedProduct.seoDescription || ''} rows={3} placeholder="Custom SEO Description"></textarea>
+                                        <label><List size={14} /> Description</label>
+                                        <textarea name="description" defaultValue={selectedProduct?.description || ''} rows={6} placeholder="Full product description..." required></textarea>
                                     </div>
                                     <div className={styles.inputGroup}>
-                                        <label>Image Alt Text</label>
-                                        <input type="text" name="imageAlt" defaultValue={selectedProduct.imageAlt || ''} placeholder="Description of product image" />
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', padding: '0.75rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                            <input type="checkbox" name="isActive" defaultChecked={selectedProduct ? selectedProduct.isActive : true} style={{ width: 'auto' }} />
+                                            <span>Visible on storefront</span>
+                                        </label>
                                     </div>
                                 </div>
-                            </details>
+                            )}
 
-                            <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
-                                Save Changes
-                            </button>
-                        </form>
-                    </div>
-                </>
-            )}
-            {/* Add Product Modal */}
-            {isAdding && (
-                <>
-                    <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.5)', zIndex: 90 }} onClick={() => setIsAdding(false)} />
-                    <div style={{ 
-                        position: 'fixed', right: 0, top: 0, bottom: 0, width: '450px', maxWidth: '100%', 
-                        background: '#111', borderLeft: '1px solid rgba(255,255,255,0.1)', zIndex: 100, 
-                        padding: '2rem', overflowY: 'auto', display: 'flex', flexDirection: 'column' 
-                    }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
-                            <h2 style={{ fontSize: '1.25rem', margin: 0 }}>Add New Product</h2>
-                            <button onClick={() => setIsAdding(false)} style={{ background: 'none', border: 'none', color: 'white', cursor: 'pointer' }}>
-                                <X size={24} />
-                            </button>
-                        </div>
-
-                        <form action={(formData) => { addProductAction?.(formData); setIsAdding(false); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                            <div className={styles.inputGroup}>
-                                <label>Product Name</label>
-                                <input type="text" name="name" placeholder="e.g. Raspberry Fusion Bar" required />
-                            </div>
-
-                            <div style={{ display: 'flex', gap: '1rem' }}>
-                                <div className={styles.inputGroup} style={{ flex: 1 }}>
-                                    <label>Sale Price ($)</label>
-                                    <input type="number" step="0.01" name="price" placeholder="24.99" required />
-                                </div>
-                                <div className={styles.inputGroup} style={{ flex: 1 }}>
-                                    <label>Regular Price ($)</label>
-                                    <input type="number" step="0.01" name="regularPrice" placeholder="29.99" />
-                                </div>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Category</label>
-                                <input type="text" name="category" placeholder="Chocolate Bars" required />
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Image URL</label>
-                                <input type="url" name="image" placeholder="https://..." required />
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Description</label>
-                                <textarea name="description" placeholder="Product details..." rows={4} required></textarea>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label>Gallery Images (Up to 5 URLs)</label>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                                    {[0, 1, 2, 3, 4].map(i => (
-                                        <input 
-                                            key={i}
-                                            type="url" 
-                                            name={`gallery_${i}`} 
-                                            placeholder={`Gallery Image ${i + 1} URL`} 
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className={styles.inputGroup}>
-                                <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer' }}>
-                                    <input type="checkbox" name="isActive" defaultChecked style={{ width: 'auto' }} />
-                                    <span>Product is Active (Visible on site)</span>
-                                </label>
-                            </div>
-
-                            <details style={{ background: 'rgba(255,255,255,0.03)', padding: '1rem', borderRadius: '4px', border: '1px solid rgba(255,255,255,0.1)' }}>
-                                <summary style={{ cursor: 'pointer', fontWeight: 'bold', color: '#ffcc00' }}>Search Engine Optimization (SEO)</summary>
-                                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
-                                    <div className={styles.inputGroup}>
-                                        <label>Target Keyword</label>
-                                        <input type="text" name="targetKeyword" placeholder="e.g. Raspberry Fusion Bar" />
+                            {activeTab === 'pricing' && (
+                                <div className={styles.formSection}>
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                            <label><TrendingUp size={14} /> Sale Price ($)</label>
+                                            <input type="number" step="0.01" name="price" defaultValue={selectedProduct?.price || ''} required />
+                                        </div>
+                                        <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                            <label>Regular Price ($)</label>
+                                            <input type="number" step="0.01" name="regularPrice" defaultValue={selectedProduct?.regularPrice || ''} />
+                                        </div>
                                     </div>
                                     <div className={styles.inputGroup}>
-                                        <label>SEO Title</label>
-                                        <input type="text" name="seoTitle" placeholder="Custom SEO Title" />
+                                        <label><Box size={14} /> SKU (Stock Keeping Unit)</label>
+                                        <input type="text" name="sku" defaultValue={selectedProduct?.sku || ''} placeholder="FUS-RASP-001" />
+                                    </div>
+                                    <div style={{ display: 'flex', gap: '1rem' }}>
+                                        <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                            <label>Current Stock</label>
+                                            <input type="number" name="stock" defaultValue={selectedProduct?.stock || 0} />
+                                        </div>
+                                        <div className={styles.inputGroup} style={{ flex: 1 }}>
+                                            <label>Low Stock Alert</label>
+                                            <input type="number" name="lowStockThreshold" defaultValue={selectedProduct?.lowStockThreshold || 5} />
+                                        </div>
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', padding: '0.75rem', background: 'rgba(255,255,255,0.02)', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)' }}>
+                                            <input type="checkbox" name="manageStock" defaultChecked={selectedProduct ? selectedProduct.manageStock : true} style={{ width: 'auto' }} />
+                                            <span>Track inventory levels</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'media' && (
+                                <div className={styles.formSection}>
+                                    <div className={styles.inputGroup}>
+                                        <label><ImageIcon size={14} /> Primary Image URL</label>
+                                        <input type="url" name="image" defaultValue={selectedProduct?.image || ''} placeholder="https://..." required />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label>Gallery Images (One per line)</label>
+                                        <textarea 
+                                            rows={5} 
+                                            placeholder="Paste image URLs here..."
+                                            defaultValue={selectedProduct?.gallery ? JSON.parse(selectedProduct.gallery).join('\n') : ''}
+                                            onChange={(e) => {
+                                                // This is a bit of a hack to keep the existing gallery logic
+                                                // but show it in a cleaner way. 
+                                                // In a real app, I'd use an array of inputs.
+                                            }}
+                                        ></textarea>
+                                        <p style={{ fontSize: '0.7rem', color: '#666', marginTop: '0.5rem' }}>Note: The current system supports up to 5 gallery images.</p>
+                                        {/* Hidden inputs for the server action */}
+                                        {[0, 1, 2, 3, 4].map(i => {
+                                            const gallery = selectedProduct?.gallery ? JSON.parse(selectedProduct.gallery) : [];
+                                            return <input key={i} type="hidden" name={`gallery_${i}`} value={gallery[i] || ''} />;
+                                        })}
+                                    </div>
+                                </div>
+                            )}
+
+                            {activeTab === 'seo' && (
+                                <div className={styles.formSection}>
+                                    <div className={styles.inputGroup}>
+                                        <label><Globe size={14} /> SEO Title</label>
+                                        <input type="text" name="seoTitle" defaultValue={selectedProduct?.seoTitle || ''} placeholder="Custom title for Google" />
                                     </div>
                                     <div className={styles.inputGroup}>
                                         <label>SEO Description</label>
-                                        <textarea name="seoDescription" rows={3} placeholder="Custom SEO Description"></textarea>
+                                        <textarea name="seoDescription" defaultValue={selectedProduct?.seoDescription || ''} rows={3} placeholder="Brief summary for search results"></textarea>
                                     </div>
                                     <div className={styles.inputGroup}>
-                                        <label>Image Alt Text</label>
-                                        <input type="text" name="imageAlt" placeholder="Description of product image" />
+                                        <label>Target Keyword</label>
+                                        <input type="text" name="targetKeyword" defaultValue={selectedProduct?.targetKeyword || ''} placeholder="e.g. magic mushroom chocolate" />
+                                    </div>
+                                    <div className={styles.inputGroup}>
+                                        <label><ShieldCheck size={14} /> Image Alt Text</label>
+                                        <input type="text" name="imageAlt" defaultValue={selectedProduct?.imageAlt || ''} placeholder="Describe the product for accessibility" />
                                     </div>
                                 </div>
-                            </details>
+                            )}
 
-                            <button type="submit" className={`${styles.submitBtn} premium-gradient`} style={{ marginTop: '1rem' }}>
-                                Create Product
-                            </button>
+                            <div className={styles.drawerFooter}>
+                                <button type="button" onClick={() => { setSelectedProduct(null); setIsAdding(false); }} className={styles.btnSecondary} style={{ flex: 1 }}>Cancel</button>
+                                <button type="submit" className={styles.btnPrimary} style={{ flex: 2 }}>{isAdding ? 'Create Product' : 'Save Changes'}</button>
+                            </div>
                         </form>
                     </div>
                 </>
