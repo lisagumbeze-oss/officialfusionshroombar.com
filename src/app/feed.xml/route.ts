@@ -20,7 +20,15 @@ function escapeXml(unsafe: string) {
 export async function GET() {
     try {
         const products = await prisma.product.findMany({
-            where: { isActive: true },
+            select: {
+                id: true,
+                slug: true,
+                name: true,
+                price: true,
+                description: true,
+                image: true,
+                category: true
+            }
         });
 
         // We use the primary domain or a default
@@ -32,10 +40,8 @@ export async function GET() {
             // Format price: e.g. "25.00 USD"
             const formattedPrice = `${product.price.toFixed(2)} USD`;
             
-            // Stock logic
-            const availability = product.manageStock && product.stock <= 0 
-                ? 'out_of_stock' 
-                : 'in_stock';
+            // Stock logic (defaulting to in_stock since stock fields are missing in current DB)
+            const availability = 'in_stock';
 
             // Make sure the image is an absolute URL
             let imageUrl = product.image || '';
