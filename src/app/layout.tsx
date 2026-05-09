@@ -129,7 +129,8 @@ export default function RootLayout({
         <Script id="smartsupp-chat" strategy="afterInteractive">
           {`
             var _smartsupp = _smartsupp || {};
-            _smartsupp.key = '066c33c30d5a0cddcfb7a8750f96fe6b77709e72';
+            _smartsupp.key = 'a817f55a37a06d176f7b4cd7ffa8a1dd9f5deb51';
+            _smartsupp.accentColor = '#9b4dff';
             window.smartsupp||(function(d) {
               var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
               s=d.getElementsByTagName('script')[0];c=d.createElement('script');
