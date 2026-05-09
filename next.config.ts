@@ -1,6 +1,14 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/feed.xml',
+        destination: '/api/products-feed',
+      },
+    ];
+  },
   images: {
     unoptimized: true, // Bypass 502 proxy errors for external WordPress CDN images
     remotePatterns: [
