@@ -93,10 +93,7 @@ export default function Header() {
         </nav>
       </div>
 
-      <BottomNav
-        isMenuOpen={isMobileMenuOpen}
-        onMenuToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-      />
+      <BottomNav />
     </>
   );
 }

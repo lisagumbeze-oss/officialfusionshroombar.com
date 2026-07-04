@@ -2,25 +2,19 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingBag, ShoppingCart, Heart, Menu } from 'lucide-react';
+import { Home, ShoppingBag, ShoppingCart, Heart } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { useWishlist } from '@/context/WishlistContext';
 import styles from './BottomNav.module.css';
 
-type BottomNavProps = {
-  isMenuOpen: boolean;
-  onMenuToggle: () => void;
-};
-
 const ITEMS = [
-  { type: 'link' as const, href: '/', label: 'Home', icon: Home, exact: true },
-  { type: 'link' as const, href: '/shop', label: 'Shop', icon: ShoppingBag },
-  { type: 'link' as const, href: '/cart', label: 'Cart', icon: ShoppingCart, badge: 'cart' as const },
-  { type: 'link' as const, href: '/wishlist', label: 'Saved', icon: Heart, badge: 'wishlist' as const },
-  { type: 'menu' as const, label: 'Menu', icon: Menu },
+  { href: '/', label: 'Home', icon: Home, exact: true },
+  { href: '/shop', label: 'Shop', icon: ShoppingBag },
+  { href: '/cart', label: 'Cart', icon: ShoppingCart, badge: 'cart' as const },
+  { href: '/wishlist', label: 'Saved', icon: Heart, badge: 'wishlist' as const },
 ];
 
-export default function BottomNav({ isMenuOpen, onMenuToggle }: BottomNavProps) {
+export default function BottomNav() {
   const pathname = usePathname();
   const { cartCount } = useCart();
   const { wishlist } = useWishlist();
@@ -37,22 +31,6 @@ export default function BottomNav({ isMenuOpen, onMenuToggle }: BottomNavProps) 
   return (
     <nav className={styles.bottomNav} aria-label="Mobile navigation">
       {ITEMS.map((item) => {
-        if (item.type === 'menu') {
-          return (
-            <button
-              key="menu"
-              type="button"
-              className={`${styles.item} ${isMenuOpen ? styles.active : ''}`}
-              onClick={onMenuToggle}
-              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={isMenuOpen}
-            >
-              <item.icon size={22} strokeWidth={isMenuOpen ? 2.25 : 2} />
-              <span>{item.label}</span>
-            </button>
-          );
-        }
-
         const active = isActive(item.href, item.exact);
         const badge = getBadge(item.badge);
 
