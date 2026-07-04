@@ -96,7 +96,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className="bg-background-dark text-white">
+      <body className="bg-background-dark text-white" data-build="2026-07-05">
         <GoogleAnalytics ga_id="G-403953413" />
         <ToastProvider>
           <RecentlyViewedProvider>

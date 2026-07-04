@@ -3,7 +3,7 @@ import { getPageMetadata } from '@/lib/metadata-utils';
 import { PAGE_SEO } from '@/lib/keywords';
 import Image from 'next/image';
 import styles from './page.module.css';
-export const revalidate = 3600;
+export const revalidate = 0;
 
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
