@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { PAGE_SEO } from '@/lib/keywords';
 
 export const revalidate = 3600;
 
+const seo = PAGE_SEO['/mushroom-chocolate-bars'];
+
 export const metadata: Metadata = {
-    title: 'Mushroom Chocolate Bars: The Ultimate Guide to Psilocybin Edibles',
-    description: 'Discover everything you need to know about mushroom chocolate bars. Learn about the benefits of combining psilocybin with cocoa, how to dose safely, and where to find premium edibles.',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
     alternates: {
         canonical: 'https://officialfusionshroombar.com/mushroom-chocolate-bars',
     },
@@ -13,8 +17,14 @@ export const metadata: Metadata = {
 
 export default function MushroomChocolateBarsLanding() {
     return (
-        <main style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
-            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>Everything You Need to Know About Mushroom Chocolate Bars</h1>
+        <main className="animate-fade-in" style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
+            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>Psychedelic Mushroom Edibles &amp; Chocolate Bars</h1>
+
+            <section id="answer" aria-label="Quick Answer" style={{ marginBottom: '3rem', padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <p style={{ fontSize: '1.05rem', margin: 0 }}>
+                    <strong>Quick Answer:</strong> Psychedelic mushroom edibles are psilocybin-infused food products — most commonly chocolate bars — that deliver precise, lab-tested doses of psilocybin. Fusion shroom bars are among the most trusted psilocybin edible products available online.
+                </p>
+            </section>
             
             <section style={{ marginBottom: '3rem' }}>
                 <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>

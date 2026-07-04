@@ -1,20 +1,20 @@
 import type { Metadata } from 'next';
 import { getPageMetadata } from '@/lib/metadata-utils';
+import { PAGE_SEO } from '@/lib/keywords';
 export const revalidate = 3600; // Incrementally regenerate page every hour
 
-import Link from 'next/link';
-import Image from 'next/image';
 import styles from './shop.module.css';
 import ShopFilters from './ShopFilters';
 import prisma from '@/lib/prisma';
-import AddToCartButton from '@/components/AddToCartButton';
-import WishlistButton from '@/components/WishlistButton';
+import ProductCard from '@/components/ProductCard/ProductCard';
 import Pagination from './Pagination';
 
 export async function generateMetadata(): Promise<Metadata> {
+    const seo = PAGE_SEO['/shop'];
     const fallback: Metadata = {
-        title: 'Shop Official Fusion Shroom Bars | Authentic Mushroom Chocolate',
-        description: 'The official shop for Fusion Shroom Bars and Neau Tropics. Explore our full collection of authentic psilocybin-infused Belgian chocolate and gummies.',
+        title: seo.title,
+        description: seo.description,
+        keywords: seo.keywords,
     };
     return await getPageMetadata("/shop", fallback);
 }
@@ -87,75 +87,27 @@ export default async function Shop({
     return (
         <div className={styles.shopContainer}>
             <header className={styles.shopHeader}>
-                <h1>Shop Fusion Shroom Bars &amp; Mushroom Chocolate Online</h1>
-                <p>Buy authentic Fusion mushroom chocolate bars, Neau Tropics, and psilocybin gummies. Lab-tested premium edibles with discreet worldwide shipping.</p>
+                <span className="section-label">Official store</span>
+                <h1>Fusion mushroom bars &amp; mushroom chocolate</h1>
+                <p>Lab-tested fusion shroom bars, Neau Tropics, and psilocybin gummies — discreet worldwide shipping.</p>
             </header>
 
             <ShopFilters categories={categories as string[]} />
 
             <div className={styles.resultsInfo}>
-                <p>Showing <strong>{products.length}</strong> of <strong>{totalProducts}</strong> products</p>
+                <p>{totalProducts} product{totalProducts !== 1 ? 's' : ''}</p>
             </div>
 
             {dbError ? (
-                <div style={{ textAlign: 'center', padding: '4rem 2rem', background: 'rgba(255,100,100,0.05)', borderRadius: '12px', border: '1px solid rgba(255,100,100,0.1)', margin: '2rem 0' }}>
-                    <h2 style={{ color: '#ff6b6b' }}>Store Temporarily Unavailable</h2>
-                    <p>We're experiencing a connection issue with our product database. Please try refreshing the page or check back in a few minutes.</p>
+                <div className={styles.errorState}>
+                    <h2>Store temporarily unavailable</h2>
+                    <p>We&apos;re experiencing a connection issue. Please try refreshing or check back shortly.</p>
                 </div>
             ) : (
                 <>
                     <div className={styles.productGrid}>
                         {products.map((product: any) => (
-                            <div key={product.id} className={styles.productCard}>
-                                <div className={styles.productImagePlaceholder}>
-                                    <Image 
-                                        src={product.image} 
-                                        alt={product.name} 
-                                        fill 
-                                        style={{ objectFit: 'cover' }} 
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                        unoptimized={product.image.includes('data:image')}
-                                    />
-                                    <div className={styles.badgeContainer}>
-                                        {product.regularPrice && product.regularPrice > product.price && (
-                                            <span className={styles.badgeSale}>SALE</span>
-                                        )}
-                                        {new Date(product.createdAt) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) && (
-                                            <span className={styles.badgeNew}>NEW</span>
-                                        )}
-                                    </div>
-                                    <WishlistButton product={product} />
-                                </div>
-                                <div className={styles.productInfo}>
-                                    <h3 className={styles.productTitle}>{product.name}</h3>
-                                    <div className={styles.categoryTag}>{product.category}</div>
-                                    
-                                    {/* Stock Indicator */}
-                                    <div className={`${styles.stockStatus} ${product.stock <= 0 ? styles.outOfStock : product.stock <= 10 ? styles.lowStock : styles.inStock}`}>
-                                        <span className={styles.stockDot}></span>
-                                        {product.stock <= 0 ? 'Out of Stock' : product.stock <= 10 ? `Low Stock (${product.stock} left)` : 'In Stock'}
-                                    </div>
-                                    <div className={styles.ratingInfo}>
-                                        <div className={styles.stars}>
-                                            {"★★★★★"}
-                                        </div>
-                                        <span className={styles.reviewCount}>(4.9 · 120 reviews)</span>
-                                    </div>
-
-                                    <div className={styles.price}>
-                                        {product.regularPrice && (
-                                            <span className={styles.oldPrice}>${product.regularPrice.toFixed(2)}</span>
-                                        )}
-                                        <span className={styles.newPrice}>${product.price.toFixed(2)}</span>
-                                    </div>
-                                    <div className={styles.buttonGroup}>
-                                        <AddToCartButton product={product} className={`${styles.cartBtn} premium-gradient`} />
-                                        <Link href={`/shop/${product.slug}`} className={styles.viewBtn}>
-                                            VIEW DETAILS
-                                        </Link>
-                                    </div>
-                                </div>
-                            </div>
+                            <ProductCard key={product.id} product={product} />
                         ))}
                     </div>
 

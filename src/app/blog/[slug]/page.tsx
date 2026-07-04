@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { Share2, Heart, Bookmark, ArrowRight, CheckCircle2, User, ChevronLeft } from 'lucide-react';
 import Link from 'next/link';
 import type { Metadata } from 'next';
+import { BLOG_POST_SEO } from '@/lib/keywords';
 import CommentForm from '@/components/CommentForm';
 
 export const revalidate = 3600; // Incrementally regenerate page every hour
@@ -18,16 +19,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         return { title: 'Post Not Found | Fusion Shroom Bars' };
     }
 
+    const tuned = BLOG_POST_SEO[slug];
+    const title = tuned?.title || post.seoTitle || `${post.title} | Official Fusion Shroom Bars`;
+    const description = tuned?.description || post.seoDescription || post.excerpt || post.content.substring(0, 160);
+    const keywords = tuned?.keywords || (post.seoKeywords ? post.seoKeywords.split(',').map((k: string) => k.trim()) : undefined);
+
     return {
-        title: post.seoTitle || `${post.title} | Official Fusion Shroom Bars`,
-        description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
-        keywords: post.seoKeywords || undefined,
+        title,
+        description,
+        keywords,
         alternates: {
             canonical: `https://officialfusionshroombar.com/blog/${slug}`,
         },
         openGraph: {
-            title: post.seoTitle || post.title,
-            description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
+            title: tuned?.title || post.seoTitle || post.title,
+            description,
             images: post.image ? [post.image] : [],
             type: 'article',
             publishedTime: post.createdAt.toISOString(),
@@ -36,8 +42,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         },
         twitter: {
             card: 'summary_large_image',
-            title: post.seoTitle || post.title,
-            description: post.seoDescription || post.excerpt || post.content.substring(0, 160),
+            title: tuned?.title || post.seoTitle || post.title,
+            description,
             images: post.image ? [post.image] : [],
         }
     };
@@ -62,6 +68,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
     if (!post) notFound();
 
+    const tuned = BLOG_POST_SEO[slug];
+    const displayTitle = tuned?.h1 || post.title;
+
     // Fetch related posts from DB
     let relatedPosts: any[] = [];
     try {
@@ -75,7 +84,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     const jsonLd = {
         "@context": "https://schema.org",
         "@type": "BlogPosting",
-        "headline": post.title,
+        "headline": displayTitle,
         "image": post.image,
         "datePublished": post.createdAt.toISOString(),
         "dateModified": post.updatedAt.toISOString(),
@@ -181,7 +190,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         maxWidth: '700px',
                         fontStyle: 'italic',
                     }}>
-                        {post.title}
+                        {displayTitle}
                     </h1>
 
                     {/* Author + metadata row */}
@@ -243,6 +252,25 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                 &ldquo;{post.excerpt}&rdquo;
                             </p>
                         </div>
+                    )}
+
+                    {tuned?.answerCapsule && (
+                        <section
+                            id="answer"
+                            aria-label="Quick Answer"
+                            style={{
+                                marginBottom: '2rem',
+                                padding: '1.25rem 1.5rem',
+                                background: 'rgba(255,255,255,0.03)',
+                                border: '1px solid rgba(255,255,255,0.08)',
+                                borderRadius: '12px',
+                            }}
+                        >
+                            <p style={{ margin: 0, fontSize: '1rem', lineHeight: 1.7, color: '#a1a1aa' }}>
+                                <strong style={{ color: '#fafafa' }}>Quick Answer:</strong>{' '}
+                                {tuned.answerCapsule}
+                            </p>
+                        </section>
                     )}
 
                     {/* Article content */}

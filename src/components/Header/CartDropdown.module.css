@@ -12,16 +12,17 @@
   border-radius: 50%;
   cursor: pointer;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .cartTrigger:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(167, 139, 250, 0.15);
   border-color: var(--primary);
-  box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
+  box-shadow: 0 0 20px var(--primary-glow);
+  transform: scale(1.05);
 }
 
 .badge {

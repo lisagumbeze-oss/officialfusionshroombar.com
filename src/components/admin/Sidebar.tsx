@@ -4,10 +4,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { 
     LayoutDashboard, 
-    FileText, 
-    Layers, 
-    Image as ImageIcon, 
-    MessageSquare,
     Package,
     ShoppingBag,
     Settings,
@@ -59,15 +55,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose
                 { label: 'Products', href: '/admin/products', icon: Package },
                 { label: 'Orders', href: '/admin/orders', icon: ShoppingBag, badgeKey: 'orders' },
                 { label: 'Customers', href: '/admin/customers', icon: Users },
-            ]
-        },
-        {
-            label: 'CONTENT MANAGEMENT',
-            items: [
-                { label: 'All Posts', href: '/admin/blog', icon: FileText },
-                { label: 'Categories', href: '/admin/categories', icon: Layers },
-                { label: 'Media Library', href: '/admin/media', icon: ImageIcon },
-                { label: 'Comments', href: '/admin/comments', icon: MessageSquare },
             ]
         },
         {
@@ -128,18 +115,6 @@ export default function Sidebar({ isOpen, onClose }: { isOpen?: boolean; onClose
                     </nav>
                 </div>
             ))}
-
-            <div className={styles.footer}>
-                <div className={styles.storageCard}>
-                    <div className={styles.storageLabel}>
-                        <span>Storage Status</span>
-                        <span>7.2 GB of 10 GB used</span>
-                    </div>
-                    <div className={styles.progressBar}>
-                        <div className={styles.progressFill} style={{ width: '72%' }} />
-                    </div>
-                </div>
-            </div>
         </aside>
     );
 }

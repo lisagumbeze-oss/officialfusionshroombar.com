@@ -3,6 +3,8 @@
 import { useState, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
+import CartLineItem from '@/components/CartLineItem/CartLineItem';
+import { AlertTriangle } from 'lucide-react';
 import styles from './checkout.module.css';
 
 export default function CheckoutForm({ 
@@ -157,7 +159,10 @@ export default function CheckoutForm({
         return (
             <div className={styles.emptyCart}>
                 <h2>Your cart is empty</h2>
-                <button onClick={() => router.push('/shop')} className="premium-gradient">CONTINUE SHOPPING</button>
+                <p>Add items before checking out.</p>
+                <button type="button" onClick={() => router.push('/shop')} className="btn btn-primary">
+                    Continue shopping
+                </button>
             </div>
         );
     }
@@ -166,7 +171,7 @@ export default function CheckoutForm({
         <div className={styles.checkoutLayout}>
             <div className={styles.formSection}>
                 <form id="checkout-form" onSubmit={handleSubmit}>
-                    <h2 className={styles.sectionTitle}>Billing & Shipping Details</h2>
+                    <h2 className={styles.sectionTitle}>Billing &amp; shipping</h2>
                     <div className={styles.inputGroup}>
                         <label>Country / Region*</label>
                         <select 
@@ -220,7 +225,7 @@ export default function CheckoutForm({
                     </div>
 
                     <div className={styles.shippingSection}>
-                        <h2 className={styles.sectionTitle}>Shipping Method</h2>
+                        <h2 className={styles.sectionTitle}>Shipping method</h2>
                         <div className={styles.shippingOptions}>
                             {shippingOptions.map(option => (
                                 <label key={option.id} className={`${styles.shippingOption} ${shippingOption?.id === option.id ? styles.selected : ''}`}>
@@ -244,15 +249,14 @@ export default function CheckoutForm({
 
             <div className={styles.summarySection}>
                 <div className={styles.orderSummary}>
-                    <h2 className={styles.sectionTitle}>Your Order</h2>
-                    <div className={styles.summaryItems}>
-                        {cart.map((item, i) => (
-                            <div key={i} className={styles.summaryRow}>
-                                <span>{item.quantity}x {item.name}</span>
-                                <span>${(item.price * item.quantity).toFixed(2)}</span>
-                            </div>
+                    <h2 className={styles.sectionTitle}>Your order</h2>
+                    <div className={styles.lineItems}>
+                        {cart.map((item) => (
+                            <CartLineItem key={item.id} item={item} variant="checkout" />
                         ))}
-                        <div className={styles.summarySeparator} />
+                    </div>
+
+                    <div className={styles.summaryTotals}>
                         <div className={styles.summaryRow}>
                             <span>Subtotal</span>
                             <span>${subtotal.toFixed(2)}</span>
@@ -260,7 +264,7 @@ export default function CheckoutForm({
                         {appliedCoupon && (
                             <div className={`${styles.summaryRow} ${styles.discountRow}`}>
                                 <span>Discount ({appliedCoupon.code})</span>
-                                <span>-${appliedCoupon.discountAmount.toFixed(2)}</span>
+                                <span>−${appliedCoupon.discountAmount.toFixed(2)}</span>
                             </div>
                         )}
                         {shippingOption && (
@@ -269,17 +273,18 @@ export default function CheckoutForm({
                                 <span>${shippingOption.price.toFixed(2)}</span>
                             </div>
                         )}
+
                         <div className={styles.couponSection}>
-                            <input 
-                                type="text" 
-                                placeholder="Promo Code" 
+                            <input
+                                type="text"
+                                placeholder="Promo code"
                                 value={couponCode}
                                 onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                             />
-                            <button type="button" onClick={handleApplyCoupon}>APPLY</button>
+                            <button type="button" onClick={handleApplyCoupon}>Apply</button>
                         </div>
                         {couponError && <p className={styles.couponError}>{couponError}</p>}
-                        
+
                         <div className={styles.summarySeparator} />
                         <div className={`${styles.summaryRow} ${styles.totalRow}`}>
                             <span>Total</span>
@@ -289,7 +294,7 @@ export default function CheckoutForm({
                 </div>
 
                 <div className={styles.paymentMethods}>
-                    <h2 className={styles.sectionTitle}>Payment Method</h2>
+                    <h2 className={styles.sectionTitle}>Payment method</h2>
                     {dbPaymentMethods.length === 0 ? (
                         <p className={styles.errorText}>No payment methods active. Please contact support.</p>
                     ) : (
@@ -349,15 +354,15 @@ export default function CheckoutForm({
                 <button
                     form="checkout-form"
                     type="submit"
-                    className={`${styles.placeOrderBtn} premium-gradient`}
+                    className={styles.placeOrderBtn}
                     disabled={isSubmitting || !selectedMethod || !shippingOption || total < 100}
                 >
-                    {isSubmitting ? 'PROCESSING...' : 'PLACE ORDER'}
+                    {isSubmitting ? 'Processing…' : 'Place order'}
                 </button>
                 {total < 100 && (
                     <div className={styles.minimumOrderWarning}>
-                        <span className="material-symbols-outlined">warning</span>
-                        <p>Minimum order amount is <strong>$100.00</strong> (including shipping). Please add more items to your cart to proceed.</p>
+                        <AlertTriangle size={20} />
+                        <p>Minimum order is <strong>$100.00</strong> including shipping. Add more items to continue.</p>
                     </div>
                 )}
             </div>

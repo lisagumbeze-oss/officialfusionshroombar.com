@@ -15,7 +15,7 @@ export default function LayoutWrapper({ children }: { children: React.ReactNode 
   return (
     <>
       <Header />
-      <main>{children}</main>
+      <main key={pathname} className="page-enter">{children}</main>
       <Footer />
     </>
   );

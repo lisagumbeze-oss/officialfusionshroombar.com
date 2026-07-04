@@ -1,35 +1,20 @@
 import type { Metadata } from "next";
-import { generateSEO } from '@/lib/seo-utils';
-import prisma from '@/lib/prisma';
+import { GLOBAL_KEYWORDS, SITE_PRIMARY_KEYWORD, BRAND_NAME } from '@/lib/keywords';
 import "./globals.css";
-import Header from "@/components/Header/Header";
-import Footer from "@/components/Footer/Footer";
 import { CartProvider } from "@/context/CartContext";
-import Script from "next/script";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import GoogleAnalytics from '@/components/GoogleAnalytics';
+import SmartsuppChat from '@/components/SmartsuppChat';
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
   manifest: '/manifest.json',
   title: {
-    default: "Official Fusion Shroom Bars | Authentic Fusion Mushroom Chocolate",
-    template: "%s | Official Fusion Shroom Bars"
+    default: `Fusion Shroom Bars | ${BRAND_NAME}`,
+    template: `%s | ${BRAND_NAME}`
   },
-  description: "The Official Fusion Shroom Bars website. Experience the gold standard of fusion mushroom chocolate bars and gummies. Authentic psilocybin edibles for focus and wellness. Shipping to USA, UK, Canada, Australia, and Europe.",
-  keywords: [
-    "fusion bars", "fusion shroom bars", "fusion mushroom bars", "neau tropics", 
-    "fusion chocolate bar", "fusion shroom bar", "fusion chocolate", "buy neau tropics", 
-    "fusion mushroom chocolate", "neau tropics chocolate", "fusion chocolate mushroom",
-    "fusion chocolate bars", "fusion chocolates", "fusion mushroom chocolate bar",
-    "fusion mushroom chocolate bars", "fusion bar", "fusion mushroom bar", 
-    "fusion shroom chocolate", "fusion bars mushroom", "where to buy fusion bars",
-    "magic mushroom chocolate", "psilocybin edibles", "mushroom gummies", "buy shroom bars online",
-    "microdosing chocolate", "psilocybin chocolate bar", "mushroom chocolate bar for sale",
-    "lab tested mushroom chocolate", "discreet mushroom shipping", "buy psilocybin online",
-    "magic mushroom edibles", "shroom chocolate", "psychedelic chocolate bar",
-    "mushroom extract chocolate", "functional mushroom bar", "premium shroom bars"
-  ],
+  description: `Fusion Shroom Bars — the official home for premium fusion mushroom chocolate bars and psilocybin edibles. Shop authentic fusion shroom bars with lab-tested dosing and discreet worldwide shipping.`,
+  keywords: GLOBAL_KEYWORDS,
   authors: [{ name: "Fusion Team" }],
   creator: "Fusion Shroom Bars",
   publisher: "Fusion Shroom Bars",
@@ -43,8 +28,8 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://officialfusionshroombar.com",
     siteName: "Official Fusion Shroom Bars",
-    title: "Official Fusion Shroom Bars | Premium Magic Mushroom Chocolate & Gummies",
-    description: "The Gold Standard in Mushroom Infusions. Gourmet chocolate and gummies with premium psilocybin extract.",
+    title: `Fusion Shroom Bars | Premium Mushroom Chocolate & Gummies`,
+    description: `Shop fusion shroom bars — the gold standard in fusion mushroom chocolate bars and psilocybin gummies. Authentic, lab-tested fusion shroom bars with worldwide shipping.`,
     images: [
       {
         url: "/og-image.jpg",
@@ -56,8 +41,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Official Fusion Shroom Bars | Premium Magic Mushroom Chocolate",
-    description: "Premium mushroom-infused chocolate and gummies. Worldwide shipping.",
+    title: `Fusion Shroom Bars | Premium Mushroom Chocolate`,
+    description: `Fusion shroom bars and premium psilocybin mushroom chocolate. Discreet worldwide shipping.`,
     images: ["/og-image.jpg"],
   },
   robots: {
@@ -79,7 +64,7 @@ export const metadata: Metadata = {
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "Official Fusion Shroom Bars",
+  "name": BRAND_NAME,
   "url": "https://officialfusionshroombar.com",
   "logo": "https://officialfusionshroombar.com/logo.png", // Assuming logo.png exists
   "sameAs": [
@@ -125,20 +110,7 @@ export default function RootLayout({
           </RecentlyViewedProvider>
         </ToastProvider>
         
-        {/* Smartsupp Live Chat script */}
-        <Script id="smartsupp-chat" strategy="afterInteractive">
-          {`
-            var _smartsupp = _smartsupp || {};
-            _smartsupp.key = 'a817f55a37a06d176f7b4cd7ffa8a1dd9f5deb51';
-            _smartsupp.accentColor = '#9b4dff';
-            window.smartsupp||(function(d) {
-              var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-              s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-              c.type='text/javascript';c.charset='utf-8';c.async=true;
-              c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-            })(document);
-          `}
-        </Script>
+        <SmartsuppChat />
       </body>
     </html>
   );

@@ -3,7 +3,7 @@
 import { useWishlist } from '@/context/WishlistContext';
 import { useToast } from '@/context/ToastContext';
 import { Heart } from 'lucide-react';
-import styles from '@/app/shop/shop.module.css';
+import styles from '@/components/WishlistButton.module.css';
 
 export default function WishlistButton({ product, className = "" }: { product: any, className?: string }) {
     const { toggleWishlist, isInWishlist } = useWishlist();

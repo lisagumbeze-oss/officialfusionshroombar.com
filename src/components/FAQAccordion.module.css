@@ -3,17 +3,19 @@
     border: 1px solid var(--surface-border);
     border-radius: 12px;
     overflow: hidden;
-    transition: all 0.3s ease;
+    transition: border-color 0.35s ease, background 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
 }
 
 .accordionItem:hover {
-    border-color: var(--primary);
+    border-color: rgba(167, 139, 250, 0.4);
     background: rgba(255, 255, 255, 0.05);
+    transform: translateX(4px);
 }
 
 .accordionItem.open {
     border-color: var(--primary);
     background: rgba(160, 30, 241, 0.05);
+    box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1);
 }
 
 .question {
@@ -34,17 +36,21 @@
 
 .icon {
     color: var(--primary);
-    transition: transform 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
+.accordionItem.open .icon {
+    transform: rotate(180deg);
+}
+
 .answerWrapper {
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .accordionItem.open .answerWrapper {

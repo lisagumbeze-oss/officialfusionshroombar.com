@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 export default function NeauTropicsLanding() {
     return (
-        <main style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
+        <main className="animate-fade-in" style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
             <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>The Definitive Guide to Neau Tropics Mushroom Chocolates</h1>
             
             <section style={{ marginBottom: '3rem' }}>

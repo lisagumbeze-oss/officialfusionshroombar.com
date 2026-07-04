@@ -95,20 +95,20 @@ const blogs = [
         `
     },
     {
-        title: "How to Microdose with Mushroom Chocolate: Complete Guide",
+        title: "Microdose Mushroom Chocolate: Dosage & Chocolate Dosing Guide",
         slug: "how-to-microdose-with-mushroom-chocolate",
-        targetKeyword: "how to microdose with mushroom chocolate",
+        targetKeyword: "microdose mushroom chocolate",
         delayDays: 12,
-        excerpt: "Learn exactly how to microdose with mushroom chocolate for enhanced focus, creativity, and mood stabilization. We break down the Fadiman and Stamets protocols in extreme detail.",
-        imageAlt: "Person holding a small square of how to microdose with mushroom chocolate",
+        excerpt: "Master microdose mushroom chocolate with precise mushroom chocolate dosage, chocolate dosing protocols, and microdosing mushroom chocolate schedules using lab-tested fusion shroom bars.",
+        imageAlt: "Microdose mushroom chocolate dosage guide with fusion shroom bars",
         image: "https://images.unsplash.com/photo-1544716278-e513176f20b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
         specificContent: `
-        <h2 style="font-size: 2rem; color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-weight: 800;">Understanding how to microdose with mushroom chocolate</h2>
+        <h2 style="font-size: 2rem; color: #fff; margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 800;">Mushroom chocolate dosage: how much is a microdose?</h2>
         <p style="margin-bottom: 1.5rem;">
-            If you're wondering <strong>how to microdose with mushroom chocolate</strong>, the answer lies in strict scheduling. Taking a daily dose will quickly build neurological tolerance. We recommend the Fadiman Protocol (1 day on, 2 days off) for absolute beginners.
+            A standard <strong>mushroom chocolate dosage</strong> for microdosing is 0.1–0.3 grams dried mushroom equivalent. On <a href="/shop" style="color: #c9a44a; text-decoration: underline;">fusion shroom bars</a> divided into 15 squares, one square (~266mg) is an ideal starting <strong>chocolate dosing</strong> amount for most adults practicing <strong>microdosing mushroom chocolate</strong>.
         </p>
         <p style="margin-bottom: 1.5rem;">
-            By utilizing a highly precise product like our <a href="/mushroom-chocolate-bars" style="color: #c9a44a; text-decoration: underline;">premium bars</a>, you eliminate the need for digital scales. Simply break off a single square (roughly 266mg of active extract) and consume it with your morning coffee. The lipids in the chocolate will ensure a steady, smooth release of serotonin-boosting alkaloids throughout your workday.
+            <strong>Microdose mushroom chocolate</strong> works best on the Fadiman protocol (1 day on, 2 days off). See our full <a href="/microdosing-chocolate" style="color: #c9a44a; text-decoration: underline;">microdosing chocolate guide</a> for Stamets stacking and tolerance management.
         </p>
         `
     },
@@ -131,20 +131,20 @@ const blogs = [
         `
     },
     {
-        title: "Magic Mushroom Edibles: Beginner's Guide",
+        title: "Psychedelic Mushroom Edibles & Magic Mushroom Edibles Guide",
         slug: "magic-mushroom-edibles-guide",
-        targetKeyword: "magic mushroom edibles guide",
+        targetKeyword: "psychedelic mushroom edible",
         delayDays: 25,
-        excerpt: "The ultimate magic mushroom edibles guide for first-timers. From preparing your set and setting, to navigating the come-up anxiety, to integrating your profound post-journey insights.",
-        imageAlt: "A calm person preparing for a journey using a magic mushroom edibles guide",
+        excerpt: "Complete guide to psychedelic mushroom edibles, magic mushrooms edible safety, and psilocybin edible dosing — plus how to choose lab-tested fusion shroom bars.",
+        imageAlt: "Psychedelic mushroom edible and magic mushroom edibles guide",
         image: "https://images.unsplash.com/photo-1541097658-ceab43b67eeb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
         specificContent: `
-        <h2 style="font-size: 2rem; color: #fff; margin-top: 3rem; margin-bottom: 1.5rem; font-weight: 800;">Your foundational magic mushroom edibles guide</h2>
+        <h2 style="font-size: 2rem; color: #fff; margin-top: 2rem; margin-bottom: 1.5rem; font-weight: 800;">What are psychedelic mushroom edibles?</h2>
         <p style="margin-bottom: 1.5rem;">
-            Welcome to the definitive <strong>magic mushroom edibles guide</strong>. If this is your first time exploring psychoactive plants, the experience can be deeply transformative. The golden rule is "Set and Setting." Your internal mindset (Set) and external environment (Setting) will directly dictate the flavor of your journey.
+            A <strong>psychedelic mushroom edible</strong> is any food infused with psilocybin extract — most commonly chocolate. The best <strong>psilocybin edible</strong> products use homogenized extract so every piece delivers the same dose, unlike raw dried mushrooms.
         </p>
         <p style="margin-bottom: 1.5rem;">
-            We strongly recommend eating a light, healthy meal a few hours prior to consuming your first <a href="/faq" style="color: #c9a44a; text-decoration: underline;">edible</a>. Clear your schedule for at least 8 hours, put your phone on airplane mode, and surround yourself with comforting items: a warm blanket, ambient music, and perhaps a trusted sober friend to act as a trip sitter.
+            For first-timers exploring <strong>magic mushrooms edible</strong> products, set and setting matter most. Clear your schedule, eat lightly beforehand, and choose lab-tested <a href="/shop" style="color: #c9a44a; text-decoration: underline;">fusion shroom bars</a>. Read our <a href="/faq" style="color: #c9a44a; text-decoration: underline;">FAQ</a> for shipping and authenticity questions.
         </p>
         `
     },

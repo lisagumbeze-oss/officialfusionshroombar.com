@@ -1,14 +1,11 @@
 export const revalidate = 3600; // Incrementally regenerate page every hour
 
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import styles from './product.module.css';
 import prisma from '@/lib/prisma';
 import { notFound } from 'next/navigation';
-import AddToCartSection from './AddToCartSection';
+import ProductPurchase from './ProductPurchase';
 import Link from 'next/link';
-import Header from '@/components/Header/Header';
-import Footer from '@/components/Footer/Footer';
 import RelatedProducts from '@/components/RelatedProducts';
 import ProductTabs from './ProductTabs';
 import ProductGallery from './ProductGallery';
@@ -148,12 +145,12 @@ export default async function ProductPage({
                 {/* Right: Info */}
                 <div className={styles.productInfo}>
                 <nav className={styles.breadcrumbs} aria-label="Breadcrumb">
-                    <Link href="/" style={{ color: '#c9a44a', textDecoration: 'none' }}>Home</Link>
-                    <span> / </span>
-                    <Link href="/shop" style={{ color: '#c9a44a', textDecoration: 'none' }}>Shop</Link>
-                    <span> / </span>
-                    <Link href={`/shop?category=${encodeURIComponent(product.category)}`} style={{ color: '#c9a44a', textDecoration: 'none' }}>{product.category}</Link>
-                    <span> / </span>
+                    <Link href="/">Home</Link>
+                    <span>/</span>
+                    <Link href="/shop">Shop</Link>
+                    <span>/</span>
+                    <Link href={`/shop?category=${encodeURIComponent(product.category)}`}>{product.category}</Link>
+                    <span>/</span>
                     <span>{product.name}</span>
                 </nav>
                     <h1 className={styles.title}>{product.name}</h1>
@@ -167,13 +164,13 @@ export default async function ProductPage({
 
                     <p className={styles.description}>{product.description}</p>
 
-                    <AddToCartSection product={product} />
+                    <ProductPurchase product={product} />
 
                     <div className={styles.benefits}>
-                        <div className={styles.benefitItem}>✓ Fast Delivery Worldwide</div>
-                        <div className={styles.benefitItem}>✓ Premium Extracted Psilocybin</div>
+                        <div className={styles.benefitItem}>Fast delivery worldwide</div>
+                        <div className={styles.benefitItem}>Premium extracted psilocybin</div>
                         {product.weight && (
-                            <div className={styles.benefitItem}>✓ {product.weight} Potency</div>
+                            <div className={styles.benefitItem}>{product.weight} potency</div>
                         )}
                     </div>
                 </div>
@@ -191,43 +188,41 @@ export default async function ProductPage({
             <RecentlyViewedList excludeId={product.id} />
 
             {/* Customer Reviews */}
-            <div style={{ marginTop: '4rem', display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Customer Reviews</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            <section className={styles.reviewsSection}>
+                <h3>Customer reviews</h3>
+                <div className={styles.reviewsGrid}>
                     {product.reviews && product.reviews.length > 0 ? (
                         product.reviews.map((r: any) => (
-                            <div key={r.id} style={{ padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                                <div style={{ color: '#c9a44a', marginBottom: '0.5rem' }}>
-                                    {Array(r.rating).fill("\u2605").join("")}
+                            <div key={r.id} className={styles.reviewCard}>
+                                <div className={styles.reviewStars}>
+                                    {Array(r.rating).fill('★').join('')}
                                 </div>
-                                <p style={{ color: '#ddd', fontSize: '0.9rem', marginBottom: '1rem', fontStyle: 'italic' }}>
-                                    "{r.content}"
-                                </p>
-                                <div style={{ fontSize: '0.8rem', color: '#888' }}>
-                                    <strong>{r.name}</strong> - Verified Buyer &middot; {new Date(r.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                                <p className={styles.reviewContent}>&ldquo;{r.content}&rdquo;</p>
+                                <div className={styles.reviewMeta}>
+                                    <strong>{r.name}</strong> · Verified buyer · {new Date(r.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                 </div>
                             </div>
                         ))
                     ) : (
-                        <p style={{ color: '#555', fontSize: '14px', fontStyle: 'italic' }}>No reviews yet for this product. Be the first to share your experience!</p>
+                        <p className={styles.reviewMeta}>No reviews yet. Be the first to share your experience.</p>
                     )}
                 </div>
-            </div>
+            </section>
 
-            {/* Internal Cross-Links Section */}
-            <div style={{ marginTop: '3rem', padding: '2rem', borderRadius: '16px', background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                <h3 style={{ fontSize: '1rem', fontWeight: 700, marginBottom: '1rem', color: '#ccc' }}>Need Help With Your Order?</h3>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
-                    <Link href="/faq" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read our FAQ</Link>
-                    <Link href="/contact" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Contact Support 24/7</Link>
-                    <Link href="/about" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>About Fusion Shroom Bars</Link>
-                    <Link href="/blog" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read the Blog</Link>
-                    <Link href="/shop" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Browse All Products</Link>
+            <section className={styles.helpSection}>
+                <h3>Need help with your order?</h3>
+                <div className={styles.helpLinks}>
+                    <Link href="/faq">FAQ</Link>
+                    <Link href="/contact">Contact support</Link>
+                    <Link href="/about">About us</Link>
+                    <Link href="/shop">Browse all products</Link>
                 </div>
-                <p style={{ marginTop: '1rem', color: '#777', fontSize: '0.8rem', lineHeight: 1.6 }}>
-                    All Fusion products are made with <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>psilocybin</a> extract infused into premium Belgian chocolate. Lab-tested for purity and consistency.
+                <p className={styles.helpNote}>
+                    All Fusion products use{' '}
+                    <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)' }}>psilocybin</a>{' '}
+                    extract in premium Belgian chocolate. Lab-tested for purity and consistency.
                 </p>
-            </div>
+            </section>
         </div>
     );
 }

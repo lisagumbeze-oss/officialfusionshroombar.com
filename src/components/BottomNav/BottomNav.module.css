@@ -1,0 +1,94 @@
+.bottomNav {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .bottomNav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0.25rem;
+    height: calc(56px + env(safe-area-inset-bottom, 0px));
+    padding: 0.35rem 0.5rem env(safe-area-inset-bottom, 0px);
+    background: rgba(9, 9, 11, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid var(--border);
+  }
+
+  .item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    min-width: 0;
+    min-height: 44px;
+    padding: 0.25rem 0.125rem;
+    color: var(--text-subtle);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    border-radius: var(--radius-sm);
+    transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+
+  .item:hover {
+    color: var(--foreground);
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  .active {
+    color: var(--primary);
+  }
+
+  .active::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 2px;
+    background: var(--primary);
+    border-radius: 0 0 2px 2px;
+    box-shadow: 0 0 8px var(--primary-glow);
+  }
+
+  .iconWrap {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+  }
+
+  .badge {
+    position: absolute;
+    top: -4px;
+    right: -8px;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--primary);
+    color: #fff;
+    font-size: 0.5625rem;
+    font-weight: 700;
+    line-height: 1;
+    border-radius: var(--radius-full);
+    border: 2px solid rgba(9, 9, 11, 0.94);
+    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+}

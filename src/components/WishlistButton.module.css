@@ -1,0 +1,32 @@
+.wishlistBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(9, 9, 11, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+  z-index: 4;
+  min-height: 36px;
+  min-width: 36px;
+}
+
+.wishlistBtn:hover {
+  background: rgba(9, 9, 11, 0.85);
+  transform: scale(1.05);
+  opacity: 1;
+}
+
+.wishlistActive {
+  color: var(--accent);
+  border-color: rgba(244, 63, 94, 0.4);
+  background: rgba(244, 63, 94, 0.12);
+}

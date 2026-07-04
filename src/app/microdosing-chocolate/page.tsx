@@ -1,11 +1,15 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { PAGE_SEO } from '@/lib/keywords';
 
 export const revalidate = 3600;
 
+const seo = PAGE_SEO['/microdosing-chocolate'];
+
 export const metadata: Metadata = {
-    title: 'Microdosing Chocolate: The Complete Guide to Gentle Psilocybin | Fusion',
-    description: 'Learn how microdosing chocolate can elevate your mood, focus, and creativity. A comprehensive guide to protocols, dosage, benefits, and premium psilocybin edibles.',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
     alternates: {
         canonical: 'https://officialfusionshroombar.com/microdosing-chocolate',
     },
@@ -13,8 +17,14 @@ export const metadata: Metadata = {
 
 export default function MicrodosingChocolateLanding() {
     return (
-        <main style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
-            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>Microdosing Chocolate: Enhancing Everyday Wellness</h1>
+        <main className="animate-fade-in" style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
+            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>Chocolate Dosing &amp; Microdosing Chocolate Guide</h1>
+
+            <section id="answer" aria-label="Quick Answer" style={{ marginBottom: '3rem', padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                <p style={{ fontSize: '1.05rem', margin: 0 }}>
+                    <strong>Quick Answer:</strong> Chocolate dosing is the practice of consuming precisely measured psilocybin via scored mushroom chocolate squares. A standard microdose is 0.1–0.3g dried mushroom equivalent — typically one square of a fusion shroom bar — taken on a structured protocol for focus and wellness.
+                </p>
+            </section>
             
             <section style={{ marginBottom: '3rem' }}>
                 <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>

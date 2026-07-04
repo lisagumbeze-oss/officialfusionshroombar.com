@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { getPageMetadata } from '@/lib/metadata-utils';
+import { PAGE_SEO } from '@/lib/keywords';
 import styles from './faq.module.css';
 import { faqData } from './faq-data';
 import { FAQAccordion } from '@/components/FAQAccordion';
@@ -7,9 +8,11 @@ import { Reveal } from '@/components/Reveal';
 import Link from 'next/link';
 
 export async function generateMetadata(): Promise<Metadata> {
+    const seo = PAGE_SEO['/faq'];
     const fallback: Metadata = {
-        title: 'Frequently Asked Questions | Official Fusion Shroom Bars',
-        description: 'Find answers to common questions about Fusion Shroom Bars, shipping, product ingredients, and authenticity. Everything you need to know about the gold standard of edibles.',
+        title: seo.title,
+        description: seo.description,
+        keywords: seo.keywords,
     };
     return await getPageMetadata("/faq", fallback);
 }

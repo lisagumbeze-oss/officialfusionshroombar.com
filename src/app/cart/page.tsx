@@ -2,98 +2,113 @@
 
 import styles from './cart.module.css';
 import Link from 'next/link';
-import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
-import { Trash2, ShoppingBag } from 'lucide-react';
+import { ShoppingBag, Lock, ArrowRight } from 'lucide-react';
+import CartLineItem from '@/components/CartLineItem/CartLineItem';
+
+const FREE_SHIPPING_THRESHOLD = 300;
+const SHIPPING_COST = 15;
 
 export default function CartPage() {
-    const { cart, cartTotal, removeFromCart, updateQuantity } = useCart();
-    const shipping: number = cartTotal > 300 ? 0 : 15; // Example shipping logic
-    const total = cartTotal + (cart.length > 0 ? shipping : 0);
+  const { cart, cartTotal, removeFromCart, updateQuantity } = useCart();
+  const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
+  const total = cartTotal + (cart.length > 0 ? shipping : 0);
+  const amountToFreeShipping = FREE_SHIPPING_THRESHOLD - cartTotal;
 
-    return (
-        <div className={styles.cartContainer}>
-            <h1 className={styles.pageTitle}>Your Cart</h1>
+  return (
+    <div className={styles.cartContainer}>
+      <header className={styles.pageHeader}>
+        <span className="section-label">Your bag</span>
+        <h1 className={styles.pageTitle}>
+          Cart{itemCount > 0 && <span className={styles.itemCount}> ({itemCount})</span>}
+        </h1>
+      </header>
 
-            {cart.length > 0 ? (
-                <div className={styles.cartLayout}>
-                    {/* Left: Cart Items */}
-                    <div className={styles.cartItems}>
-                        <div className={styles.cartHeader}>
-                            <span>Product</span>
-                            <span>Quantity</span>
-                            <span>Subtotal</span>
-                        </div>
-                        {cart.map((item) => (
-                            <div key={item.id} className={styles.cartRow}>
-                                <div className={styles.productCell}>
-                                    <div className={styles.imageWrapper}>
-                                        <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} unoptimized />
-                                    </div>
-                                    <div>
-                                        <Link href={`/shop/${item.slug}`} className={styles.productName}>{item.name}</Link>
-                                        <div className={styles.productPrice}>${item.price.toFixed(2)}</div>
-                                    </div>
-                                </div>
-                                <div className={styles.quantityCell}>
-                                    <div className={styles.quantityControl}>
-                                        <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>-</button>
-                                        <input type="number" value={item.quantity} min={1} readOnly />
-                                        <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>+</button>
-                                    </div>
-                                </div>
-                                <div className={styles.subtotalCell}>
-                                    ${(item.price * item.quantity).toFixed(2)}
-                                    <button onClick={() => removeFromCart(item.id)} className={styles.removeBtn}>
-                                        <Trash2 size={18} />
-                                    </button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+      {cart.length > 0 ? (
+        <div className={styles.cartLayout}>
+          <div className={styles.cartItems}>
+            <ul className={styles.itemList}>
+              {cart.map((item) => (
+                <li key={item.id}>
+                  <CartLineItem
+                    item={item}
+                    variant="cart"
+                    onUpdateQuantity={updateQuantity}
+                    onRemove={removeFromCart}
+                  />
+                </li>
+              ))}
+            </ul>
 
-                    {/* Right: Order Summary */}
-                    <div className={styles.orderSummary}>
-                        <h2>Order Summary</h2>
-                        <div className={styles.summaryRow}>
-                            <span>Subtotal</span>
-                            <span>${cartTotal.toFixed(2)}</span>
-                        </div>
-                        <div className={styles.summaryRow}>
-                            <span>Shipping</span>
-                            <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
-                        </div>
-                        {shipping > 0 && (
-                            <p style={{ fontSize: '0.75rem', color: '#666', marginTop: '-0.5rem' }}>
-                                Free shipping on orders over $300!
-                            </p>
-                        )}
-                        <div className={styles.divider}></div>
-                        <div className={styles.totalRow}>
-                            <span>Total</span>
-                            <span>${total.toFixed(2)}</span>
-                        </div>
-                        <Link href="/checkout" className={`${styles.checkoutBtn} premium-gradient`}>
-                            PROCEED TO CHECKOUT
-                        </Link>
+            <Link href="/shop" className={styles.continueLink}>
+              ← Continue shopping
+            </Link>
+          </div>
 
-                        <div className={styles.secureCheckout}>
-                            <span>🔒 Secure Checkout</span>
-                            <div className={styles.paymentIcons}>
-                                <span>BTC</span> <span>APPLE CASH</span> <span>ZELLE</span> <span>CASHAPP</span>
-                            </div>
-                        </div>
-                    </div>
+          <aside className={styles.orderSummary}>
+            <h2>Order summary</h2>
+
+            {shipping > 0 && amountToFreeShipping > 0 && (
+              <div className={styles.shippingBanner}>
+                <p>
+                  Add <strong>${amountToFreeShipping.toFixed(2)}</strong> more for free shipping
+                </p>
+                <div className={styles.shippingProgress}>
+                  <div
+                    className={styles.shippingProgressFill}
+                    style={{ width: `${Math.min(100, (cartTotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
+                  />
                 </div>
-            ) : (
-                <div className={styles.emptyCart}>
-                    <div className={styles.emptyIcon}>
-                        <ShoppingBag size={64} />
-                    </div>
-                    <p>Your cart is currently empty.</p>
-                    <Link href="/shop" className={styles.returnBtn}>RETURN TO SHOP</Link>
-                </div>
+              </div>
             )}
+
+            <div className={styles.summaryRows}>
+              <div className={styles.summaryRow}>
+                <span>Subtotal</span>
+                <span>${cartTotal.toFixed(2)}</span>
+              </div>
+              <div className={styles.summaryRow}>
+                <span>Shipping</span>
+                <span>{shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}</span>
+              </div>
+            </div>
+
+            <div className={styles.divider} />
+
+            <div className={styles.totalRow}>
+              <span>Total</span>
+              <span>${total.toFixed(2)}</span>
+            </div>
+
+            <Link href="/checkout" className={styles.checkoutBtn}>
+              Proceed to checkout
+              <ArrowRight size={18} />
+            </Link>
+
+            <div className={styles.secureCheckout}>
+              <Lock size={14} />
+              <span>Secure checkout</span>
+            </div>
+
+            <div className={styles.paymentMethods}>
+              <span>BTC</span>
+              <span>Apple Cash</span>
+              <span>Zelle</span>
+              <span>Cash App</span>
+            </div>
+          </aside>
         </div>
-    );
+      ) : (
+        <div className={styles.emptyCart}>
+          <div className={styles.emptyIcon}>
+            <ShoppingBag size={48} strokeWidth={1.25} />
+          </div>
+          <h2>Your cart is empty</h2>
+          <p>Browse our fusion shroom bars and add something to your bag.</p>
+          <Link href="/shop" className="btn btn-primary">Shop collection</Link>
+        </div>
+      )}
+    </div>
+  );
 }

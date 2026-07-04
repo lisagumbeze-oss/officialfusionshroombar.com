@@ -3,16 +3,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ArrowRight, Search, ChevronLeft, ChevronRight, Mail, Sparkles } from 'lucide-react';
 import type { Metadata } from 'next';
+import { PAGE_SEO } from '@/lib/keywords';
+
+const seo = PAGE_SEO['/blog'];
 
 export const metadata: Metadata = {
-    title: 'Blog | Fusion Shroom Bars',
-    description: 'Insights, news, and education from the world of premium psilocybin. Discover the science and soul behind every official Fusion Shroom Bar.',
+    title: seo.title,
+    description: seo.description,
+    keywords: seo.keywords,
     alternates: {
         canonical: 'https://officialfusionshroombar.com/blog',
     },
     openGraph: {
-        title: 'Blog | Fusion Shroom Bars',
-        description: 'Explore our latest articles on wellness, microdosing, and the science of psilocybin.',
+        title: seo.title,
+        description: 'Guides on microdosing chocolate, mushroom chocolate dosage, psychedelic mushroom edibles, and fusion shroom bars wellness.',
         images: ['/og-blog.jpg'],
     }
 };
@@ -70,7 +74,7 @@ export default async function BlogPage({
     const categories = ['All Stories', 'Wellness & Microdosing', 'Product Launch', 'Science & Research', 'Community Stories', 'Lifestyle'];
 
     return (
-        <div className="min-h-screen" style={{ background: '#0a0510', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
+        <div className="min-h-screen animate-fade-in" style={{ background: '#0a0510', color: '#fff', fontFamily: "'Inter', sans-serif" }}>
             <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '20px 24px 60px' }}>
                 <h1 style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', fontWeight: 900, letterSpacing: '-0.02em', marginBottom: '32px', lineHeight: 1.1 }}>Fusion Shroom Bars Blog: Psilocybin Science, Wellness &amp; Microdosing Insights</h1>
 
