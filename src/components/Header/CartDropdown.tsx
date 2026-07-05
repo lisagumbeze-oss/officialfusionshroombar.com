@@ -7,6 +7,7 @@ import styles from './CartDropdown.module.css';
 import Image from 'next/image';
 import { ShoppingCart, X, Trash2 } from 'lucide-react';
 import UpsellList from '../UpsellList';
+import { shouldUnoptimizeImage } from '@/lib/image';
 
 export default function CartDropdown() {
   const { cart, cartCount, cartTotal, removeFromCart, updateQuantity } = useCart();
@@ -56,7 +57,7 @@ export default function CartDropdown() {
               cart.map((item) => (
                 <div key={item.id} className={styles.cartItem}>
                   <div className={styles.itemImage}>
-                    <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} unoptimized />
+                    <Image src={item.image} alt={item.name} fill style={{ objectFit: 'cover' }} sizes="64px" unoptimized={shouldUnoptimizeImage(item.image)} />
                   </div>
                   <div className={styles.itemInfo}>
                     <Link href={`/shop/${item.slug}`} onClick={() => setIsOpen(false)} className={styles.itemName}>

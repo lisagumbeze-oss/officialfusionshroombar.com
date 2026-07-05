@@ -3,7 +3,7 @@ import { getPageMetadata } from '@/lib/metadata-utils';
 import { PAGE_SEO } from '@/lib/keywords';
 import Image from 'next/image';
 import styles from './page.module.css';
-export const revalidate = 0;
+export const revalidate = 3600;
 
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
@@ -108,8 +108,8 @@ export default async function Home() {
           </Reveal>
           <Reveal delay={0.4}>
             <div className={styles.buttons}>
-              <Link href="/shop" className="btn btn-primary">Browse collection</Link>
-              <Link href="/about" className="btn btn-secondary">Our story</Link>
+              <Link href="/shop" className="btn btn-primary btn-mobile-full">Browse collection</Link>
+              <Link href="/about" className="btn btn-secondary btn-mobile-full">Our story</Link>
             </div>
           </Reveal>
         </div>
@@ -124,6 +124,9 @@ export default async function Home() {
               fill
               className={styles.heroImg}
               priority
+              fetchPriority="high"
+              quality={80}
+              sizes="(max-width: 968px) 100vw, 50vw"
             />
             </div>
           </div>

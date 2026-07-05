@@ -4,6 +4,12 @@
   align-items: center;
 }
 
+@media (max-width: 1023px) {
+  .cartWrapper {
+    display: none;
+  }
+}
+
 .cartTrigger {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);

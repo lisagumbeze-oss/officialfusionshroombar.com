@@ -229,10 +229,25 @@
 @media (max-width: 968px) {
   .cartLayout {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cartItems {
+    order: 1;
   }
 
   .orderSummary {
     position: static;
-    order: -1;
+    order: 2;
+  }
+}
+
+@media (max-width: 480px) {
+  .cartContainer {
+    padding: 1.25rem 1rem calc(1.5rem + var(--bottom-nav-offset));
+  }
+
+  .pageTitle {
+    font-size: 1.5rem;
   }
 }

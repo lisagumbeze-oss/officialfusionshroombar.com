@@ -396,4 +396,12 @@
   .formSection {
     padding: 1.25rem;
   }
+
+  .page {
+    padding: 1.25rem 1rem calc(2rem + var(--bottom-nav-offset));
+  }
+
+  .pageHeader h1 {
+    font-size: 1.5rem;
+  }
 }

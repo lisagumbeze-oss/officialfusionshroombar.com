@@ -699,4 +699,17 @@
     .thumbnails {
         grid-template-columns: repeat(4, 1fr);
     }
+
+    .productContainer {
+        padding: 1.25rem 1rem calc(2rem + var(--bottom-nav-offset));
+    }
+
+    .stickyInner {
+        padding: 0 0.25rem;
+    }
+
+    .stickyAddBtn {
+        min-height: 44px;
+        font-size: 0.8125rem;
+    }
 }

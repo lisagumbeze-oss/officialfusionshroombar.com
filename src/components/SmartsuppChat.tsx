@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
 
@@ -72,21 +72,27 @@ function hideSmartsuppWidget() {
 export default function SmartsuppChat() {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/admin');
+  const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (isAdmin) return;
 
     applyChatOffset();
 
-    const onResize = () => applyChatOffset();
-    window.addEventListener('resize', onResize);
+    const scheduleApply = () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(applyChatOffset, 150);
+    };
 
-    const observer = new MutationObserver(applyChatOffset);
+    window.addEventListener('resize', scheduleApply, { passive: true });
+
+    const observer = new MutationObserver(scheduleApply);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
-      window.removeEventListener('resize', onResize);
+      window.removeEventListener('resize', scheduleApply);
       observer.disconnect();
+      if (debounceRef.current) clearTimeout(debounceRef.current);
     };
   }, [isAdmin]);
 
@@ -106,7 +112,7 @@ export default function SmartsuppChat() {
   }
 
   return (
-    <Script id="smartsupp-chat" strategy="afterInteractive">
+    <Script id="smartsupp-chat" strategy="lazyOnload">
       {`
         var _smartsupp = _smartsupp || {};
         _smartsupp.key = 'a817f55a37a06d176f7b4cd7ffa8a1dd9f5deb51';

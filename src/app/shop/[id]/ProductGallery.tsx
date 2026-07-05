@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import Image from 'next/image';
 import { X, ChevronLeft, ChevronRight, ZoomIn } from 'lucide-react';
+import { shouldUnoptimizeImage } from '@/lib/image';
 import styles from './product.module.css';
 
 interface ProductGalleryProps {
@@ -79,7 +80,7 @@ export default function ProductGallery({ mainImage, gallery, name }: ProductGall
                 : undefined
             }
             priority
-            unoptimized={activeImage.includes('data:image')}
+            unoptimized={shouldUnoptimizeImage(activeImage)}
             sizes="(max-width: 900px) 100vw, 50vw"
           />
           <span className={styles.zoomHint}>
@@ -104,7 +105,7 @@ export default function ProductGallery({ mainImage, gallery, name }: ProductGall
                   alt=""
                   fill
                   style={{ objectFit: 'cover' }}
-                  unoptimized={img.includes('data:image')}
+                  unoptimized={shouldUnoptimizeImage(img)}
                 />
               </button>
             ))}
@@ -157,7 +158,7 @@ export default function ProductGallery({ mainImage, gallery, name }: ProductGall
                 alt={name}
                 fill
                 style={{ objectFit: 'contain' }}
-                unoptimized={activeImage.includes('data:image')}
+                unoptimized={shouldUnoptimizeImage(activeImage)}
                 sizes="100vw"
               />
             </div>

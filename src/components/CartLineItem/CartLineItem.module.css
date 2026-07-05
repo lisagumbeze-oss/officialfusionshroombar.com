@@ -197,4 +197,28 @@
   .name {
     font-size: 0.875rem;
   }
+
+  .item {
+    gap: 0.75rem;
+    padding: 0.875rem;
+  }
+
+  .quantity button {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .removeBtn {
+    width: 36px;
+    height: 36px;
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .footer {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 }

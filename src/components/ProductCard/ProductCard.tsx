@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import AddToCartButton from '@/components/AddToCartButton';
+import { shouldUnoptimizeImage } from '@/lib/image';
 import WishlistButton from '@/components/WishlistButton';
 import styles from './ProductCard.module.css';
 
@@ -44,7 +45,7 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
             className={styles.image}
-            unoptimized={product.image.includes('data:image')}
+            unoptimized={shouldUnoptimizeImage(product.image)}
           />
           <div className={styles.badges}>
             {onSale && <span className={styles.badgeSale}>Sale</span>}

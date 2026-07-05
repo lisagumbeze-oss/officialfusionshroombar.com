@@ -4,6 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { useCart } from '@/context/CartContext';
 import { useToast } from '@/context/ToastContext';
 import Image from 'next/image';
+import { shouldUnoptimizeImage } from '@/lib/image';
 import styles from './product.module.css';
 
 interface ProductPurchaseProps {
@@ -123,7 +124,7 @@ export default function ProductPurchase({ product }: ProductPurchaseProps) {
                 alt=""
                 fill
                 style={{ objectFit: 'cover' }}
-                unoptimized={product.image.includes('data:image')}
+                unoptimized={shouldUnoptimizeImage(product.image)}
               />
             </div>
             <div className={styles.stickyMeta}>

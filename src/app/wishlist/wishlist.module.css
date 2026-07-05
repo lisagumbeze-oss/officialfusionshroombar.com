@@ -6,6 +6,12 @@
   animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+@media (max-width: 480px) {
+  .container {
+    padding: 1.25rem 1rem calc(2rem + var(--bottom-nav-offset));
+  }
+}
+
 @media (min-width: 768px) {
   .container {
     padding: 2.5rem 2rem 5rem;

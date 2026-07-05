@@ -482,4 +482,64 @@
   .trustInner {
     grid-template-columns: 1fr;
   }
+
+  .hero {
+    padding: 1rem 1rem 2.5rem;
+    gap: 1.5rem;
+  }
+
+  .heroVisual {
+    max-height: 280px;
+    animation: none;
+  }
+
+  .title {
+    font-size: clamp(1.75rem, 8vw, 2.25rem);
+  }
+
+  .heroText {
+    font-size: 0.9375rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .buttons :global(.btn) {
+    width: 100%;
+  }
+
+  .answerCapsule {
+    padding: 0 1rem 1.5rem;
+  }
+
+  .answerInner {
+    padding: 1rem 1.125rem;
+    font-size: 0.875rem;
+  }
+
+  .productGrid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .exploreGrid,
+  .reviewsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .finalCta {
+    margin: 2rem 1rem;
+    padding: 2.5rem 1.25rem;
+  }
+
+  .container {
+    padding: 0 1rem;
+  }
+
+  .sectionHeader {
+    margin-bottom: 1.5rem;
+  }
 }

@@ -34,7 +34,8 @@ export default function Header() {
   return (
     <>
       <div className={styles.announcement}>
-        <span>Free discreet shipping on orders over $150</span>
+        <span className={styles.announcementFull}>Free discreet shipping on orders over $150</span>
+        <span className={styles.announcementShort}>Free shipping over $150</span>
         <Link href="/shop">Shop now →</Link>
       </div>
 

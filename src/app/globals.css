@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,8 +32,8 @@
   --primary-glow: rgba(167, 139, 250, 0.25);
 
   /* Typography */
-  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
-  --font-heading: 'Inter', system-ui, sans-serif;
+  --font-sans: var(--font-inter), 'Inter', system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-inter), 'Inter', system-ui, sans-serif;
 
   /* Spacing & radius */
   --radius-sm: 8px;
@@ -50,6 +48,7 @@
   --shadow-elevated: 0 12px 40px rgba(0, 0, 0, 0.45);
 
   --bottom-nav-offset: 0px;
+  --header-offset: 100px;
 
   --grid-bg: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139, 92, 246, 0.08), transparent);
 
@@ -64,6 +63,13 @@
 @media (max-width: 1023px) {
   :root {
     --bottom-nav-offset: calc(56px + env(safe-area-inset-bottom, 0px));
+    --header-offset: calc(88px + env(safe-area-inset-top, 0px));
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --header-offset: calc(96px + env(safe-area-inset-top, 0px));
   }
 }
 
@@ -86,7 +92,7 @@ body {
   width: 100%;
   background: var(--background);
   background-image: var(--grid-bg);
-  background-attachment: fixed;
+  background-attachment: scroll;
   color: var(--foreground);
   font-family: var(--font-sans);
   font-size: 1rem;
@@ -95,6 +101,15 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
   position: relative;
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  -webkit-tap-highlight-color: rgba(167, 139, 250, 0.15);
+}
+
+@media (min-width: 1024px) {
+  body {
+    background-attachment: fixed;
+  }
 }
 
 body::before {
@@ -134,23 +149,24 @@ body::after {
 }
 
 main {
-  padding-top: 100px;
+  padding-top: var(--header-offset);
+  min-height: calc(100vh - var(--header-offset));
 }
 
 .page-enter {
   animation: pageEnter var(--duration-slow) var(--ease-out-expo) forwards;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1023px) {
   main {
-    padding-top: 88px;
     padding-bottom: var(--bottom-nav-offset);
+    min-height: calc(100vh - var(--header-offset) - var(--bottom-nav-offset));
   }
 }
 
-@media (min-width: 769px) and (max-width: 1023px) {
-  main {
-    padding-bottom: var(--bottom-nav-offset);
+@media (max-width: 768px) {
+  .container {
+    padding: 0 1rem;
   }
 }
 
@@ -225,6 +241,12 @@ button {
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+@media (max-width: 480px) {
+  .btn-mobile-full {
+    width: 100%;
+  }
 }
 
 .btn-secondary {
@@ -413,6 +435,21 @@ button {
 .link-underline:hover::after {
   transform: scaleX(1);
   transform-origin: left;
+}
+
+@media (max-width: 1023px) {
+  body::before {
+    animation: none;
+    opacity: 0.7;
+  }
+
+  body::after {
+    display: none;
+  }
+
+  .page-enter {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

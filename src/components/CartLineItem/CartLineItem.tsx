@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Trash2 } from 'lucide-react';
+import { shouldUnoptimizeImage } from '@/lib/image';
 import styles from './CartLineItem.module.css';
 
 export interface CartLineItemData {
@@ -40,7 +41,7 @@ export default function CartLineItem({
             fill
             sizes="80px"
             style={{ objectFit: 'cover' }}
-            unoptimized={item.image.includes('data:image')}
+            unoptimized={shouldUnoptimizeImage(item.image)}
           />
           {!isCart && item.quantity > 1 && (
             <span className={styles.qtyBadge}>{item.quantity}</span>

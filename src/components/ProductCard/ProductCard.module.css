@@ -206,15 +206,38 @@
     opacity: 1;
     transform: none;
     position: static;
-    padding: 0 1rem 1rem;
+    padding: 0 0.875rem 0.875rem;
   }
 
   .imageWrap {
     border-radius: 0;
   }
 
+  .body {
+    padding: 0.875rem 0.875rem 0.5rem;
+  }
+
   .addBtn {
+    font-size: 0.8125rem;
+    padding: 0.75rem;
+    min-height: 44px;
+  }
+
+  .card:hover {
+    transform: none;
+  }
+
+  .title {
+    font-size: 0.875rem;
+  }
+
+  .currentPrice {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .viewLink {
     font-size: 0.75rem;
-    padding: 0.625rem;
   }
 }

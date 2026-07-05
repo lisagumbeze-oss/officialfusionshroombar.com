@@ -1,11 +1,18 @@
 import type { Metadata } from "next";
-import { GLOBAL_KEYWORDS, SITE_PRIMARY_KEYWORD, BRAND_NAME } from '@/lib/keywords';
+import { Inter } from "next/font/google";
+import { GLOBAL_KEYWORDS, BRAND_NAME } from '@/lib/keywords';
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import SmartsuppChat from '@/components/SmartsuppChat';
 
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-inter',
+  preload: true,
+});
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
   manifest: '/manifest.json',
@@ -83,21 +90,29 @@ import { ToastProvider } from "@/context/ToastContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 import { RecentlyViewedProvider } from "@/context/RecentlyViewedContext";
 
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  viewportFit: 'cover' as const,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className={`dark ${inter.variable}`}>
       <head>
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.smartsuppchat.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className="bg-background-dark text-white" data-build="2026-07-05">
-        <GoogleAnalytics ga_id="G-403953413" />
+      <body className={`${inter.className} bg-background-dark text-white`}>        <GoogleAnalytics ga_id="G-403953413" />
         <ToastProvider>
           <RecentlyViewedProvider>
             <WishlistProvider>
