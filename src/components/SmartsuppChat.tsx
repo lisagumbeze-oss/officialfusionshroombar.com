@@ -112,19 +112,27 @@ export default function SmartsuppChat() {
   }
 
   return (
-    <Script id="smartsupp-chat" strategy="lazyOnload">
-      {`
-        var _smartsupp = _smartsupp || {};
-        _smartsupp.key = 'a817f55a37a06d176f7b4cd7ffa8a1dd9f5deb51';
-        _smartsupp.accentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#a78bfa';
-        _smartsupp.offsetY = window.matchMedia('(max-width: 1023px)').matches ? 68 : 16;
-        window.smartsupp||(function(d) {
-          var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
-          s=d.getElementsByTagName('script')[0];c=d.createElement('script');
-          c.type='text/javascript';c.charset='utf-8';c.async=true;
-          c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
-        })(document);
-      `}
-    </Script>
+    <>
+      <Script id="smartsupp-chat" strategy="lazyOnload">
+        {`
+          var _smartsupp = _smartsupp || {};
+          _smartsupp.key = '066c33c30d5a0cddcfb7a8750f96fe6b77709e72';
+          _smartsupp.accentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#a78bfa';
+          _smartsupp.offsetY = window.matchMedia('(max-width: 1023px)').matches ? 68 : 16;
+          window.smartsupp||(function(d) {
+            var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+            s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+            c.type='text/javascript';c.charset='utf-8';c.async=true;
+            c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+          })(document);
+        `}
+      </Script>
+      <noscript>
+        Powered by{' '}
+        <a href="https://www.smartsupp.com" target="_blank" rel="noopener noreferrer">
+          Smartsupp
+        </a>
+      </noscript>
+    </>
   );
 }

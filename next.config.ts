@@ -40,6 +40,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'www.officialfusionshroombars.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'www.officialfusionshroombars.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'officialfusionshroombars.com',
       },
       {

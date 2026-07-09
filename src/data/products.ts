@@ -22,7 +22,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Chocolate Bars",
         "description": "LAUGHING GAS X FUSION, LAUGHING GAS X FUSION,Tremendous Fusion Bars,Fusion bar,fusion mushroom bars,fusion shroom bars,Rainbow Runtz Fusion Bar,White Truffle Fusion Bar,Coco Fusion Bar,fusion x laughing gas,Rainbow Runtz,White Truffle,Tremendous",
-        "image": "/images/products/chocolate-bar.png",
+        "image": "/images/products/laughing-gas-x-fusion.png",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -38,7 +38,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Chocolate Bars",
         "description": "Fusion Bars key Lime Pie",
-        "image": "/images/products/chocolate-bar.png",
+        "image": "/images/products/fusion-bars-key-lime-pie.png",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -54,7 +54,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Gummies",
         "description": "A Box of Fusion Gummies,fusion mushroom bars,fusion shroom bars,mushroom gummy,polkadot gummies,fusion bars,fusion chocolate bar,mushroom bites gummies,mushroom.gummies",
-        "image": "/images/products/gummies.png",
+        "image": "/images/products/a-box-of-fusion-gummies.png",
         "attributes": {
             "effects": [
                 "Euphoria",
@@ -69,7 +69,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Chocolate Bars",
         "description": "Neau Tropics Magic Mushroom Chocolate Bars,neau tropics chocolate bar,neau tropics,Neau Tropics Chocolate,Neau Tropics gummies,Fusion bar,fusion mushroom bars,fusion shroom bars",
-        "image": "/images/products/chocolate-bar.png",
+        "image": "/images/products/neau-tropics-magic-mushroom-chocolate-bars.png",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -85,7 +85,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Wholesale",
         "description": "Fusion X Whole Melt Extract Box of 10",
-        "image": "/images/products/syrup.png",
+        "image": "/images/products/fusion-x-whole-melt-extract-box-of-10.png",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -101,7 +101,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Wholesale",
         "description": "Fusion X Whole Melt 50 stacks box",
-        "image": "/images/products/syrup.png",
+        "image": "/images/products/fusion-x-whole-melt-50-stacks-box.webp",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -117,7 +117,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Wholesale",
         "description": "Get the Fusion X Whole Melt Wholesale 2000 MG Vaporizer at wholesale price — powerful, portable, and infused with premium whole melt extracts. Fusion Shroom Bars approved.",
-        "image": "/images/products/syrup.png",
+        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/fusion-x-whole-melt-wholesale-price-2000-mg-vaporizer-2.jpeg",
         "attributes": {
             "weight": "2g",
             "effects": [
@@ -133,7 +133,7 @@ export const products: Product[] = [
         "regularPrice": 34.99,
         "category": "Chocolate Bars",
         "description": "Fusion Bars Almond Crush is a masterpiece of Belgian confectionery and psilocybin extraction. Pure and potent.",
-        "image": "/images/products/almond-crush.png",
+        "image": "/images/products/almond-crush-fusion-magic-mushroom-bar.png",
         "attributes": {
             "weight": "6g",
             "effects": ["Euphoria", "Focus"]
@@ -146,7 +146,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Chocolate Bars",
         "description": "Sweet and celebratory. Fusion Birthday Cake bars are the perfect way to elevate any occasion.",
-        "image": "/images/products/birthday-cake.webp",
+        "image": "/images/products/birthday-cake-fusion-magic-mushroom-bar.webp",
         "attributes": {
             "weight": "6g",
             "effects": ["Happiness", "Social"]
@@ -159,7 +159,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Wholesale",
         "description": "Mimosa Haze Fusion X Whole Melt, fusion mimosa haze, mimosa haze whole melt",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/mimosa-haze-fusion-x-whole-melt-2-grams-2.png",
+        "image": "/images/products/mimosa-haze-fusion-x-whole-melt.webp",
         "attributes": {
             "weight": "6g",
             "effects": [
@@ -191,7 +191,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Gummies",
         "description": "A Box of 10 Fusion Gummies",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/a-box-of-10-fusion-gummies.png",
+        "image": "/images/products/gummies.png",
         "attributes": {
             "effects": [
                 "Euphoria",
@@ -222,7 +222,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Gummies",
         "description": "Fusion Cactus Cooler Gummies",
-        "image": "/images/products/gummies.png",
+        "image": "/images/products/cactus-cooler.webp",
         "attributes": {
             "effects": [
                 "Euphoria",
@@ -237,7 +237,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Gummies",
         "description": "Fusion Cherry Lime Gummies",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/fusion-cherry-lime-gummies-6000-mg-mushroom.jpeg",
+        "image": "/images/products/cherry-lime-gummies.webp",
         "attributes": {
             "effects": [
                 "Euphoria",
@@ -252,7 +252,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Gummies",
         "description": "Fusion Gummies Berry Citrus",
-        "image": "https://i0.wp.com/officialfusionshroombars.com/wp-content/uploads/2024/09/fusion-gummies-berry-citrus-6000mg.jpeg",
+        "image": "/images/products/berry-citrus-gummies.jpg",
         "attributes": {
             "effects": [
                 "Euphoria",
@@ -404,7 +404,7 @@ export const products: Product[] = [
         "regularPrice": null,
         "category": "Chocolate Bars",
         "description": "Fusion Bar Pretzel Sea Salt",
-        "image": "/images/products/honey.png",
+        "image": "/images/products/chocolate-bar.png",
         "attributes": {
             "weight": "6g",
             "effects": [

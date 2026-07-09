@@ -4,11 +4,15 @@ import { products } from '@/data/products';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
+export async function GET(request: Request) {
     try {
+        const { searchParams } = new URL(request.url);
+        const syncImages = searchParams.get('syncImages') === 'true';
+
         let count = 0;
+        let imageUpdates = 0;
+
         for (const product of products) {
-            // Additive only: Check if slug exists, skip if it does
             const existing = await prisma.product.findUnique({
                 where: { slug: product.id }
             });
@@ -30,6 +34,12 @@ export async function GET() {
                     }
                 });
                 count++;
+            } else if (syncImages && existing.image !== product.image) {
+                await prisma.product.update({
+                    where: { slug: product.id },
+                    data: { image: product.image },
+                });
+                imageUpdates++;
             }
         }
         
@@ -64,7 +74,7 @@ export async function GET() {
                 slug: "fusion-vs-oneup-vs-polkadot-comparison",
                 excerpt: "Learn the difference between Fusion chocolate bar, One Up chocolate bar, and Polkadot chocolate bar. See why Fusion stands out as the most trusted and verified brand.",
                 content: `<h2>Brand Comparison: Fusion vs One Up vs Polkadot</h2><p>If a website claims to sell Fusion chocolate bars and does not link directly to this official Fusion platform, the product is not authentic. This clear rule protects you from counterfeit risks and misleading listings.</p><p>If your goal is trust, verification, and brand certainty, Fusion chocolate bar remains the strongest option when compared directly to One Up chocolate bar and Polkadot chocolate bar. Our commitment to quality ingredients, precise dosing, and secure packaging sets us apart in a crowded market.</p><p>Each Fusion bar undergoes rigorous quality control to ensure that every bite delivers the premium experience our customers expect. Unlike many competitors, we provide full transparency about our ingredients and production process.</p>`,
-                image: "/images/blogs/blog-science.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Comparison"
             },
             {
@@ -72,7 +82,7 @@ export async function GET() {
                 slug: "official-fusion-website-verification",
                 excerpt: "You are on the only official Fusion website. Learn how to verify authentic Fusion chocolate bars, avoid fake sellers, and confirm brand legitimacy before buying.",
                 content: `<h2>Welcome to the Official Fusion Website</h2><p>If you reached this page through searches like fusion magic chocolate bars, fusion chocolate shroom bar, fusion mushroom chocolate bar Canada, or fusion premium chocolate bar, your visit confirms you are now on the only official Fusion website. This page serves as your verification checkpoint.</p><p>No authorized wholesale distributors exist outside this platform. No influencer store, reseller page, or online marketplace partner is approved to sell Fusion bars. Direct access through this website is the only verified source.</p><p>If any seller claims to ship Fusion bars without linking directly to this official website, that seller is not connected to the Fusion brand. This rule protects buyers from deception and protects the brand from misuse.</p><p>This page should be bookmarked for verification any time you see Fusion bars listed elsewhere. If the site does not match this official domain, the product is not real.</p>`,
-                image: "/images/blogs/blog-guide.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Brand Verification"
             },
             {
@@ -80,7 +90,7 @@ export async function GET() {
                 slug: "mushroom-chocolate-bar-guide",
                 excerpt: "Learn what a mushroom chocolate bar is, how packaging works, where reviews come from, what legality means, and how to verify the official Fusion website.",
                 content: `<h2>The Complete Mushroom Chocolate Bar Guide</h2><p>Buyers searching for best mushroom chocolate bars, mushroom chocolate bar brands, mushroom chocolate bars for sale, and where to buy mushroom chocolate bars near me will find both real brands and fake resellers. Many counterfeit products use high dose claims to attract attention. These exaggerated labels are one of the strongest signs of an unverified product.</p><p>You will often see unrelated brands mixed into mushroom searches. These are food products unrelated to mushroom chocolate bars and are often used by sellers to confuse buyers.</p><p>Your safety as a buyer starts with verification. The only way to confirm a real Fusion mushroom chocolate bar listing is by accessing it through this official Fusion website. Any product outside this platform using the Fusion name is not approved and not verified.</p>`,
-                image: "/images/blogs/blog-mastering.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Education"
             },
             {
@@ -96,7 +106,7 @@ export async function GET() {
                 slug: "how-to-make-mushroom-chocolate-bars",
                 excerpt: "A behind-the-scenes look at the expert process of crafting mushroom chocolate bars, from ingredient selection to final quality control.",
                 content: `<h2>The Art of Crafting Mushroom Chocolate Bars</h2><p>Creating premium mushroom chocolate bars is both an art and a science. At Fusion, we begin with the finest Belgian chocolate – sourced from trusted suppliers who share our commitment to quality.</p><p>The process involves careful tempering of the chocolate to achieve that perfect snap and glossy finish. Our proprietary mushroom extract is then precisely measured and blended at controlled temperatures to preserve potency while ensuring even distribution throughout each bar.</p><p>Quality control is paramount at every stage. Each batch is tested for consistency, potency, and flavor profile before being packaged in our signature secure packaging designed to maintain freshness and protect against contamination.</p><p>While we share the general principles behind our process, our exact formulations and techniques remain closely guarded trade secrets – it's what makes Fusion bars uniquely exceptional.</p>`,
-                image: "/images/blogs/blog-science.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Behind the Scenes"
             },
             {
@@ -104,7 +114,7 @@ export async function GET() {
                 slug: "how-long-do-shroom-chocolates-last",
                 excerpt: "Everything you need to know about the shelf life of mushroom chocolates, proper storage conditions, and how to maintain potency over time.",
                 content: `<h2>How Long Do Shroom Chocolates Last?</h2><p>It's crucial to remember that the shelf life of shroom chocolates does not only refer to their edibility but also to their potency. Over time, the psychoactive compounds in magic mushrooms can degrade, potentially reducing their effects. To maintain the desired potency, it's best to consume your shroom chocolates within a reasonable timeframe, especially if you're seeking specific experiences.</p><h2>Proper Storage Guidelines</h2><p>Fusion mushroom chocolates can have a shelf life ranging from several months to a year, depending on their production quality and storage conditions. Proper storage is essential to maintain freshness and potency.</p><p>Store your Fusion bars in a cool, dark place – ideally between 60-70°F (15-21°C). Avoid direct sunlight and high humidity. Keep them sealed in their original packaging until ready to consume. For extended storage, consider refrigeration in an airtight container.</p><p>Whether you're enjoying fusion magic mushroom chocolate bars, fusion chocolate mushroom bars, or fusion premium mushroom chocolate bars, knowing how to store them correctly ensures a more satisfying and safer experience.</p>`,
-                image: "/images/blogs/blog-guide.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Education"
             },
             {
@@ -112,7 +122,7 @@ export async function GET() {
                 slug: "fusion-bars-mushroom-brand-story",
                 excerpt: "Discover the story behind Fusion Bars Mushroom – from the science of psilocybin to the culinary artistry that makes each bar a unique experience.",
                 content: `<h2>The Magic Behind Fusion Bars Mushroom</h2><p>Psychedelic mushrooms contain compounds called psilocybin and psilocin, known for their potential to induce altered states of consciousness. Research into the therapeutic applications of psychedelics is on the rise, with promising studies suggesting their effectiveness in treating conditions such as depression, anxiety, and PTSD.</p><h2>The Birth of Fusion Bars Mushroom</h2><p>Fusion Mushroom Bars emerged as a product of innovation and a desire to make the consumption of psychedelic mushrooms more accessible and enjoyable. One of the primary advantages is precise dosing – each bar is carefully infused with a specific amount, ensuring a consistent and reliable experience.</p><h2>A Culinary Delight</h2><p>What sets Fusion bars apart is their delectable taste. Our bars come in an array of flavors, ranging from classic chocolate to innovative combinations that tantalize your taste buds. The fusion of premium chocolate and top-quality mushrooms creates a harmonious blend.</p><h2>Why Choose Fusion</h2><p>1. Precision Dosing for easy intake management. 2. Delicious variety with over 30 flavors. 3. Expertly crafted by passionate professionals. 4. Rigorous quality assurance meeting the highest industry standards.</p>`,
-                image: "/images/blogs/blog-mastering.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Brand Story"
             },
             {
@@ -120,7 +130,7 @@ export async function GET() {
                 slug: "fusion-mushroom-bars-legal-status",
                 excerpt: "Explore the legal landscape surrounding Fusion Mushroom Bars, including novel food regulations, regional differences, and compliance standards.",
                 content: `<h2>Introduction</h2><p>In recent years, there has been a growing interest in unconventional forms of food and wellness products. Among these are fusion mushroom bars, a unique blend of culinary innovation and holistic health. However, the legality remains a subject of debate and concern in some regions.</p><h2>Understanding the Legal Landscape</h2><p>The legality varies depending on the region and the specific ingredients used. In many countries, mushrooms themselves are legal and can be sold and consumed without restrictions. However, when it comes to products that combine mushrooms with other ingredients, the legal status can become more complicated.</p><p>Key factors include: Novel Food Regulations – some regions have specific regulations regarding the sale of novel foods. Psychoactive Compounds – certain mushroom species contain psychoactive compounds classified as controlled substances. Labeling and Marketing – accurate labeling and marketing claims are crucial. Local Laws – what is legal in one place may not be in another.</p><p>Benefits of mushroom consumption are well-documented: mushrooms are a rich source of essential nutrients, antioxidants, and bioactive compounds that may support various aspects of well-being.</p>`,
-                image: "/images/blogs/blog-science.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Legal Guide"
             },
             {
@@ -136,7 +146,7 @@ export async function GET() {
                 slug: "can-shrooms-be-laced-safety-guide",
                 excerpt: "Learn about the risks of laced mushrooms, how to identify them, and why buying from a trusted source like Fusion is essential for your safety.",
                 content: `<h2>Can Shrooms Be Laced?</h2><p>Yes, psychedelic mushrooms can potentially be laced with other substances. Lacing involves adding additional substances to the mushrooms, often without the consumer's knowledge or consent.</p><h2>Why Lacing Occurs</h2><p>There are several reasons: 1) Unscrupulous dealers may add substances to increase weight and profit. 2) Some may intentionally lace mushrooms to create a different experience, which can be dangerous. 3) Accidental contamination can occur during cultivation or handling.</p><h2>How to Protect Yourself</h2><p>It's essential to obtain mushrooms from reputable sources to reduce the risk of lacing. Properly cultivated and sourced psychedelic mushrooms should not be laced with other substances. At Fusion, every product undergoes rigorous testing and quality control to ensure purity and safety.</p><p>When consuming any substance, practice harm reduction: use proper dosing techniques, start with small amounts, and have a trusted friend present to ensure a safe and positive experience. This is why buying from verified brands like Fusion matters – your safety is our top priority.</p>`,
-                image: "/images/blogs/blog-science.jpg",
+                image: "/images/blogs/blog-gummies.jpg",
                 category: "Safety"
             }
         ];
@@ -173,7 +183,8 @@ export async function GET() {
         }
         
         return NextResponse.json({ 
-            message: `Successfully seeded ${count} products, ${blogCount} blog posts, and ensured Crypto payment method exists.` 
+            message: `Successfully seeded ${count} products, ${blogCount} blog posts, and ensured Crypto payment method exists.`,
+            imageUpdates,
         });
     } catch (error: any) {
         console.error('Seeding error:', error);

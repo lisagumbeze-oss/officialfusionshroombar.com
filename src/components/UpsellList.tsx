@@ -6,8 +6,8 @@ import { Plus } from 'lucide-react';
 import styles from './upsell.module.css';
 
 const RECOMMENDATIONS = [
-    { id: 'guide-1', name: 'Microdose Guide', price: 9.99, image: '/images/products/guide.jpg', category: 'Digital' },
-    { id: 'elite-1', name: 'Fusion Elite 5g', price: 65.00, image: '/images/products/elite.jpg', category: 'Premium' },
+    { id: 'guide-1', name: 'Microdose Guide', price: 9.99, image: '/images/products/chocolate-bar.png', category: 'Digital' },
+    { id: 'elite-1', name: 'Fusion Elite 5g', price: 65.00, image: '/images/products/almond-crush.png', category: 'Premium' },
 ];
 
 export default function UpsellList() {
