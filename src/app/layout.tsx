@@ -6,6 +6,7 @@ import { CartProvider } from "@/context/CartContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import SmartsuppChat from '@/components/SmartsuppChat';
+import BackToTop from '@/components/BackToTop/BackToTop';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -125,6 +126,7 @@ export default function RootLayout({
           </RecentlyViewedProvider>
         </ToastProvider>
         
+        <BackToTop />
         <SmartsuppChat />
       </body>
     </html>

@@ -511,7 +511,7 @@ button {
   margin-bottom: 1rem;
 }
 
-/* Smartsupp chat — sit above mobile bottom nav */
+/* Floating support widgets — stack above mobile bottom nav */
 @media (max-width: 1023px) {
   #smartsupp-widget-container,
   #smartsupp-widget,

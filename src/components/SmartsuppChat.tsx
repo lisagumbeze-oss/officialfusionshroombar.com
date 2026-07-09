@@ -3,6 +3,12 @@
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import Script from 'next/script';
+import {
+  FLOATING_WIDGETS_CHANGE,
+  getBrandPrimaryColor,
+  getChatOffsetY,
+  MOBILE_NAV_QUERY,
+} from '@/lib/floating-widgets';
 
 declare global {
   interface Window {
@@ -15,34 +21,16 @@ declare global {
   }
 }
 
-const MOBILE_NAV_QUERY = '(max-width: 1023px)';
-const CHAT_GAP = 12;
-const DESKTOP_OFFSET = 16;
-
-function getBottomNavHeight(): number {
-  const probe = document.createElement('div');
-  probe.style.cssText =
-    'position:fixed;bottom:0;left:0;width:0;height:var(--bottom-nav-offset);visibility:hidden;pointer-events:none';
-  document.body.appendChild(probe);
-  const height = probe.offsetHeight;
-  document.body.removeChild(probe);
-  return height;
-}
-
-function getChatOffsetY(): number {
-  const isMobile = window.matchMedia(MOBILE_NAV_QUERY).matches;
-  if (!isMobile) return DESKTOP_OFFSET;
-  return getBottomNavHeight() + CHAT_GAP;
-}
-
 function applyChatOffset() {
   const offsetY = getChatOffsetY();
+  const accentColor = getBrandPrimaryColor();
 
   if (window._smartsupp) {
     window._smartsupp.offsetY = offsetY;
+    window._smartsupp.accentColor = accentColor;
   }
 
-  const bottom = offsetY > DESKTOP_OFFSET ? `${offsetY}px` : `${DESKTOP_OFFSET}px`;
+  const bottom = `${offsetY}px`;
 
   document
     .querySelectorAll(
@@ -77,20 +65,22 @@ export default function SmartsuppChat() {
   useEffect(() => {
     if (isAdmin) return;
 
-    applyChatOffset();
-
     const scheduleApply = () => {
       if (debounceRef.current) clearTimeout(debounceRef.current);
       debounceRef.current = setTimeout(applyChatOffset, 150);
     };
 
+    applyChatOffset();
+
     window.addEventListener('resize', scheduleApply, { passive: true });
+    window.addEventListener(FLOATING_WIDGETS_CHANGE, scheduleApply);
 
     const observer = new MutationObserver(scheduleApply);
     observer.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener('resize', scheduleApply);
+      window.removeEventListener(FLOATING_WIDGETS_CHANGE, scheduleApply);
       observer.disconnect();
       if (debounceRef.current) clearTimeout(debounceRef.current);
     };
@@ -111,14 +101,17 @@ export default function SmartsuppChat() {
     return null;
   }
 
+  const initialOffset = 68;
+  const initialAccent = '#a78bfa';
+
   return (
     <>
       <Script id="smartsupp-chat" strategy="lazyOnload">
         {`
           var _smartsupp = _smartsupp || {};
           _smartsupp.key = '066c33c30d5a0cddcfb7a8750f96fe6b77709e72';
-          _smartsupp.accentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '#a78bfa';
-          _smartsupp.offsetY = window.matchMedia('(max-width: 1023px)').matches ? 68 : 16;
+          _smartsupp.accentColor = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '${initialAccent}';
+          _smartsupp.offsetY = window.matchMedia('${MOBILE_NAV_QUERY}').matches ? ${initialOffset} : 16;
           window.smartsupp||(function(d) {
             var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
             s=d.getElementsByTagName('script')[0];c=d.createElement('script');
