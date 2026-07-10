@@ -322,17 +322,21 @@
   padding: 0.875rem 1.5rem;
   border: none;
   border-radius: var(--radius-md);
-  background: #fff;
-  color: #09090b;
+  background: var(--primary);
+  color: var(--on-primary);
+  font-family: var(--font-sans);
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, opacity 0.2s ease;
+  transition: background 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
   min-height: 48px;
+  position: relative;
+  z-index: 2;
 }
 
 .placeOrderBtn:hover:not(:disabled) {
-  background: #f4f4f5;
+  background: var(--primary-hover);
+  box-shadow: 0 6px 20px rgba(0, 113, 227, 0.28);
 }
 
 .placeOrderBtn:disabled {
@@ -398,7 +402,7 @@
   }
 
   .page {
-    padding: 1.25rem 1rem calc(2rem + var(--bottom-nav-offset));
+    padding: 1.25rem 1rem calc(3rem + var(--bottom-nav-offset));
   }
 
   .pageHeader h1 {

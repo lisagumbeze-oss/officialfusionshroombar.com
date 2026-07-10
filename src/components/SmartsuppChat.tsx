@@ -13,6 +13,11 @@ import {
   getChatOffsetY,
   MOBILE_NAV_QUERY,
 } from '@/lib/floating-widgets';
+import {
+  registerSmartsuppChatListeners,
+  setSmartsuppChatOpen,
+  syncSmartsuppPointerEvents,
+} from '@/lib/smartsupp-widget';
 
 declare global {
   interface Window {
@@ -74,6 +79,8 @@ function applyChatOffset() {
       node.style.setProperty('bottom', bottom, 'important');
       node.style.setProperty('right', right, 'important');
     });
+
+  syncSmartsuppPointerEvents();
 }
 
 function hideSmartsuppWidget() {
@@ -104,6 +111,8 @@ export default function SmartsuppChat() {
     };
 
     applyChatOffset();
+    setSmartsuppChatOpen(false);
+    registerSmartsuppChatListeners();
 
     const colorRetries = [0, 400, 1000, 2500, 5000].map((ms) =>
       setTimeout(() => {
@@ -157,6 +166,11 @@ export default function SmartsuppChat() {
 
     return () => observer.disconnect();
   }, [isAdmin]);
+
+  useEffect(() => {
+    if (isAdmin) return;
+    setSmartsuppChatOpen(false);
+  }, [pathname, isAdmin]);
 
   if (isAdmin) {
     return null;

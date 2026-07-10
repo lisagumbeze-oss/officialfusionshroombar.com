@@ -2,6 +2,7 @@
 
 import styles from './cart.module.css';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useCart } from '@/context/CartContext';
 import { ShoppingBag, Lock, ArrowRight } from 'lucide-react';
 import CartLineItem from '@/components/CartLineItem/CartLineItem';
@@ -10,6 +11,7 @@ const FREE_SHIPPING_THRESHOLD = 300;
 const SHIPPING_COST = 15;
 
 export default function CartPage() {
+  const router = useRouter();
   const { cart, cartTotal, removeFromCart, updateQuantity } = useCart();
   const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
   const shipping = cartTotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST;
@@ -26,6 +28,7 @@ export default function CartPage() {
       </header>
 
       {cart.length > 0 ? (
+        <>
         <div className={styles.cartLayout}>
           <div className={styles.cartItems}>
             <ul className={styles.itemList}>
@@ -81,10 +84,14 @@ export default function CartPage() {
               <span>${total.toFixed(2)}</span>
             </div>
 
-            <Link href="/checkout" className={styles.checkoutBtn}>
+            <button
+              type="button"
+              className={styles.checkoutBtn}
+              onClick={() => router.push('/checkout')}
+            >
               Proceed to checkout
-              <ArrowRight size={18} />
-            </Link>
+              <ArrowRight size={18} aria-hidden />
+            </button>
 
             <div className={styles.secureCheckout}>
               <Lock size={14} />
@@ -99,6 +106,22 @@ export default function CartPage() {
             </div>
           </aside>
         </div>
+
+        <div className={styles.mobileCheckoutBar}>
+          <div className={styles.mobileCheckoutMeta}>
+            <span className={styles.mobileCheckoutLabel}>Total</span>
+            <strong className={styles.mobileCheckoutTotal}>${total.toFixed(2)}</strong>
+          </div>
+          <button
+            type="button"
+            className={styles.mobileCheckoutBtn}
+            onClick={() => router.push('/checkout')}
+          >
+            Checkout
+            <ArrowRight size={18} aria-hidden />
+          </button>
+        </div>
+        </>
       ) : (
         <div className={styles.emptyCart}>
           <div className={styles.emptyIcon}>

@@ -640,4 +640,18 @@ iframe[src*="smartsupp"]:not([data-chat-hidden="true"]) {
   right: var(--floating-side, 20px) !important;
   bottom: var(--floating-chat-bottom) !important;
   z-index: 999997 !important;
+  pointer-events: none !important;
+}
+
+#smartsupp-widget-container,
+#smartsupp-widget,
+[class*="smartsupp-widget"]:not([data-chat-hidden="true"]) {
+  pointer-events: none !important;
+}
+
+html.smartsupp-chat-open iframe[src*="smartsupp"]:not([data-chat-hidden="true"]),
+html.smartsupp-chat-open #smartsupp-widget-container,
+html.smartsupp-chat-open #smartsupp-widget,
+html.smartsupp-chat-open [class*="smartsupp-widget"]:not([data-chat-hidden="true"]) {
+  pointer-events: auto !important;
 }

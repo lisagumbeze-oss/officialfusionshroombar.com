@@ -9,12 +9,19 @@ export const metadata = {
 };
 
 export default async function CheckoutPage() {
-  const paymentMethods = await prisma.manualPaymentMethod.findMany({
-    where: { isActive: true },
-    orderBy: { createdAt: 'desc' },
-  });
+  let paymentMethods: Awaited<ReturnType<typeof prisma.manualPaymentMethod.findMany>> = [];
+  let shippingSettings: unknown[] = [];
 
-  const shippingSettings = await (prisma as any).shippingSetting.findMany();
+  try {
+    paymentMethods = await prisma.manualPaymentMethod.findMany({
+      where: { isActive: true },
+      orderBy: { createdAt: 'desc' },
+    });
+
+    shippingSettings = await (prisma as any).shippingSetting.findMany();
+  } catch (error) {
+    console.error('[Checkout] Failed to load checkout settings:', error);
+  }
 
   return (
     <div className={styles.page}>
