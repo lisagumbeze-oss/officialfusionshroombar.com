@@ -7,6 +7,7 @@ export const revalidate = 3600;
 
 import Link from 'next/link';
 import prisma from '@/lib/prisma';
+import { PRODUCT_CARD_SELECT } from '@/lib/product-select';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import { Reveal } from '@/components/Reveal';
 import { FlaskConical, Truck, ShieldCheck, Sparkles } from 'lucide-react';
@@ -20,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
     openGraph: {
       title: 'Fusion Shroom Bars | Official Premium Mushroom Chocolate',
       description: 'Shop authentic fusion shroom bars — premium Belgian psilocybin mushroom chocolate with precise dosing and discreet worldwide shipping.',
-      images: ['/images/hero-fusion.png'],
+      images: ['/images.png'],
     },
   };
 
@@ -79,6 +80,7 @@ export default async function Home() {
       where: { isActive: true },
       take: 8,
       orderBy: { createdAt: 'desc' },
+      select: PRODUCT_CARD_SELECT,
     });
   } catch (error) {
     console.error('[Home] Failed to fetch bestsellers:', error);
@@ -98,7 +100,7 @@ export default async function Home() {
             <span className={styles.eyebrow}>Official fusion shroom bars</span>
           </Reveal>
           <Reveal delay={0.2}>
-            <h1 className={`${styles.title} text-gradient`}>Premium mushroom chocolate, precisely dosed</h1>
+            <h1 className={styles.title}>Premium mushroom chocolate, precisely dosed</h1>
           </Reveal>
           <Reveal delay={0.3}>
             <p className={styles.heroText}>
@@ -114,12 +116,10 @@ export default async function Home() {
           </Reveal>
         </div>
 
-        <Reveal delay={0.2}>
-          <div style={{ position: 'relative' }}>
-            <div className={styles.heroVisualGlow} />
-            <div className={styles.heroVisual}>
+        <Reveal delay={0.2} direction="scale">
+          <div className={styles.heroVisual}>
             <Image
-              src="/images/hero-fusion.png"
+              src="/images/hero-fusion.webp"
               alt="Fusion Shroom Bars — premium psilocybin mushroom chocolate"
               fill
               className={styles.heroImg}
@@ -128,24 +128,25 @@ export default async function Home() {
               quality={80}
               sizes="(max-width: 968px) 100vw, 50vw"
             />
-            </div>
           </div>
         </Reveal>
       </section>
 
       {/* GEO Answer */}
       <section id="answer" aria-label="Quick Answer" className={styles.answerCapsule}>
-        <div className={styles.answerInner}>
-          <strong>Quick answer:</strong> Fusion shroom bars are premium Belgian chocolate infused with lab-tested psilocybin,
-          available in 4000mg and 6000mg variants. Official Fusion Shroom Bars is the authentic source with discreet worldwide shipping.
-        </div>
+        <Reveal direction="blur" delay={0.1}>
+          <div className={styles.answerInner}>
+            <strong>Quick answer:</strong> Fusion shroom bars are premium Belgian chocolate infused with lab-tested psilocybin,
+            available in 4000mg and 6000mg variants. Official Fusion Shroom Bars is the authentic source with discreet worldwide shipping.
+          </div>
+        </Reveal>
       </section>
 
       {/* Trust strip */}
       <section className={styles.trustStrip}>
         <div className={styles.trustInner}>
           {TRUST_ITEMS.map((item, i) => (
-            <Reveal key={item.title} delay={i * 0.08}>
+            <Reveal key={item.title} delay={i * 0.08} direction="up">
               <div className={styles.trustItem}>
                 <div className={styles.trustIcon}>
                   <item.icon size={18} />
@@ -165,24 +166,25 @@ export default async function Home() {
         <div className={styles.container}>
           <div className={styles.teaserGrid}>
             <div className={styles.teaserImage}>
-              <Reveal>
+              <Reveal fill direction="left">
                 <Image
                   src="/images/fusion-bars-hand.jpg"
                   alt="Fusion shroom bars in hand"
                   fill
                   style={{ objectFit: 'cover' }}
+                  sizes="(max-width: 900px) 100vw, 50vw"
                 />
               </Reveal>
             </div>
             <div className={styles.teaserText}>
-              <Reveal delay={0.1}>
+              <Reveal delay={0.1} direction="right">
                 <span className="section-label">Why Fusion</span>
                 <h2>Masterful fusion shroom bars, crafted with care</h2>
               </Reveal>
               <Reveal delay={0.2}>
                 <p>
                   Each bar is a blend of{' '}
-                  <a href="https://en.wikipedia.org/wiki/Belgian_chocolate" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-gold)', textDecoration: 'underline' }}>
+                  <a href="https://en.wikipedia.org/wiki/Belgian_chocolate" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--primary)', textDecoration: 'underline' }}>
                     Belgian confectionery
                   </a>{' '}
                   expertise and modern extraction science — safe, consistent, and undeniably delicious.
@@ -208,16 +210,16 @@ export default async function Home() {
           <Reveal>
             <div className={styles.sectionHeader}>
               <div className={styles.headerTitle}>
-                <span className="section-label">Shop the best</span>
-                <h2>Bestsellers</h2>
+                <span className="section-label">Collection</span>
+                <h2>Best sellers</h2>
               </div>
-              <Link href="/shop" className={styles.browseAll}>View all →</Link>
+              <Link href="/shop" className={styles.browseAll}>View all</Link>
             </div>
           </Reveal>
 
           <div className={styles.productGrid}>
             {bestsellers.map((product, index) => (
-              <Reveal key={product.id} delay={index * 0.06}>
+              <Reveal key={product.id} delay={index * 0.06} direction="scale">
                 <ProductCard product={product} />
               </Reveal>
             ))}
@@ -238,7 +240,7 @@ export default async function Home() {
           </Reveal>
           <div className={styles.exploreGrid}>
             {EXPLORE_LINKS.map((link, i) => (
-              <Reveal key={link.href} delay={i * 0.08}>
+              <Reveal key={link.href} delay={i * 0.08} direction="up">
                 <Link href={link.href} className={styles.exploreCard}>
                   <h3>{link.title}</h3>
                   <p>{link.desc}</p>
@@ -255,14 +257,14 @@ export default async function Home() {
           <Reveal>
             <div className={styles.sectionHeader}>
               <div className={styles.headerTitle}>
-                <span className="section-label">Trusted worldwide</span>
-                <h2>What customers say</h2>
+                <span className="section-label">Reviews</span>
+                <h2>Trusted by thousands</h2>
               </div>
             </div>
           </Reveal>
           <div className={styles.reviewsGrid}>
             {REVIEWS.map((review, i) => (
-              <Reveal key={review.author} delay={i * 0.1}>
+              <Reveal key={review.author} delay={i * 0.1} direction="blur">
                 <div className={styles.reviewCard}>
                   <div className={styles.reviewStars}>★★★★★</div>
                   <p className={styles.reviewText}>&ldquo;{review.text}&rdquo;</p>
@@ -276,12 +278,12 @@ export default async function Home() {
       </section>
 
       {/* CTA */}
-      <Reveal>
+      <Reveal direction="scale">
         <section className={styles.finalCta}>
           <div className={styles.ctaContent}>
-            <h2>Ready to try fusion shroom bars?</h2>
-            <p>Browse our full collection of fusion mushroom bars, shroom chocolate, and premium gummies.</p>
-            <Link href="/shop" className="btn btn-primary">Start your order</Link>
+            <h2>Ready to explore?</h2>
+            <p>Authentic fusion mushroom chocolate, lab-tested and shipped discreetly to your door.</p>
+            <Link href="/shop" className="btn btn-primary">Shop all products</Link>
           </div>
         </section>
       </Reveal>

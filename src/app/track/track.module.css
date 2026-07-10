@@ -33,10 +33,11 @@
     display: flex;
     gap: 1rem;
     margin-bottom: 4rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--surface-elevated);
     padding: 1rem;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-card);
 }
 
 .searchBox input {
@@ -44,14 +45,14 @@
     background: none;
     border: none;
     padding: 0.5rem 1rem;
-    color: #fff;
+    color: var(--foreground);
     font-size: 1.1rem;
     outline: none;
 }
 
 .searchBox button {
     background: var(--primary);
-    color: #fff;
+    color: var(--on-primary);
     border: none;
     padding: 0.75rem 2rem;
     border-radius: 12px;
@@ -61,7 +62,7 @@
 }
 
 .searchBox button:hover {
-    box-shadow: 0 5px 15px rgba(155, 77, 255, 0.4);
+    box-shadow: 0 5px 15px var(--primary-glow);
     transform: translateY(-2px);
 }
 
@@ -70,7 +71,7 @@
     align-items: center;
     gap: 1rem;
     padding: 1.5rem;
-    background: rgba(255, 75, 75, 0.1);
+    background: rgba(255, 75, 75, 0.08);
     border: 1px solid rgba(255, 75, 75, 0.2);
     border-radius: 16px;
     color: #ff6b6b;
@@ -78,10 +79,11 @@
 }
 
 .resultCard {
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
     border-radius: 24px;
     padding: 3rem;
+    box-shadow: var(--shadow-card);
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -94,7 +96,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 2rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    border-bottom: 1px solid var(--border);
     margin-bottom: 3rem;
 }
 
@@ -117,7 +119,7 @@
     display: flex;
     gap: 2rem;
     position: relative;
-    opacity: 0.3;
+    opacity: 0.35;
 }
 
 .timelineStep:not(:last-child)::after {
@@ -127,7 +129,7 @@
     top: 48px;
     width: 2px;
     height: calc(100% - 28px);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--border);
 }
 
 .timelineStep.active {
@@ -142,18 +144,21 @@
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--surface);
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #fff;
+    color: var(--text-muted);
     z-index: 1;
     transition: all 0.3s;
 }
 
 .active .stepIconWrapper {
     background: var(--primary);
-    box-shadow: 0 0 20px rgba(155, 77, 255, 0.4);
+    color: var(--on-primary);
+    border-color: var(--primary);
+    box-shadow: 0 0 20px var(--primary-glow);
 }
 
 .stepInfo h3 {
@@ -169,7 +174,7 @@
 
 .orderSummary {
     padding-top: 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid var(--border);
 }
 
 .orderSummary h3 {
@@ -188,9 +193,9 @@
     justify-content: space-between;
     margin-top: 1.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid var(--border);
     font-weight: 800;
-    color: #fff;
+    color: var(--foreground);
     font-size: 1.1rem;
 }
 

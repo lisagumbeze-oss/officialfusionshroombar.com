@@ -11,9 +11,9 @@
 }
 
 .cartTrigger {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
   padding: 0.6rem;
   border-radius: 50%;
   cursor: pointer;
@@ -25,9 +25,9 @@
 }
 
 .cartTrigger:hover {
-  background: rgba(167, 139, 250, 0.15);
+  background: var(--primary-muted);
   border-color: var(--primary);
-  box-shadow: 0 0 20px var(--primary-glow);
+  box-shadow: 0 0 16px var(--primary-glow);
   transform: scale(1.05);
 }
 
@@ -36,7 +36,7 @@
   top: -5px;
   right: -5px;
   background: var(--primary);
-  color: white;
+  color: var(--on-primary);
   font-size: 0.7rem;
   font-weight: bold;
   height: 18px;
@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
   padding: 0 4px;
-  border: 2px solid #000;
+  border: 2px solid var(--background);
 }
 
 .dropdown {
@@ -55,9 +55,10 @@
   right: 0;
   width: 320px;
   max-height: 450px;
-  background: rgba(10, 10, 10, 0.95);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
   border-radius: 12px;
+  box-shadow: var(--shadow-elevated);
   display: flex;
   flex-direction: column;
   z-index: 1000;
@@ -71,7 +72,7 @@
 
 .header {
   padding: 1rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,18 +83,19 @@
   font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 1px;
+  color: var(--foreground);
 }
 
 .closeBtn {
   background: none;
   border: none;
-  color: #666;
+  color: var(--text-muted);
   cursor: pointer;
   transition: color 0.3s;
 }
 
 .closeBtn:hover {
-  color: white;
+  color: var(--foreground);
 }
 
 .itemList {
@@ -102,19 +104,18 @@
   padding: 0.5rem;
 }
 
-/* Custom scrollbar */
 .itemList::-webkit-scrollbar {
   width: 4px;
 }
 .itemList::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--border);
   border-radius: 10px;
 }
 
 .emptyState {
   padding: 2rem;
   text-align: center;
-  color: #666;
+  color: var(--text-muted);
 }
 
 .shopLink {
@@ -135,7 +136,7 @@
 }
 
 .cartItem:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface);
 }
 
 .itemImage {
@@ -144,7 +145,7 @@
   border-radius: 4px;
   overflow: hidden;
   position: relative;
-  background: #111;
+  background: var(--image-placeholder);
   flex-shrink: 0;
 }
 
@@ -161,7 +162,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   margin-bottom: 0.25rem;
-  color: white;
+  color: var(--foreground);
   text-decoration: none;
 }
 
@@ -174,14 +175,15 @@
   justify-content: space-between;
   align-items: center;
   font-size: 0.8rem;
-  color: #aaa;
+  color: var(--text-muted);
 }
 
 .qtyControls {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface);
+  border: 1px solid var(--border);
   padding: 2px 8px;
   border-radius: 4px;
 }
@@ -189,7 +191,7 @@
 .qtyControls button {
   background: none;
   border: none;
-  color: white;
+  color: var(--foreground);
   padding: 0 4px;
   cursor: pointer;
 }
@@ -197,7 +199,7 @@
 .removeBtn {
   background: none;
   border: none;
-  color: #444;
+  color: var(--text-subtle);
   cursor: pointer;
   padding: 4px;
   transition: color 0.3s;
@@ -209,8 +211,8 @@
 
 .footer {
   padding: 1rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.02);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
 }
 
 .subtotal {
@@ -218,6 +220,7 @@
   justify-content: space-between;
   margin-bottom: 1rem;
   font-weight: bold;
+  color: var(--foreground);
 }
 
 .actions {
@@ -237,21 +240,22 @@
 }
 
 .viewCartBtn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: white;
+  background: var(--surface-elevated);
+  border: 1px solid var(--border);
+  color: var(--foreground);
 }
 
 .viewCartBtn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface);
 }
 
 .checkoutBtn {
-  color: white;
+  background: var(--primary);
+  color: var(--on-primary);
   border: none;
 }
 
 .checkoutBtn:hover {
-  opacity: 0.9;
+  background: var(--primary-hover);
   transform: translateY(-2px);
 }

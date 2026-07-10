@@ -1,6 +1,22 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
+import styles from './page.module.css';
 import { PAGE_SEO } from '@/lib/keywords';
+import { Reveal } from '@/components/Reveal';
+import {
+    ShieldCheck,
+    FlaskConical,
+    Headphones,
+    Truck,
+    Bitcoin,
+    Smartphone,
+    Wallet,
+    AlertTriangle,
+    QrCode,
+    Factory,
+    Lock,
+} from 'lucide-react';
 
 export const revalidate = 3600;
 
@@ -15,93 +31,358 @@ export const metadata: Metadata = {
     },
 };
 
+const STATS = [
+    { value: 'Official', label: 'Authorized retailer' },
+    { value: 'Lab tested', label: 'Every batch verified' },
+    { value: 'Discreet', label: 'Plain packaging' },
+    { value: 'Worldwide', label: 'Tracked shipping' },
+];
+
+const TRUST_INDICATORS = [
+    {
+        icon: FlaskConical,
+        title: 'Readily available lab tests',
+        desc: 'Third-party testing for psilocybin potency, heavy metals, and mycotoxins on every batch.',
+    },
+    {
+        icon: Headphones,
+        title: 'Responsive customer support',
+        desc: 'Real human support via email with clear shipping protocols.',
+        link: { href: '/contact', label: 'Contact us' },
+    },
+    {
+        icon: Truck,
+        title: 'Secure, tracked shipping',
+        desc: 'Discreet vacuum-sealed Mylar packaging with delivery tracking and stealth protocols.',
+    },
+];
+
+const PAYMENT_METHODS = [
+    {
+        icon: Bitcoin,
+        title: 'Cryptocurrency',
+        subtitle: 'Bitcoin, Ethereum, USDT',
+        desc: 'The gold standard for discrete psychedelic commerce — cryptographic privacy for buyer and seller.',
+    },
+    {
+        icon: Smartphone,
+        title: 'CashApp & Zelle',
+        subtitle: 'Instant transfers',
+        desc: 'Extremely popular for stateside buyers, offering fast and secure peer-to-peer payments.',
+    },
+    {
+        icon: Wallet,
+        title: 'Apple Pay & Chime',
+        subtitle: 'P2P applications',
+        desc: 'Bypass traditional high-risk gateway fees with trusted mobile payment platforms.',
+    },
+];
+
+const COUNTERFEIT_WARNINGS = [
+    'Empty branded boxes sold in bulk and filled with cheap chocolate',
+    'Synthetic 4-AcO-DMT instead of real psilocybin extract',
+    'No holographic seals, QR codes, or lab verification',
+];
+
 export default function BuyShroomBarsLanding() {
     return (
-        <main className="animate-fade-in" style={{ padding: '6rem 2rem 4rem', maxWidth: '1000px', margin: '0 auto', color: '#eaeaea', lineHeight: 1.8, fontFamily: 'sans-serif' }}>
-            <h1 style={{ fontSize: '3rem', fontWeight: 900, marginBottom: '2rem', color: '#fff' }}>Where to Buy Shroom Bars Online</h1>
-
-            <section id="answer" aria-label="Quick Answer" style={{ marginBottom: '3rem', padding: '1.5rem', borderRadius: '12px', background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)' }}>
-                <p style={{ fontSize: '1.05rem', margin: 0 }}>
-                    <strong>Quick Answer:</strong> The safest place to buy shroom bars online is directly from officialfusionshroombar.com — the authorized retailer for fusion shroom bars with lab-tested psilocybin, secure checkout, and discreet worldwide delivery.
-                </p>
-            </section>
-            
-            <section style={{ marginBottom: '3rem' }}>
-                <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                    If you are searching the internet trying to figure out how to <strong>buy shroom bars online</strong>, you have likely encountered a web of confusing vendors, sketchy payment methods, and questionable products. The psychedelic renaissance has brought immense healing and joy to millions, but it has also attracted bad actors looking to capitalize on the massive demand for psilocybin chocolate.
-                </p>
-                <p style={{ fontSize: '1.1rem', marginBottom: '1.5rem' }}>
-                    This comprehensive guide is designed to educate you on the intricacies of purchasing <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a', textDecoration: 'underline' }}>psilocybin</a> edibles on the internet. Whether you are looking for our legendary <Link href="/shop" style={{ color: '#c9a44a', textDecoration: 'underline' }}>Fusion Shroom Bars</Link> or exploring other boutique options, understanding the landscape is critical for your safety and satisfaction.
-                </p>
-            </section>
-
-            <section style={{ marginBottom: '3rem' }}>
-                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>The Surge in Counterfeit Shroom Bars</h2>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    The number one issue consumers face when they try to <strong>buy shroom bars online</strong> is encountering counterfeit products. As brands like Fusion and Polkadot gained massive popularity, overseas manufacturers began producing thousands of identical, empty cardboard packaging boxes. These boxes are sold in bulk to illicit dealers who then fill them with cheap, gas-station-quality chocolate.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    Worse still, these counterfeiters rarely use actual psilocybe mushrooms. Because raw mushrooms are time-consuming to grow, they often lace the chocolate with 4-AcO-DMT, a synthetic research chemical that converts into psilocin in the body but lacks the "entourage effect" of whole-fungus alkaloids like baeocystin and norbaeocystin. The resulting high is often described as highly synthetic, lacking the grounded, earthy feeling of genuine magic mushrooms.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    To protect yourself, you must be hyper-vigilant. True manufacturers use high-quality holographic seals, proprietary stamping on the chocolate itself, and verified QR codes that link securely back to a transparent domain.
-                </p>
-            </section>
-
-            <section style={{ marginBottom: '3rem' }}>
-                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Key Indicators of a Trustworthy Online Vendor</h2>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    When deciding where to <strong>buy shroom bars online</strong>, you should evaluate the vendor based on a strict set of criteria. The dark web era is over; today, premium psychedelic e-commerce should feel just as professional as buying high-end supplements or craft coffee.
-                </p>
-                <div style={{ backgroundColor: 'rgba(255,255,255,0.03)', padding: '2rem', borderRadius: '12px', borderLeft: '4px solid #c9a44a' }}>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: '#c9a44a' }}>1. Readily Available Lab Tests</h3>
-                    <p style={{ marginBottom: '1.5rem' }}>The vendor should clearly state that their products undergo rigorous third-party analytical testing. They should test not only for total psilocybin and psilocin content to ensure dosage accuracy but also for heavy metals and mycotoxins.</p>
-
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: '#c9a44a' }}>2. Responsive Customer Support</h3>
-                    <p style={{ marginBottom: '1.5rem' }}>You should be able to get in touch with a real human being. Legit operations have dedicated email support (like the one you can find on our <Link href="/contact" style={{ color: '#fff', textDecoration: 'underline' }}>Contact Page</Link>) and clear shipping protocols.</p>
-
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '1rem', color: '#c9a44a' }}>3. Secure, Tracked Shipping</h3>
-                    <p style={{ marginBottom: '0' }}>Because of the delicate legal nature of shipping psilocybin globally, top-tier vendors utilize highly discreet, vacuum-sealed Mylar packaging. Look for guarantees regarding delivery tracking and stealth shipping protocols.</p>
+        <div className={styles.guidePage}>
+            {/* Hero */}
+            <section className={styles.hero}>
+                <div className={styles.container}>
+                    <Reveal delay={0.1}>
+                        <span className="section-label">Buying guide</span>
+                    </Reveal>
+                    <Reveal delay={0.2}>
+                        <h1>Where to buy shroom bars online</h1>
+                    </Reveal>
+                    <Reveal delay={0.3}>
+                        <p className={styles.lead}>
+                            Avoid counterfeits, sketchy vendors, and scam payment pages. Here&apos;s how
+                            to buy authentic, lab-tested fusion shroom bars safely.
+                        </p>
+                    </Reveal>
+                    <Reveal delay={0.4}>
+                        <div className={styles.heroActions}>
+                            <Link href="/shop" className="btn btn-primary btn-mobile-full">
+                                Shop official store
+                            </Link>
+                            <Link href="/about" className="btn btn-secondary btn-mobile-full">
+                                Our story
+                            </Link>
+                        </div>
+                    </Reveal>
                 </div>
             </section>
 
-            <section style={{ marginBottom: '3rem' }}>
-                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Understanding Payment Methods for Edibles</h2>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    A common point of confusion for first-time buyers is the checkout process. Due to federal banking regulations regarding psilocybin, traditional credit card processors (like Stripe or PayPal) will instantly ban vendors selling magic mushroom products. Therefore, if you see a website offering standard credit card processing for shroom bars, you should proceed with extreme caution—it is highly likely a honey-pot or a scam that will steal your card information.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    Legitimate vendors who allow you to genuinely <strong>buy shroom bars online</strong> operate using alternative secure payment gateways. The most common and secure methods include:
-                </p>
-                <ul style={{ paddingLeft: '2rem', marginBottom: '1.5rem' }}>
-                    <li style={{ marginBottom: '0.8rem' }}><strong>Cryptocurrency (Bitcoin, Ethereum, USDT):</strong> The absolute gold standard for discrete psychedelic commerce. It protects both the buyer and the seller through absolute cryptographic privacy.</li>
-                    <li style={{ marginBottom: '0.8rem' }}><strong>CashApp and Zelle:</strong> Extremely popular for stateside buyers, offering instant secure transfers.</li>
-                    <li style={{ marginBottom: '0.8rem' }}><strong>Apple Pay / Chime:</strong> Peer-to-peer applications that bypass traditional high-risk gateway fees.</li>
-                </ul>
+            {/* Quick answer */}
+            <section id="answer" aria-label="Quick answer" className={styles.answerCapsule}>
+                <div className={styles.answerInner}>
+                    <strong>Quick answer:</strong> The safest place to buy shroom bars online is directly
+                    from officialfusionshroombar.com — the authorized retailer for fusion shroom bars
+                    with lab-tested psilocybin, secure checkout, and discreet worldwide delivery.
+                </div>
             </section>
 
-            <section style={{ marginBottom: '3rem' }}>
-                <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>Why Buying Directly from the Source is Crucial</h2>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    We cannot stress this enough: cutting out the middleman is the safest way to procure your chocolate. Middlemen and "resellers" on social media applications like Telegram and Instagram are notorious for pulling exit scams—taking your money and immediately blocking you.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    By ordering directly through an official verified website (like ours), you eliminate the risk of the "man in the middle." We control the manufacturing process from spawn-to-sale. Our mycologists extract the psilocybin, our chocolatiers temper the Belgian chocolate, and our fulfillment team vacuum-seals the final package before it lands on your doorstep.
-                </p>
-                <p style={{ marginBottom: '1.5rem' }}>
-                    If you want to read more about our rigorous safety standards and the history of our brand, please <Link href="/about" style={{ color: '#c9a44a', textDecoration: 'underline' }}>read our story here</Link>. 
-                </p>
+            {/* Stats */}
+            <section className={styles.statsStrip}>
+                <div className={styles.container}>
+                    <div className={styles.statsGrid}>
+                        {STATS.map((item, i) => (
+                            <Reveal key={item.label} delay={i * 0.08}>
+                                <div className={styles.statItem}>
+                                    <div className={styles.statValue}>{item.value}</div>
+                                    <div className={styles.statLabel}>{item.label}</div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </div>
             </section>
 
-            <section style={{ marginBottom: '3rem', padding: '3rem', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(201,164,74,0.3)', borderRadius: '16px', textAlign: 'center' }}>
-                <h3 style={{ fontSize: '2rem', fontWeight: 900, marginBottom: '1rem', color: '#fff' }}>Ready to Order Safely?</h3>
-                <p style={{ marginBottom: '2rem', fontSize: '1.1rem', color: '#aaa' }}>
-                    Avoid the fakes. Skip the scammers. Buy authentic, lab-tested mushroom chocolate directly from the premier manufacturer. Safe, discreet worldwide shipping guaranteed.
-                </p>
-                <Link href="/shop" style={{ display: 'inline-block', padding: '1rem 2.5rem', backgroundColor: '#c9a44a', color: '#000', fontWeight: 800, textDecoration: 'none', borderRadius: '50px', letterSpacing: '0.05em' }}>
-                    BROWSE OUR SHOP
-                </Link>
+            {/* Intro */}
+            <section className={styles.contentSection}>
+                <div className={styles.containerNarrow}>
+                    <Reveal>
+                        <div className={styles.prose}>
+                            <p>
+                                If you are searching the internet trying to figure out how to{' '}
+                                <strong>buy shroom bars online</strong>, you have likely encountered a
+                                web of confusing vendors, sketchy payment methods, and questionable
+                                products. The psychedelic renaissance has brought immense healing and joy
+                                to millions, but it has also attracted bad actors capitalizing on demand
+                                for psilocybin chocolate.
+                            </p>
+                            <p>
+                                This guide educates you on purchasing{' '}
+                                <a
+                                    href="https://en.wikipedia.org/wiki/Psilocybin"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    psilocybin
+                                </a>{' '}
+                                edibles online. Whether you want our legendary{' '}
+                                <Link href="/shop">Fusion Shroom Bars</Link> or are evaluating other
+                                options, understanding the landscape is critical for your safety.
+                            </p>
+                        </div>
+                    </Reveal>
+                </div>
             </section>
-        </main>
+
+            {/* Counterfeits */}
+            <section className={styles.splitSection}>
+                <div className={styles.container}>
+                    <div className={styles.splitGrid}>
+                        <div className={styles.splitText}>
+                            <Reveal delay={0.1}>
+                                <span className="section-label">Stay safe</span>
+                                <h2>The surge in counterfeit shroom bars</h2>
+                            </Reveal>
+                            <Reveal delay={0.2}>
+                                <div className={styles.prose}>
+                                    <p>
+                                        The number one issue when you try to{' '}
+                                        <strong>buy shroom bars online</strong> is counterfeit products.
+                                        As brands like Fusion gained popularity, overseas manufacturers
+                                        began producing thousands of identical empty packaging boxes
+                                        filled with cheap, gas-station-quality chocolate.
+                                    </p>
+                                    <p>
+                                        These counterfeiters rarely use actual psilocybe mushrooms. They
+                                        often lace chocolate with 4-AcO-DMT — a synthetic research chemical
+                                        that lacks the entourage effect of whole-fungus alkaloids. The
+                                        resulting experience feels synthetic, not grounded.
+                                    </p>
+                                </div>
+                            </Reveal>
+                            <Reveal delay={0.3}>
+                                <ul className={styles.warningList}>
+                                    {COUNTERFEIT_WARNINGS.map((warning) => (
+                                        <li key={warning}>
+                                            <AlertTriangle size={16} />
+                                            <span>{warning}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </Reveal>
+                        </div>
+                        <div className={styles.splitImage}>
+                            <Reveal fill>
+                                <Image
+                                    src="/images/hero-fusion.webp"
+                                    alt="Authentic Fusion shroom bars — buy from official source only"
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                    sizes="(max-width: 968px) 100vw, 50vw"
+                                />
+                            </Reveal>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Trust indicators */}
+            <section className={styles.trustSection}>
+                <div className={styles.container}>
+                    <Reveal>
+                        <div className={styles.sectionHeader}>
+                            <span className="section-label">What to look for</span>
+                            <h2>Key indicators of a trustworthy vendor</h2>
+                            <p className={styles.sectionDesc}>
+                                Premium psychedelic e-commerce should feel as professional as buying
+                                high-end supplements. Evaluate vendors on these criteria.
+                            </p>
+                        </div>
+                    </Reveal>
+                    <div className={styles.trustGrid}>
+                        {TRUST_INDICATORS.map((item, i) => (
+                            <Reveal key={item.title} delay={i * 0.1}>
+                                <div className={styles.trustCard}>
+                                    <div className={styles.trustIcon}>
+                                        <item.icon size={18} />
+                                    </div>
+                                    <h3>{item.title}</h3>
+                                    <p>
+                                        {item.desc}
+                                        {'link' in item && item.link && (
+                                            <>
+                                                {' '}
+                                                <Link href={item.link.href}>{item.link.label}</Link>.
+                                            </>
+                                        )}
+                                    </p>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                    <Reveal delay={0.3}>
+                        <div className={styles.callout}>
+                            <QrCode size={18} />
+                            <p>
+                                True manufacturers use holographic seals, proprietary chocolate stamping,
+                                and verified QR codes linking to a transparent official domain.
+                            </p>
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            {/* Payment methods */}
+            <section className={styles.paymentSection}>
+                <div className={styles.container}>
+                    <Reveal>
+                        <div className={styles.sectionHeader}>
+                            <span className="section-label">Checkout</span>
+                            <h2>Understanding payment methods</h2>
+                            <p className={styles.sectionDesc}>
+                                Traditional credit card processors ban psilocybin vendors. If a site
+                                offers standard Stripe or PayPal checkout, proceed with extreme caution —
+                                it may be a scam to steal card information.
+                            </p>
+                        </div>
+                    </Reveal>
+                    <div className={styles.paymentGrid}>
+                        {PAYMENT_METHODS.map((item, i) => (
+                            <Reveal key={item.title} delay={i * 0.1}>
+                                <div className={styles.paymentCard}>
+                                    <div className={styles.paymentIcon}>
+                                        <item.icon size={18} />
+                                    </div>
+                                    <span className={styles.paymentSubtitle}>{item.subtitle}</span>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.desc}</p>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Buy direct */}
+            <section className={styles.contentSection}>
+                <div className={styles.containerNarrow}>
+                    <Reveal>
+                        <span className="section-label">Official source</span>
+                        <h2>Why buying directly matters</h2>
+                    </Reveal>
+                    <Reveal delay={0.15}>
+                        <div className={styles.prose}>
+                            <p>
+                                Cutting out the middleman is the safest way to procure your chocolate.
+                                Resellers on Telegram and Instagram are notorious for exit scams — taking
+                                your money and blocking you immediately.
+                            </p>
+                            <p>
+                                By ordering through an official verified website, you eliminate the
+                                man-in-the-middle risk. We control manufacturing from spawn to sale:
+                                mycologists extract psilocybin, chocolatiers temper Belgian chocolate,
+                                and fulfillment vacuum-seals every package.
+                            </p>
+                            <p>
+                                Read more about our safety standards and brand history on our{' '}
+                                <Link href="/about">about page</Link>.
+                            </p>
+                        </div>
+                    </Reveal>
+                    <Reveal delay={0.25}>
+                        <div className={styles.directBadges}>
+                            <div className={styles.badge}>
+                                <Factory size={18} />
+                                <span>Spawn to sale</span>
+                            </div>
+                            <div className={styles.badge}>
+                                <Lock size={18} />
+                                <span>Secure checkout</span>
+                            </div>
+                            <div className={styles.badge}>
+                                <ShieldCheck size={18} />
+                                <span>Verified authentic</span>
+                            </div>
+                        </div>
+                    </Reveal>
+                </div>
+            </section>
+
+            {/* CTA */}
+            <Reveal>
+                <section className={styles.finalCta}>
+                    <div className={styles.ctaContent}>
+                        <h2>Ready to order safely?</h2>
+                        <p>
+                            Avoid the fakes. Skip the scammers. Buy authentic, lab-tested mushroom
+                            chocolate directly from the premier manufacturer with discreet worldwide
+                            shipping.
+                        </p>
+                        <Link href="/shop" className="btn btn-primary">
+                            Browse our shop
+                        </Link>
+                    </div>
+                </section>
+            </Reveal>
+
+            <section className="cross-links" style={{ maxWidth: '900px', margin: '0 auto 4rem' }}>
+                <h3>Explore more</h3>
+                <p>Helpful resources before you buy.</p>
+                <div className="link-pills">
+                    <Link href="/shop" className="link-pill">
+                        Browse products
+                    </Link>
+                    <Link href="/mushroom-chocolate-bars" className="link-pill">
+                        Product guide
+                    </Link>
+                    <Link href="/faq" className="link-pill">
+                        FAQ
+                    </Link>
+                    <Link href="/contact" className="link-pill">
+                        Contact support
+                    </Link>
+                    <Link href="/about" className="link-pill">
+                        About Fusion
+                    </Link>
+                </div>
+            </section>
+        </div>
     );
 }

@@ -64,11 +64,11 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
         <div style={{ 
             marginTop: '3rem', 
             padding: '2rem', 
-            background: 'rgba(255,255,255,0.02)', 
+            background: 'var(--surface-elevated)', 
             borderRadius: '16px', 
-            border: '1px solid rgba(255,255,255,0.06)' 
+            border: '1px solid var(--border)' 
         }}>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: '#fff' }}>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: 800, marginBottom: '1.5rem', color: 'var(--foreground)' }}>
                 Leave a Comment
             </h3>
             
@@ -84,10 +84,10 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
                             style={{
                                 width: '100%',
                                 padding: '12px 16px',
-                                background: 'rgba(255,255,255,0.03)',
-                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'var(--surface)',
+                                border: '1px solid var(--border)',
                                 borderRadius: '8px',
-                                color: '#fff',
+                                color: 'var(--foreground)',
                                 outline: 'none'
                             }}
                         />
@@ -102,10 +102,10 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
                             style={{
                                 width: '100%',
                                 padding: '12px 16px',
-                                background: 'rgba(255,255,255,0.03)',
-                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'var(--surface)',
+                                border: '1px solid var(--border)',
                                 borderRadius: '8px',
-                                color: '#fff',
+                                color: 'var(--foreground)',
                                 outline: 'none',
                                 resize: 'none'
                             }}
@@ -123,27 +123,21 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
                         className="cf-turnstile" 
                         data-sitekey={SITE_KEY}
                         data-callback="onTurnstileSuccess"
-                        data-theme="dark"
+                        data-theme="light"
                     ></div>
                 </div>
 
                 <div>
                     <button
                         type="submit"
+                        className="btn btn-primary"
                         disabled={status === 'submitting'}
                         style={{
-                            padding: '12px 32px',
-                            background: '#7c3aed',
-                            color: '#fff',
-                            border: 'none',
-                            borderRadius: '999px',
-                            fontWeight: 700,
                             cursor: status === 'submitting' ? 'not-allowed' : 'pointer',
                             opacity: status === 'submitting' ? 0.7 : 1,
-                            transition: 'all 0.2s'
                         }}
                     >
-                        {status === 'submitting' ? 'POSTING...' : 'POST COMMENT'}
+                        {status === 'submitting' ? 'Posting…' : 'Post comment'}
                     </button>
                     {message && (
                         <p style={{ 

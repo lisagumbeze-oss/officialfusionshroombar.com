@@ -5,10 +5,9 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  background: rgba(9, 9, 11, 0.6);
-  backdrop-filter: blur(8px);
+  background: var(--surface-elevated);
   border: 1px solid var(--border);
-  color: #fff;
+  color: var(--foreground);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,7 +19,7 @@
 }
 
 .wishlistBtn:hover {
-  background: rgba(9, 9, 11, 0.85);
+  background: var(--surface-elevated);
   transform: scale(1.05);
   opacity: 1;
 }

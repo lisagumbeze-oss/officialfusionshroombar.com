@@ -202,10 +202,20 @@
 }
 
 .title {
-    font-size: clamp(1.5rem, 3vw, 2rem);
-    margin-bottom: 0.75rem;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
+    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    font-weight: 700;
+}
+
+.categoryLabel {
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--text-subtle);
+    margin-bottom: 0.5rem;
 }
 
 .priceContainer {
@@ -307,7 +317,7 @@
     top: -8px;
     right: 12px;
     background: var(--primary);
-    color: #fff;
+    color: var(--on-primary);
     font-size: 0.625rem;
     font-weight: 700;
     padding: 2px 8px;
@@ -359,9 +369,9 @@
 
 .addToCartBtn {
     flex: 1;
-    border-radius: var(--radius-md);
-    background: #fff;
-    color: #09090b;
+    border-radius: var(--radius-full);
+    background: var(--primary);
+    color: var(--on-primary);
     font-size: 0.9375rem;
     font-weight: 600;
     border: none;
@@ -371,7 +381,7 @@
 }
 
 .addToCartBtn:hover:not(:disabled) {
-    background: #f4f4f5;
+    background: var(--primary-hover);
     opacity: 1;
 }
 
@@ -418,9 +428,9 @@
     left: 0;
     right: 0;
     z-index: 900;
-    background: rgba(9, 9, 11, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: var(--frost-strong);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-top: 1px solid var(--border);
     padding: 0.75rem 1.25rem;
     transform: translateY(100%);
@@ -498,9 +508,9 @@
 
 .stickyAddBtn {
     padding: 0.75rem 1.5rem;
-    background: #fff;
-    color: #09090b;
-    border-radius: var(--radius-md);
+    background: var(--primary);
+    color: var(--on-primary);
+    border-radius: var(--radius-full);
     font-size: 0.875rem;
     font-weight: 600;
     white-space: nowrap;

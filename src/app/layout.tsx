@@ -1,19 +1,11 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import { GLOBAL_KEYWORDS, BRAND_NAME } from '@/lib/keywords';
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
 import LayoutWrapper from "@/components/LayoutWrapper";
 import GoogleAnalytics from '@/components/GoogleAnalytics';
-import SmartsuppChat from '@/components/SmartsuppChat';
-import BackToTop from '@/components/BackToTop/BackToTop';
+import DeferredWidgets from '@/components/DeferredWidgets';
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  preload: true,
-});
 export const metadata: Metadata = {
   metadataBase: new URL("https://officialfusionshroombar.com"),
   manifest: '/manifest.json',
@@ -40,10 +32,10 @@ export const metadata: Metadata = {
     description: `Shop fusion shroom bars — the gold standard in fusion mushroom chocolate bars and psilocybin gummies. Authentic, lab-tested fusion shroom bars with worldwide shipping.`,
     images: [
       {
-        url: "/og-image.jpg",
-        width: 1200,
-        height: 630,
-        alt: "Official Fusion Shroom Bars",
+        url: "/images.png",
+        width: 362,
+        height: 139,
+        alt: "Fusion Shroom Bars",
       },
     ],
   },
@@ -51,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `Fusion Shroom Bars | Premium Mushroom Chocolate`,
     description: `Fusion shroom bars and premium psilocybin mushroom chocolate. Discreet worldwide shipping.`,
-    images: ["/og-image.jpg"],
+    images: ["/images.png"],
   },
   robots: {
     index: true,
@@ -74,7 +66,7 @@ const organizationJsonLd = {
   "@type": "Organization",
   "name": BRAND_NAME,
   "url": "https://officialfusionshroombar.com",
-  "logo": "https://officialfusionshroombar.com/logo.png", // Assuming logo.png exists
+  "logo": "https://officialfusionshroombar.com/images.png",
   "sameAs": [
     "https://twitter.com/fusionshroombar", // Placeholders
     "https://instagram.com/officialfusionshroombar"
@@ -104,16 +96,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`dark ${inter.variable}`}>
+    <html lang="en">
       <head>
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.smartsuppchat.com" />
+        <link rel="preload" href="/images.png" as="image" type="image/png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
       </head>
-      <body className={`${inter.className} bg-background-dark text-white`}>        <GoogleAnalytics ga_id="G-403953413" />
+      <body>
+        <GoogleAnalytics ga_id="G-403953413" />
         <ToastProvider>
           <RecentlyViewedProvider>
             <WishlistProvider>
@@ -126,8 +120,7 @@ export default function RootLayout({
           </RecentlyViewedProvider>
         </ToastProvider>
         
-        <BackToTop />
-        <SmartsuppChat />
+        <DeferredWidgets />
       </body>
     </html>
   );

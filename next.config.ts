@@ -1,6 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
+  compress: true,
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -20,6 +22,12 @@ const nextConfig: NextConfig = {
   },
   async headers() {
     return [
+      {
+        source: '/_next/static/:path*',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
       {
         source: '/:path*\\.(jpg|jpeg|png|webp|avif|svg|ico|woff2)',
         headers: [
@@ -64,6 +72,14 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
+        hostname: 'myfusionbar.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'myfusionbar.com',
+      },
+      {
+        protocol: 'https',
         hostname: 'i0.wp.com',
       },
       {
@@ -93,6 +109,14 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'i3.wp.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'fusionchocolatestore.com',
+      },
+      {
+        protocol: 'http',
+        hostname: 'fusionchocolatestore.com',
       },
       {
         protocol: 'https',

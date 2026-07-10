@@ -153,6 +153,7 @@ export default async function ProductPage({
                     <span>/</span>
                     <span>{product.name}</span>
                 </nav>
+                    <p className={styles.categoryLabel}>{product.category}</p>
                     <h1 className={styles.title}>{product.name}</h1>
 
                     <div className={styles.priceContainer}>

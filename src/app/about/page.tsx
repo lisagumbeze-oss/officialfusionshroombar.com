@@ -4,127 +4,344 @@ import styles from './page.module.css';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Reveal } from '@/components/Reveal';
+import {
+    FlaskConical,
+    Sparkles,
+    Truck,
+    ShieldCheck,
+    Leaf,
+    Award,
+    Package,
+} from 'lucide-react';
 
 export async function generateMetadata(): Promise<Metadata> {
     const fallback: Metadata = {
         title: 'About Official Fusion Shroom Bars | Our Story & Standards',
-        description: 'Learn the authentic story of Fusion Shroom Bars. Discover our commitment to precision science, artisanal craftsmanship, and the industry standard for psilocybin wellness.',
+        description:
+            'Learn the authentic story of Fusion Shroom Bars. Discover our commitment to precision science, artisanal craftsmanship, and the industry standard for psilocybin wellness.',
     };
-    return await getPageMetadata("/about", fallback);
+    return await getPageMetadata('/about', fallback);
 }
+
+const VALUES = [
+    {
+        icon: FlaskConical,
+        title: 'Lab tested',
+        desc: 'Every batch is verified for purity, potency, and safety before it ships.',
+    },
+    {
+        icon: Sparkles,
+        title: 'Precise dosing',
+        desc: 'Scored squares deliver consistent experiences you can trust.',
+    },
+    {
+        icon: Leaf,
+        title: 'Organic extract',
+        desc: '100% organic psilocybin extract — no raw mushroom chitin, no nausea.',
+    },
+    {
+        icon: Award,
+        title: 'Belgian chocolate',
+        desc: 'Responsibly sourced cacao for a smooth, gourmet finish.',
+    },
+    {
+        icon: Package,
+        title: 'Discreet shipping',
+        desc: 'Plain, unmarked packaging with tracked worldwide delivery.',
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Authentic source',
+        desc: 'Official retailer — no counterfeits, no synthetic substitutes.',
+    },
+];
+
+const MILESTONES = [
+    { value: '2021', label: 'Founded' },
+    { value: '50K+', label: 'Happy customers' },
+    { value: '100%', label: 'Lab-tested batches' },
+    { value: '24/7', label: 'Support available' },
+];
+
+const PROCESS_STEPS = [
+    {
+        step: '01',
+        title: 'Organic extraction',
+        desc: 'Psilocybin is distilled from organic fruiting bodies to eliminate chitin while preserving the full alkaloid spectrum.',
+    },
+    {
+        step: '02',
+        title: 'Precision infusion',
+        desc: 'Extract is homogenized into Belgian chocolate at our facility for even distribution across every scored square.',
+    },
+    {
+        step: '03',
+        title: 'Third-party testing',
+        desc: 'Independent labs verify potency, heavy metals, and mycotoxins before any batch is approved for sale.',
+    },
+    {
+        step: '04',
+        title: 'Discreet fulfillment',
+        desc: 'Orders are vacuum-sealed and shipped in plain packaging with full tracking to your door.',
+    },
+];
 
 export default function AboutPage() {
     return (
         <div className={styles.aboutPage}>
-            {/* Hero Section */}
+            {/* Hero */}
             <section className={styles.hero}>
-                <div className={styles.container}>
-                    <Reveal>
-                        <h1>ABOUT FUSION SHROOM BARS</h1>
+                <div className={styles.heroContent}>
+                    <Reveal delay={0.1}>
+                        <span className="section-label">Our story</span>
                     </Reveal>
                     <Reveal delay={0.2}>
-                        <p className={styles.lead}>Leading the industry in premium psychedelic edibles since 2021.</p>
+                        <h1>Premium psychedelic edibles, built on science</h1>
                     </Reveal>
+                    <Reveal delay={0.3}>
+                        <p className={styles.heroText}>
+                            Fusion Shroom Bars began in 2021 with a simple mission: marry world-class Belgian
+                            confectionery with advanced herbal extraction to create the industry standard in
+                            psilocybin wellness.
+                        </p>
+                    </Reveal>
+                    <Reveal delay={0.4}>
+                        <div className={styles.heroActions}>
+                            <Link href="/shop" className="btn btn-primary btn-mobile-full">
+                                Shop collection
+                            </Link>
+                            <Link href="/faq" className="btn btn-secondary btn-mobile-full">
+                                Read FAQ
+                            </Link>
+                        </div>
+                    </Reveal>
+                </div>
+
+                <Reveal delay={0.2}>
+                    <div className={styles.heroVisual}>
+                        <Image
+                            src="/images/fusion-boxes.jpg"
+                            alt="Fusion Shroom Bars collection — premium Belgian psilocybin mushroom chocolate"
+                            fill
+                            className={styles.heroImg}
+                            sizes="(max-width: 968px) 100vw, 50vw"
+                            priority
+                        />
+                    </div>
+                </Reveal>
+            </section>
+
+            {/* Quick answer */}
+            <section id="answer" aria-label="Quick answer" className={styles.answerCapsule}>
+                <div className={styles.answerInner}>
+                    <strong>Who we are:</strong> Fusion Shroom Bars is the official source for lab-tested
+                    psilocybin mushroom chocolate — combining Belgian confectionery craft with precision
+                    extraction science since 2021.
                 </div>
             </section>
 
-            {/* Content Section */}
-            <section className={styles.contentSection}>
+            {/* Milestones */}
+            <section className={styles.milestones}>
                 <div className={styles.container}>
-                    <div className={styles.grid}>
-                        <div className={styles.textBlock}>
-                            <Reveal>
-                                <h2>A Legacy of Innovation</h2>
+                    <div className={styles.milestoneGrid}>
+                        {MILESTONES.map((item, i) => (
+                            <Reveal key={item.label} delay={i * 0.08}>
+                                <div className={styles.milestoneItem}>
+                                    <div className={styles.milestoneValue}>{item.value}</div>
+                                    <div className={styles.milestoneLabel}>{item.label}</div>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Story */}
+            <section className={styles.storySection}>
+                <div className={styles.container}>
+                    <div className={styles.storyGrid}>
+                        <div className={styles.storyImage}>
+                            <Reveal fill>
+                                <Image
+                                    src="/images/fusion-bars-hand.jpg"
+                                    alt="Fusion shroom bars held in hand"
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                    sizes="(max-width: 968px) 100vw, 50vw"
+                                />
+                            </Reveal>
+                        </div>
+                        <div className={styles.storyText}>
+                            <Reveal delay={0.1}>
+                                <span className="section-label">Our legacy</span>
+                                <h2>A legacy of innovation</h2>
                             </Reveal>
                             <Reveal delay={0.2}>
                                 <p>
-                                    Fusion Shroom Bars began with a vision to revolutionize the psychedelic experience. By marrying world-class Belgian confectionery with advanced herbal extraction techniques, we've created a product that stands alone at the intersection of luxury and consciousness.
+                                    Fusion Shroom Bars began with a vision to revolutionize the psychedelic
+                                    experience. By marrying world-class Belgian confectionery with advanced
+                                    herbal extraction techniques, we created a product that stands alone at the
+                                    intersection of luxury and consciousness.
                                 </p>
                             </Reveal>
                             <Reveal delay={0.3}>
                                 <p>
-                                    Our team consists of master chocolatiers and mycological experts dedicated to the highest standards of safety and purity. We don't just sell edibles; we facilitate journeys.
-                                </p>
-                            </Reveal>
-                            <Reveal delay={0.4}>
-                                <h2>Precision Science Meets Artisanal Craft</h2>
-                            </Reveal>
-                            <Reveal delay={0.5}>
-                                <p>
-                                    At our state-of-the-art facility, every Fusion bar undergoes a rigorous infusion process. We use 100% organic psilocybin extract, distilled to eliminate the nausea-inducing chitin found in raw mushrooms while preserving the full spectrum of beneficial compounds.
-                                </p>
-                            </Reveal>
-                            <Reveal delay={0.6}>
-                                <p>
-                                    The result? A predictable, fast-acting, and exceptionally delicious experience that allows you to focus on what matters: the journey ahead.
+                                    Our team consists of master chocolatiers and mycological experts dedicated
+                                    to the highest standards of safety and purity. We don&apos;t just sell
+                                    edibles — we facilitate journeys.
                                 </p>
                             </Reveal>
                         </div>
-                        <div className={styles.imageBlock}>
-                            <Reveal delay={0.3}>
-                                <Image 
-                                    src="/images/fusion-boxes.jpg" 
-                                    alt="Fusion Shroom Bars Collection - Premium Belgian Psilocybin Mushroom Chocolate Bars and Gummies" 
-                                    width={600} 
-                                    height={600} 
-                                    style={{ objectFit: 'cover', borderRadius: '15px', boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }} 
-                                />
+                    </div>
 
+                    <div className={`${styles.storyGrid} ${styles.storyGridReverse}`}>
+                        <div className={styles.storyText}>
+                            <Reveal delay={0.1}>
+                                <span className="section-label">Our craft</span>
+                                <h2>Precision science meets artisanal craft</h2>
+                            </Reveal>
+                            <Reveal delay={0.2}>
+                                <p>
+                                    At our state-of-the-art facility, every Fusion bar undergoes a rigorous
+                                    infusion process. We use 100% organic{' '}
+                                    <a
+                                        href="https://en.wikipedia.org/wiki/Psilocybin"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        psilocybin
+                                    </a>{' '}
+                                    extract, distilled to eliminate the nausea-inducing chitin found in raw
+                                    mushrooms while preserving the full spectrum of beneficial compounds.
+                                </p>
+                            </Reveal>
+                            <Reveal delay={0.3}>
+                                <p>
+                                    The result is a predictable, fast-acting, and exceptionally delicious
+                                    experience that lets you focus on what matters: the journey ahead.
+                                </p>
+                            </Reveal>
+                        </div>
+                        <div className={styles.storyImage}>
+                            <Reveal fill>
+                                <Image
+                                    src="/images/hero-fusion.webp"
+                                    alt="Fusion shroom bars — premium mushroom chocolate"
+                                    fill
+                                    style={{ objectFit: 'cover' }}
+                                    sizes="(max-width: 968px) 100vw, 50vw"
+                                />
                             </Reveal>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* Why Fusion */}
-            <section className={styles.values}>
+            {/* Process */}
+            <section className={styles.processSection}>
                 <div className={styles.container}>
                     <Reveal>
-                        <h2 className={styles.centeredTitle}>WHY CHOOSE FUSION?</h2>
+                        <div className={styles.sectionHeader}>
+                            <div>
+                                <span className="section-label">How we make it</span>
+                                <h2>From extract to your door</h2>
+                            </div>
+                        </div>
+                    </Reveal>
+                    <div className={styles.processGrid}>
+                        {PROCESS_STEPS.map((step, i) => (
+                            <Reveal key={step.step} delay={i * 0.1}>
+                                <div className={styles.processCard}>
+                                    <span className={styles.processStep}>{step.step}</span>
+                                    <h3>{step.title}</h3>
+                                    <p>{step.desc}</p>
+                                </div>
+                            </Reveal>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            {/* Values */}
+            <section className={styles.valuesStrip}>
+                <div className={styles.container}>
+                    <Reveal>
+                        <div className={styles.sectionHeader}>
+                            <div>
+                                <span className="section-label">Why Fusion</span>
+                                <h2>Built on trust, tested for quality</h2>
+                            </div>
+                        </div>
                     </Reveal>
                     <div className={styles.valuesGrid}>
-                        <Reveal delay={0.2}>
-                            <div className={styles.valueCard}>
-                                <div className={styles.icon}>🔬</div>
-                                <h3>Lab Tested</h3>
-                                <p>Every batch is tested for purity and potency to ensure your safety and experience.</p>
-                            </div>
-                        </Reveal>
-                        <Reveal delay={0.4}>
-                            <div className={styles.valueCard}>
-                                <div className={styles.icon}>🍫</div>
-                                <h3>Belgian Chocolate</h3>
-                                <p>We use only the finest responsibly sourced cacao for a smooth, rich finish.</p>
-                            </div>
-                        </Reveal>
-                        <Reveal delay={0.6}>
-                            <div className={styles.valueCard}>
-                                <div className={styles.icon}>📦</div>
-                                <h3>Discreet Shipping</h3>
-                                <p>Your privacy is our priority. All orders are packed in plain, unmarked boxes.</p>
-                            </div>
-                        </Reveal>
+                        {VALUES.map((item, i) => (
+                            <Reveal key={item.title} delay={i * 0.08}>
+                                <div className={styles.valueCard}>
+                                    <div className={styles.valueIcon}>
+                                        <item.icon size={18} />
+                                    </div>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.desc}</p>
+                                </div>
+                            </Reveal>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* CTA */}
             <Reveal>
-                <section className={styles.cta}>
-                    <div className={styles.container}>
+                <section className={styles.finalCta}>
+                    <div className={styles.ctaContent}>
                         <h2>Ready to start your journey?</h2>
-                        <Link href="/shop" className="premium-gradient">EXPLORE THE SHOP</Link>
-                        <div style={{ marginTop: '2rem', display: 'flex', flexWrap: 'wrap', gap: '1.5rem', justifyContent: 'center' }}>
-                            <Link href="/faq" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Read our FAQ</Link>
-                            <Link href="/contact" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Contact Us 24/7</Link>
-                            <Link href="/blog" style={{ color: '#c9a44a', textDecoration: 'underline', fontSize: '0.9rem' }}>Visit the Blog</Link>
-                        </div>
-                        <p style={{ marginTop: '1.5rem', color: '#888', fontSize: '0.8rem', maxWidth: '600px', margin: '1.5rem auto 0', lineHeight: 1.6 }}>
-                            Our products use organic <a href="https://en.wikipedia.org/wiki/Psilocybin" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>psilocybin</a> extract, precision-infused into world-class <a href="https://en.wikipedia.org/wiki/Belgian_chocolate" target="_blank" rel="noopener noreferrer" style={{ color: '#c9a44a' }}>Belgian chocolate</a>.
+                        <p>
+                            Authentic fusion mushroom chocolate, lab-tested and shipped discreetly to your
+                            door. Explore our full collection or reach out — we&apos;re here 24/7.
                         </p>
+                        <Link href="/shop" className="btn btn-primary">
+                            Explore the shop
+                        </Link>
                     </div>
                 </section>
             </Reveal>
+
+            <section className="cross-links" style={{ maxWidth: '900px', margin: '0 auto 4rem' }}>
+                <h3>Learn more</h3>
+                <p>Browse helpful resources before you order.</p>
+                <div className="link-pills">
+                    <Link href="/faq" className="link-pill">
+                        FAQ
+                    </Link>
+                    <Link href="/contact" className="link-pill">
+                        Contact us 24/7
+                    </Link>
+                    <Link href="/blog" className="link-pill">
+                        Visit the blog
+                    </Link>
+                    <Link href="/microdosing-chocolate" className="link-pill">
+                        Dosing guide
+                    </Link>
+                </div>
+                <p className={styles.disclaimer}>
+                    Our products use organic{' '}
+                    <a
+                        href="https://en.wikipedia.org/wiki/Psilocybin"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        psilocybin
+                    </a>{' '}
+                    extract, precision-infused into world-class{' '}
+                    <a
+                        href="https://en.wikipedia.org/wiki/Belgian_chocolate"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                    >
+                        Belgian chocolate
+                    </a>
+                    .
+                </p>
+            </section>
         </div>
     );
 }

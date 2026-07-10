@@ -6,6 +6,7 @@ export const revalidate = 3600; // Incrementally regenerate page every hour
 import styles from './shop.module.css';
 import ShopFilters from './ShopFilters';
 import prisma from '@/lib/prisma';
+import { PRODUCT_CARD_SELECT } from '@/lib/product-select';
 import ProductCard from '@/components/ProductCard/ProductCard';
 import Pagination from './Pagination';
 
@@ -68,6 +69,7 @@ export default async function Shop({
                 orderBy,
                 skip: skip >= 0 ? skip : 0,
                 take: pageSize,
+                select: PRODUCT_CARD_SELECT,
             }),
             (prisma as any).product.count({ where })
         ]);
@@ -87,9 +89,9 @@ export default async function Shop({
     return (
         <div className={styles.shopContainer}>
             <header className={styles.shopHeader}>
-                <span className="section-label">Official store</span>
-                <h1>Fusion mushroom bars &amp; mushroom chocolate</h1>
-                <p>Lab-tested fusion shroom bars, Neau Tropics, and psilocybin gummies — discreet worldwide shipping.</p>
+                <span className="section-label">Shop</span>
+                <h1>Fusion collection</h1>
+                <p>Premium mushroom chocolate bars, gummies, and disposables — precisely dosed and lab verified.</p>
             </header>
 
             <ShopFilters categories={categories as string[]} />

@@ -1,0 +1,101 @@
+.page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem calc(3rem + var(--bottom-nav-offset));
+  color: var(--text-muted);
+  line-height: 1.75;
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding: 3rem 2rem 4rem;
+  }
+}
+
+.page h1 {
+  font-size: clamp(2rem, 5vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+  line-height: 1.1;
+}
+
+.page h2 {
+  font-size: clamp(1.375rem, 3vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+  color: var(--foreground);
+}
+
+.page h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--foreground);
+}
+
+.page p {
+  margin-bottom: 1.25rem;
+  font-size: 1.0625rem;
+}
+
+.page ul {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.page li {
+  margin-bottom: 0.75rem;
+}
+
+.page a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.page a:hover {
+  color: var(--primary-hover);
+  opacity: 1;
+}
+
+.section {
+  margin-bottom: 2.5rem;
+}
+
+.answerCapsule {
+  margin-bottom: 2rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  border: 1px solid var(--border);
+}
+
+.answerCapsule p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.answerCapsule strong {
+  color: var(--foreground);
+}
+
+.callout {
+  background: var(--surface);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  border-left: 3px solid var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.callout h3 {
+  color: var(--primary);
+}
+
+.cta {
+  margin-top: 2.5rem;
+  text-align: center;
+}

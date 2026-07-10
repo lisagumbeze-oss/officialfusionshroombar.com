@@ -1,7 +1,7 @@
 .button {
   position: fixed;
   right: var(--floating-side, 20px);
-  bottom: var(--back-to-top-bottom, 84px);
+  bottom: var(--floating-back-to-top-bottom);
   z-index: 999998;
   width: var(--floating-button-size, 56px);
   height: var(--floating-button-size, 56px);
@@ -11,29 +11,29 @@
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  color: #fff;
+  color: var(--on-primary);
   background: var(--primary);
-  box-shadow: 0 8px 24px var(--primary-glow);
+  box-shadow: 0 4px 16px var(--primary-glow);
   transition:
-    opacity 0.25s ease,
-    transform 0.25s ease,
+    opacity 0.35s var(--ease-out-expo),
+    transform 0.35s var(--ease-spring),
     bottom 0.25s ease,
     background 0.2s ease,
-    box-shadow 0.2s ease;
+    box-shadow 0.25s ease;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(12px) scale(0.92);
+  transform: translateY(16px) scale(0.9);
   pointer-events: none;
 }
 
 .button:hover {
   background: var(--primary-hover);
-  box-shadow: 0 10px 28px var(--primary-glow);
-  transform: translateY(-2px) scale(1);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 24px var(--primary-glow);
 }
 
 .button:focus-visible {
-  outline: 2px solid #fff;
+  outline: 2px solid var(--on-primary);
   outline-offset: 3px;
 }
 
@@ -42,10 +42,13 @@
   visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+  animation: backToTopBounce 0.5s var(--ease-spring) forwards;
 }
 
-.visible:hover {
-  transform: translateY(-2px) scale(1);
+@keyframes backToTopBounce {
+  0% { transform: translateY(16px) scale(0.9); opacity: 0; }
+  60% { transform: translateY(-4px) scale(1.05); opacity: 1; }
+  100% { transform: translateY(0) scale(1); opacity: 1; }
 }
 
 .icon {

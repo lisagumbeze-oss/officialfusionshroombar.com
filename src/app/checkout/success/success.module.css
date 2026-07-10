@@ -1,0 +1,57 @@
+.page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 2rem 1.25rem calc(3rem + var(--bottom-nav-offset));
+  text-align: center;
+  min-height: 50vh;
+  animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.card {
+  background: var(--surface);
+  padding: 2.5rem 1.5rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  background: var(--primary-muted);
+  border: 1px solid rgba(0, 113, 227, 0.25);
+  color: var(--primary);
+}
+
+.title {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  color: var(--primary);
+  margin-bottom: 0.75rem;
+}
+
+.lead {
+  font-size: 1.0625rem;
+  margin-bottom: 1.5rem;
+  color: var(--foreground);
+}
+
+.note {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.orderId {
+  color: var(--foreground);
+  font-weight: 600;
+}

@@ -2,29 +2,26 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, ShoppingBag, ShoppingCart, Heart } from 'lucide-react';
+import { Home, ShoppingBag, ShoppingCart, MessageCircle } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
-import { useWishlist } from '@/context/WishlistContext';
 import styles from './BottomNav.module.css';
 
 const ITEMS = [
   { href: '/', label: 'Home', icon: Home, exact: true },
   { href: '/shop', label: 'Shop', icon: ShoppingBag },
   { href: '/cart', label: 'Cart', icon: ShoppingCart, badge: 'cart' as const },
-  { href: '/wishlist', label: 'Saved', icon: Heart, badge: 'wishlist' as const },
+  { href: '/contact', label: 'Contact', icon: MessageCircle },
 ];
 
 export default function BottomNav() {
   const pathname = usePathname();
   const { cartCount } = useCart();
-  const { wishlist } = useWishlist();
 
   const isActive = (href: string, exact?: boolean) =>
     exact ? pathname === href : pathname === href || pathname.startsWith(`${href}/`);
 
-  const getBadge = (badge?: 'cart' | 'wishlist') => {
+  const getBadge = (badge?: 'cart') => {
     if (badge === 'cart' && cartCount > 0) return cartCount;
-    if (badge === 'wishlist' && wishlist.length > 0) return wishlist.length;
     return 0;
   };
 

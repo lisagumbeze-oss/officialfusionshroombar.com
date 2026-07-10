@@ -1,6 +1,6 @@
 .triggerBtn {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
     color: var(--primary);
     padding: 0.5rem 1rem;
     border-radius: 8px;
@@ -15,9 +15,9 @@
 }
 
 .triggerBtn:hover {
-    background: rgba(155, 77, 255, 0.1);
+    background: rgba(41, 151, 255, 0.1);
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(155, 77, 255, 0.2);
+    box-shadow: 0 5px 15px rgba(41, 151, 255, 0.2);
 }
 
 .overlay {
@@ -36,8 +36,8 @@
 }
 
 .modal {
-    background: #0f0f0f;
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
     width: 100%;
     max-width: 450px;
     border-radius: 24px;
@@ -53,12 +53,12 @@
     right: 1.5rem;
     background: none;
     border: none;
-    color: #666;
+    color: var(--text-muted);
     cursor: pointer;
     transition: color 0.2s;
 }
 
-.closeBtn:hover { color: #fff; }
+.closeBtn:hover { color: var(--foreground); }
 
 .progress {
     position: absolute;
@@ -66,7 +66,7 @@
     left: 0;
     width: 100%;
     height: 4px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--border);
 }
 
 .progressBar {
@@ -95,7 +95,7 @@
 .stepContent h2 {
     font-size: 1.5rem;
     margin-bottom: 2rem;
-    color: #fff;
+    color: var(--foreground);
 }
 
 .options {
@@ -109,10 +109,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--surface);
+    border: 1px solid var(--border);
     border-radius: 16px;
-    color: #fff;
+    color: var(--foreground);
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
@@ -120,7 +120,7 @@
 }
 
 .options button:hover {
-    background: rgba(155, 77, 255, 0.1);
+    background: rgba(41, 151, 255, 0.1);
     border-color: var(--primary);
     transform: translateX(5px);
 }
@@ -128,7 +128,7 @@
 .optIcon {
     width: 32px;
     height: 32px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--border);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -149,7 +149,7 @@
 .resultBadge {
     display: inline-block;
     padding: 0.25rem 0.75rem;
-    background: rgba(155, 77, 255, 0.1);
+    background: rgba(41, 151, 255, 0.1);
     color: var(--primary);
     border-radius: 20px;
     font-size: 0.7rem;
@@ -161,7 +161,7 @@
 .resultContent h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
-    color: #fff;
+    color: var(--foreground);
 }
 
 .doseTag {
@@ -175,7 +175,7 @@
 }
 
 .resultContent p {
-    color: #888;
+    color: var(--text-muted);
     line-height: 1.6;
     margin-bottom: 2rem;
 }
@@ -184,12 +184,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    background: rgba(0, 0, 0, 0.3);
+    background: var(--surface);
     padding: 0.75rem;
     border-radius: 12px;
     font-size: 0.75rem;
-    color: #666;
+    color: var(--text-muted);
     margin-bottom: 2rem;
+    border: 1px solid var(--border);
 }
 
 .resultActions {
@@ -203,17 +204,17 @@
     border-radius: 12px;
     font-weight: 800;
     border: none;
-    color: #fff;
+    color: var(--on-primary);
     cursor: pointer;
 }
 
 .resetBtn {
     background: none;
     border: none;
-    color: #666;
+    color: var(--text-muted);
     font-size: 0.8rem;
     font-weight: 700;
     cursor: pointer;
 }
 
-.resetBtn:hover { color: #fff; }
+.resetBtn:hover { color: var(--foreground); }

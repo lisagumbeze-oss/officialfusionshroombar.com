@@ -1,0 +1,40 @@
+.button {
+  position: fixed;
+  left: var(--floating-side, 20px);
+  bottom: var(--floating-chat-bottom);
+  z-index: 999997;
+  width: var(--floating-button-size, 56px);
+  height: var(--floating-button-size, 56px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  color: var(--on-primary);
+  background: var(--primary);
+  box-shadow: 0 4px 16px rgba(0, 113, 227, 0.3);
+  transition:
+    transform 0.25s var(--ease-spring),
+    bottom 0.25s ease,
+    background 0.2s ease,
+    box-shadow 0.25s ease;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: var(--primary-hover);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 8px 24px rgba(0, 113, 227, 0.4);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
+.icon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}

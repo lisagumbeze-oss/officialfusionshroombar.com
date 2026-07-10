@@ -101,11 +101,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     };
 
     // Styles constants
-    const purple = '#7c3aed';
-    const bg = '#0a0510';
+    const purple = 'var(--primary)';
+    const bg = 'var(--background)';
 
     return (
-        <div style={{ minHeight: '100vh', background: bg, color: '#fff', fontFamily: "'Inter', sans-serif" }}>
+        <div style={{ minHeight: '100vh', background: bg, color: 'var(--foreground)' }}>
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -137,14 +137,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                 ) : (
                     <div style={{
                         position: 'absolute', inset: 0, zIndex: 1,
-                        background: 'linear-gradient(135deg, rgba(124,58,237,0.3), rgba(10,5,16,0.8))',
+                        background: 'linear-gradient(135deg, rgba(0,113,227,0.12), rgba(250,248,245,0.95))',
                     }} />
                 )}
 
                 {/* Gradient overlays */}
                 <div style={{
                     position: 'absolute', inset: 0, zIndex: 2,
-                    background: 'linear-gradient(to top, #0a0510 0%, rgba(10,5,16,0.5) 50%, rgba(10,5,16,0.15) 100%)',
+                    background: 'linear-gradient(to top, #faf8f5 0%, rgba(250,248,245,0.9) 50%, rgba(250,248,245,0.45) 100%)',
                     pointerEvents: 'none'
                 }} />
 
@@ -201,8 +201,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <div style={{
                                 width: '40px', height: '40px', borderRadius: '50%',
-                                background: 'rgba(124,58,237,0.2)',
-                                border: '2px solid rgba(124,58,237,0.3)',
+                                background: 'rgba(41,151,255,0.2)',
+                                border: '2px solid rgba(41,151,255,0.3)',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                             }}>
                                 <User size={18} style={{ color: purple }} />
@@ -213,11 +213,11 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             </div>
                         </div>
                         <div>
-                            <p style={{ fontSize: '10px', fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Published</p>
+                            <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Published</p>
                             <p style={{ fontSize: '12px', fontWeight: 700 }}>{new Date(post.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}</p>
                         </div>
                         <div>
-                            <p style={{ fontSize: '10px', fontWeight: 700, color: '#666', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Read Time</p>
+                            <p style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Read Time</p>
                             <p style={{ fontSize: '12px', fontWeight: 700 }}>8 min read</p>
                         </div>
                     </div>
@@ -241,13 +241,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <div style={{
                             padding: '28px 32px',
                             borderRadius: '16px',
-                            background: 'rgba(255,255,255,0.03)',
+                            background: 'var(--surface-elevated)',
                             borderLeft: `4px solid ${purple}`,
                             marginBottom: '40px',
                         }}>
                             <p style={{
                                 fontSize: '16px', fontStyle: 'italic',
-                                color: '#bbb', lineHeight: 1.7,
+                                color: 'var(--text-muted)', lineHeight: 1.7,
                             }}>
                                 &ldquo;{post.excerpt}&rdquo;
                             </p>
@@ -261,13 +261,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                             style={{
                                 marginBottom: '2rem',
                                 padding: '1.25rem 1.5rem',
-                                background: 'rgba(255,255,255,0.03)',
-                                border: '1px solid rgba(255,255,255,0.08)',
+                                background: 'var(--surface-elevated)',
+                                border: '1px solid var(--border)',
                                 borderRadius: '12px',
                             }}
                         >
-                            <p style={{ margin: 0, fontSize: '1rem', lineHeight: 1.7, color: '#a1a1aa' }}>
-                                <strong style={{ color: '#fafafa' }}>Quick Answer:</strong>{' '}
+                            <p style={{ margin: 0, fontSize: '1rem', lineHeight: 1.7, color: 'var(--text-muted)' }}>
+                                <strong style={{ color: 'var(--foreground)' }}>Quick Answer:</strong>{' '}
                                 {tuned.answerCapsule}
                             </p>
                         </section>
@@ -282,14 +282,14 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     {/* Share section at bottom */}
                     <div style={{
                         marginTop: '48px', paddingTop: '28px',
-                        borderTop: '1px solid rgba(255,255,255,0.06)',
+                        borderTop: '1px solid var(--border)',
                         display: 'flex', flexWrap: 'wrap',
                         alignItems: 'center', gap: '12px',
                     }}>
                         <span style={{
                             fontSize: '10px', fontWeight: 800,
                             textTransform: 'uppercase', letterSpacing: '0.15em',
-                            color: '#555',
+                            color: 'var(--text-subtle)',
                         }}>
                             Share This Guide:
                         </span>
@@ -318,9 +318,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                 post.comments.map((c: any) => (
                                     <div key={c.id} style={{ 
                                         padding: '20px', 
-                                        background: 'rgba(255,255,255,0.02)', 
+                                        background: 'var(--surface-elevated)', 
                                         borderRadius: '12px',
-                                        border: '1px solid rgba(255,255,255,0.05)'
+                                        border: '1px solid var(--border)'
                                     }}>
                                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                                             <span style={{ fontWeight: 700, fontSize: '14px', color: purple }}>{c.name}</span>
@@ -328,7 +328,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                                 {new Date(c.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
                                             </span>
                                         </div>
-                                        <p style={{ fontSize: '14px', color: '#ccc', lineHeight: '1.5', margin: 0 }}>{c.content}</p>
+                                        <p style={{ fontSize: '14px', color: 'var(--text-muted)', lineHeight: '1.5', margin: 0 }}>{c.content}</p>
                                     </div>
                                 ))
                             ) : (
@@ -358,7 +358,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         }}>
                             Recommended for You
                         </h2>
-                        <p style={{ color: '#666', fontSize: '13px' }}>
+                        <p style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
                             Continue your journey into functional wellness.
                         </p>
                     </div>
@@ -380,8 +380,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                         <Link href={`/blog/${rPost.slug}`} key={rPost.id} style={{
                             textDecoration: 'none', color: 'inherit',
                             borderRadius: '16px', overflow: 'hidden',
-                            background: 'rgba(255,255,255,0.03)',
-                            border: '1px solid rgba(255,255,255,0.06)',
+                            background: 'var(--surface-elevated)',
+                            border: '1px solid var(--border)',
                             transition: 'transform 0.3s',
                         }}>
                             <div style={{ position: 'relative', aspectRatio: '16/9', overflow: 'hidden' }}>
@@ -398,7 +398,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                                         background: purple,
                                         fontSize: '8px', fontWeight: 800,
                                         textTransform: 'uppercase', letterSpacing: '0.1em',
-                                        color: '#fff',
+                                        color: 'var(--on-primary)',
                                     }}>
                                         {rPost.category}
                                     </span>
