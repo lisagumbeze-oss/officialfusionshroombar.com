@@ -30,6 +30,11 @@ function invokeSmartsupp(...args: unknown[]) {
   return true;
 }
 
+export function hideSmartsuppLauncher() {
+  invokeSmartsupp('chat:hide');
+  setSmartsuppChatOpen(false);
+}
+
 export function openSmartsuppChat() {
   if (!invokeSmartsupp('chat:show')) return;
 
@@ -39,13 +44,13 @@ export function openSmartsuppChat() {
 
 export function closeSmartsuppChat() {
   invokeSmartsupp('chat:close');
-  setSmartsuppChatOpen(false);
+  hideSmartsuppLauncher();
 }
 
 export function registerSmartsuppChatListeners() {
   if (typeof window === 'undefined' || typeof window.smartsupp !== 'function') return;
 
-  const close = () => setSmartsuppChatOpen(false);
+  const close = () => hideSmartsuppLauncher();
   const open = () => setSmartsuppChatOpen(true);
 
   try {

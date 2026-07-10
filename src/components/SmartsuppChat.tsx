@@ -15,8 +15,8 @@ import {
 } from '@/lib/floating-widgets';
 import {
   closeSmartsuppChat,
+  hideSmartsuppLauncher,
   registerSmartsuppChatListeners,
-  setSmartsuppChatOpen,
   syncSmartsuppPointerEvents,
 } from '@/lib/smartsupp-widget';
 
@@ -27,6 +27,7 @@ declare global {
       key?: string;
       color?: string;
       hideBanner?: boolean;
+      hideWidget?: boolean;
       offsetY?: number;
       offsetX?: number;
     };
@@ -39,6 +40,7 @@ function applyBrandColor() {
   if (window._smartsupp) {
     window._smartsupp.color = brandColor;
     window._smartsupp.hideBanner = true;
+    window._smartsupp.hideWidget = true;
   }
 }
 
@@ -50,8 +52,10 @@ function applyChatOffset() {
     window._smartsupp.offsetY = getChatOffsetY();
     window._smartsupp.offsetX = FLOATING_SIDE;
     window._smartsupp.hideBanner = true;
+    window._smartsupp.hideWidget = true;
   }
 
+  hideSmartsuppLauncher();
   syncSmartsuppPointerEvents();
 }
 
@@ -83,47 +87,36 @@ export default function SmartsuppChat() {
     };
 
     applyChatOffset();
-    setSmartsuppChatOpen(false);
     registerSmartsuppChatListeners();
 
-    const colorRetries = [0, 400, 1000, 2500, 5000].map((ms) =>
+    const launcherRetries = [0, 400, 1000, 2500, 5000, 8000].map((ms) =>
       setTimeout(() => {
         applyBrandColor();
+        hideSmartsuppLauncher();
       }, ms)
     );
 
     window.addEventListener('resize', scheduleApply, { passive: true });
     window.addEventListener(FLOATING_WIDGETS_CHANGE, scheduleApply);
 
-    let observer: MutationObserver | null = null;
-    let disconnectTimer: ReturnType<typeof setTimeout> | null = null;
-
-    const connectObserver = () => {
-      if (observer) return;
-      const target =
-        document.getElementById('smartsupp-widget-container') ??
-        document.getElementById('smartsupp-widget');
-      if (!target) return;
-
-      observer = new MutationObserver(scheduleApply);
-      observer.observe(target, { childList: true, attributes: true, attributeFilter: ['style'] });
-      disconnectTimer = setTimeout(() => {
-        observer?.disconnect();
-        observer = null;
-      }, 12000);
-    };
-
-    connectObserver();
-    const observerRetries = [300, 1000, 2500].map((ms) => setTimeout(connectObserver, ms));
+    const launcherDebounceRef = { current: null as ReturnType<typeof setTimeout> | null };
+    const launcherObserver = new MutationObserver(() => {
+      if (document.documentElement.classList.contains('smartsupp-chat-open')) return;
+      if (launcherDebounceRef.current) clearTimeout(launcherDebounceRef.current);
+      launcherDebounceRef.current = setTimeout(() => {
+        hideSmartsuppLauncher();
+        launcherDebounceRef.current = null;
+      }, 120);
+    });
+    launcherObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       window.removeEventListener('resize', scheduleApply);
       window.removeEventListener(FLOATING_WIDGETS_CHANGE, scheduleApply);
-      observer?.disconnect();
-      observerRetries.forEach(clearTimeout);
-      if (disconnectTimer) clearTimeout(disconnectTimer);
+      launcherObserver.disconnect();
+      if (launcherDebounceRef.current) clearTimeout(launcherDebounceRef.current);
       if (debounceRef.current) clearTimeout(debounceRef.current);
-      colorRetries.forEach(clearTimeout);
+      launcherRetries.forEach(clearTimeout);
     };
   }, [isAdmin]);
 
@@ -166,6 +159,7 @@ export default function SmartsuppChat() {
           _smartsupp.key = '066c33c30d5a0cddcfb7a8750f96fe6b77709e72';
           _smartsupp.color = getComputedStyle(document.documentElement).getPropertyValue('--primary').trim() || '${BRAND_PRIMARY_FALLBACK}';
           _smartsupp.hideBanner = true;
+          _smartsupp.hideWidget = true;
           _smartsupp.offsetX = ${FLOATING_SIDE};
           _smartsupp.offsetY = window.matchMedia('${MOBILE_NAV_QUERY}').matches ? 68 : ${16};
           window.smartsupp||(function(d) {

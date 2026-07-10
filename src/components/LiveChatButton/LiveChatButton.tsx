@@ -53,6 +53,7 @@ export default function LiveChatButton() {
     <button
       type="button"
       className={styles.button}
+      data-live-chat-trigger
       onClick={openChat}
       aria-label="Open live chat"
       style={
