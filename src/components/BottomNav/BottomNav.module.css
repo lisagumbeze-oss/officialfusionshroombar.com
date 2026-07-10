@@ -55,13 +55,7 @@
   }
 
   .active .iconWrap {
-    animation: navIconPop 0.4s var(--ease-spring);
-  }
-
-  @keyframes navIconPop {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
+    color: var(--primary);
   }
 
   .active::before {
@@ -102,6 +96,5 @@
     line-height: 1;
     border-radius: var(--radius-full);
     border: 2px solid var(--background);
-    animation: scaleIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
   }
 }

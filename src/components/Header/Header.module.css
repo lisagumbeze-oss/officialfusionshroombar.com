@@ -573,35 +573,15 @@
   visibility: hidden;
   pointer-events: none;
   transition:
-    opacity 0.35s var(--ease-out-expo),
-    visibility 0.35s var(--ease-out-expo),
-    transform 0.35s var(--ease-out-expo);
-  transform: translateY(-8px);
+    opacity 0.2s ease,
+    visibility 0.2s ease;
 }
 
 .mobileOverlayOpen {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
-  transform: translateY(0);
 }
-
-.mobileOverlayOpen .mobileNav > a,
-.mobileOverlayOpen .mobileNavGroup,
-.mobileOverlayOpen .mobileNav .btn,
-.mobileOverlayOpen .mobileNavSecondary {
-  animation: slideInNav 0.4s var(--ease-out-expo) both;
-}
-
-.mobileOverlayOpen .mobileNav > a:nth-child(1) { animation-delay: 0.04s; }
-.mobileOverlayOpen .mobileNav > a:nth-child(2) { animation-delay: 0.08s; }
-.mobileOverlayOpen .mobileNav > a:nth-child(3) { animation-delay: 0.12s; }
-.mobileOverlayOpen .mobileNav > .mobileNavGroup:nth-child(4) { animation-delay: 0.16s; }
-.mobileOverlayOpen .mobileNav > a:nth-child(5) { animation-delay: 0.2s; }
-.mobileOverlayOpen .mobileNav > a:nth-child(6) { animation-delay: 0.24s; }
-.mobileOverlayOpen .mobileNav > a:nth-child(7) { animation-delay: 0.28s; }
-.mobileOverlayOpen .mobileNav .mobileNavSecondary { animation-delay: 0.32s; }
-.mobileOverlayOpen .mobileNav .btn { animation-delay: 0.36s; }
 
 @media (min-width: 1024px) {
   .mobileOverlay {

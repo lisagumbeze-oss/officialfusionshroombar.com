@@ -3,7 +3,6 @@
   margin: 0 auto;
   padding: 2rem 1.25rem 4rem;
   min-height: 60vh;
-  animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (min-width: 768px) {

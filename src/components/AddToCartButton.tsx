@@ -7,11 +7,13 @@ import { useState } from 'react';
 export default function AddToCartButton({ 
     product, 
     className = "", 
-    iconOnly = false 
+    iconOnly = false,
+    compact = false,
 }: { 
     product: any, 
     className?: string,
-    iconOnly?: boolean
+    iconOnly?: boolean,
+    compact?: boolean,
 }) {
     const { addToCart } = useCart();
     const { showToast } = useToast();
@@ -33,9 +35,13 @@ export default function AddToCartButton({
             disabled={added}
         >
             {added ? (
-                <span>✓ ADDED</span>
+                <span>✓ Added</span>
+            ) : iconOnly ? (
+                <span>🛒</span>
+            ) : compact ? (
+                <span>Add</span>
             ) : (
-                iconOnly ? <span>🛒</span> : <span>ADD TO CART</span>
+                <span>Add to cart</span>
             )}
         </button>
     );

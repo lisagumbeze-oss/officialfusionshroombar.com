@@ -4,7 +4,6 @@
   padding: 2rem 1.25rem calc(3rem + var(--bottom-nav-offset));
   text-align: center;
   min-height: 50vh;
-  animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .card {

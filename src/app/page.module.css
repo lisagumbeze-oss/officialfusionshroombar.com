@@ -26,14 +26,8 @@
   height: 60%;
   background: radial-gradient(circle, rgba(0, 113, 227, 0.08) 0%, transparent 70%);
   filter: blur(40px);
-  animation: heroGlow 8s ease-in-out infinite alternate;
   pointer-events: none;
   z-index: 0;
-}
-
-@keyframes heroGlow {
-  0% { opacity: 0.6; transform: translate(0, 0) scale(1); }
-  100% { opacity: 1; transform: translate(5%, 3%) scale(1.08); }
 }
 
 .heroContent {
@@ -54,7 +48,6 @@
   background: var(--primary-muted);
   border: 1px solid rgba(0, 113, 227, 0.15);
   border-radius: var(--radius-full);
-  animation: eyebrowPulse 3s ease-in-out infinite;
 }
 
 .eyebrow::before {
@@ -63,17 +56,6 @@
   height: 6px;
   border-radius: 50%;
   background: var(--primary);
-  animation: dotPulse 2s ease-in-out infinite;
-}
-
-@keyframes eyebrowPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 113, 227, 0); }
-  50% { box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.08); }
-}
-
-@keyframes dotPulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(0.85); }
 }
 
 .title {
@@ -125,17 +107,11 @@
 }
 
 .heroVisual:hover {
-  transform: translateY(-4px) scale(1.01);
   box-shadow: 0 20px 48px rgba(44, 36, 25, 0.14);
 }
 
 .heroImg {
   object-fit: cover;
-  transition: transform 1s var(--ease-out-expo);
-}
-
-.heroVisual:hover .heroImg {
-  transform: scale(1.05);
 }
 
 /* ── Answer capsule ── */
@@ -159,7 +135,6 @@
 .answerInner:hover {
   border-color: var(--border-strong);
   box-shadow: var(--shadow-card);
-  transform: translateY(-2px);
 }
 
 .answerInner strong {
@@ -189,12 +164,11 @@
   gap: 1rem;
   padding: 0.75rem;
   border-radius: var(--radius-md);
-  transition: background var(--duration-normal) ease, transform var(--duration-normal) var(--ease-out-expo);
+  transition: background var(--duration-normal) ease;
 }
 
 .trustItem:hover {
   background: var(--surface);
-  transform: translateY(-2px);
 }
 
 .trustIcon {
@@ -207,11 +181,9 @@
   color: var(--primary);
   background: var(--primary-muted);
   border-radius: var(--radius-sm);
-  transition: transform var(--duration-normal) var(--ease-spring), background var(--duration-fast) ease;
 }
 
 .trustItem:hover .trustIcon {
-  transform: scale(1.08) rotate(-3deg);
   background: rgba(0, 113, 227, 0.15);
 }
 
@@ -256,11 +228,10 @@
   overflow: hidden;
   background: var(--surface);
   box-shadow: var(--shadow-card);
-  transition: transform 0.6s var(--ease-out-expo), box-shadow 0.6s ease;
+  transition: box-shadow 0.3s ease;
 }
 
 .teaserImage:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
 }
 
@@ -288,12 +259,11 @@
   color: var(--text-muted);
   padding-left: 1.25rem;
   position: relative;
-  transition: color var(--duration-fast) ease, transform var(--duration-normal) var(--ease-out-expo);
+  transition: color var(--duration-fast) ease;
 }
 
 .featureList li:hover {
   color: var(--foreground);
-  transform: translateX(4px);
 }
 
 .featureList li::before {
@@ -305,11 +275,6 @@
   height: 6px;
   border-radius: 50%;
   background: var(--primary);
-  transition: transform var(--duration-normal) var(--ease-spring);
-}
-
-.featureList li:hover::before {
-  transform: scale(1.3);
 }
 
 .learnMore {
@@ -370,14 +335,14 @@
   opacity: 1;
 }
 
-.browseAll:hover::after {
-  transform: translateX(4px);
-}
-
 .productGrid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1.5rem;
+}
+
+.productGrid > * {
+  min-width: 0;
 }
 
 /* ── Explore cards ── */
@@ -421,7 +386,6 @@
   border-color: var(--border-strong);
   background: var(--surface-elevated);
   opacity: 1;
-  transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
 }
 
@@ -462,7 +426,6 @@
 }
 
 .reviewCard:hover {
-  transform: translateY(-4px);
   box-shadow: var(--shadow-elevated);
   border-color: var(--border-strong);
 }
@@ -502,7 +465,6 @@
   padding: 4.5rem 2rem;
   text-align: center;
   background: linear-gradient(135deg, var(--surface) 0%, rgba(0, 113, 227, 0.04) 50%, var(--surface) 100%);
-  background-size: 200% 200%;
   border: 1px solid var(--border);
   border-radius: var(--radius-xl);
   max-width: 1280px;
@@ -510,12 +472,10 @@
   margin-right: auto;
   position: relative;
   overflow: hidden;
-  animation: ctaGradient 10s ease infinite;
-  transition: transform var(--duration-normal) var(--ease-out-expo), box-shadow var(--duration-normal) ease;
+  transition: box-shadow var(--duration-normal) ease;
 }
 
 .finalCta:hover {
-  transform: translateY(-2px);
   box-shadow: var(--shadow-elevated);
 }
 
@@ -525,12 +485,6 @@
   inset: -50%;
   background: radial-gradient(circle at 30% 50%, rgba(0, 113, 227, 0.06), transparent 50%);
   pointer-events: none;
-  animation: heroGlow 12s ease-in-out infinite alternate;
-}
-
-@keyframes ctaGradient {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
 }
 
 .ctaContent {
@@ -614,8 +568,8 @@
   }
 
   .productGrid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
   }
 }
 

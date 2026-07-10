@@ -63,11 +63,6 @@
 
 .heroImg {
   object-fit: cover;
-  transition: transform 0.8s var(--ease-out-expo);
-}
-
-.heroVisual:hover .heroImg {
-  transform: scale(1.02);
 }
 
 /* ── Answer capsule ── */
@@ -210,7 +205,6 @@
 
 .processCard:hover {
   border-color: var(--border-strong);
-  transform: translateY(-2px);
 }
 
 .processStep {
@@ -257,7 +251,6 @@
 
 .valueCard:hover {
   border-color: var(--border-strong);
-  transform: translateY(-2px);
 }
 
 .valueIcon {

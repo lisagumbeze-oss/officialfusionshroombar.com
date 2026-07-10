@@ -2,18 +2,12 @@
     max-width: 1280px;
     margin: 0 auto;
     padding: 2rem 1.25rem 4rem;
-    animation: fadeIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 @media (min-width: 768px) {
     .shopContainer {
         padding: 2.5rem 2rem 5rem;
     }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .shopHeader {
@@ -288,6 +282,10 @@
     margin-bottom: 3rem;
 }
 
+.productGrid > * {
+    min-width: 0;
+}
+
 .productCard {
     background: var(--surface);
     border: 1px solid var(--surface-border);
@@ -299,7 +297,6 @@
 }
 
 .productCard:hover {
-    transform: translateY(-4px);
     border-color: var(--border-strong);
     box-shadow: var(--shadow-elevated);
 }
@@ -527,7 +524,7 @@
     }
 
     .productGrid {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 0.75rem;
     }
 

@@ -224,7 +224,6 @@
 
 .trustCard:hover {
     border-color: var(--border-strong);
-    transform: translateY(-2px);
 }
 
 .trustIcon {

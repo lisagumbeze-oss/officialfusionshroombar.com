@@ -37,29 +37,28 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
 
   return (
     <article className={`${styles.card} ${styles[variant]}`}>
-      <Link href={`/shop/${product.slug}`} className={styles.imageLink}>
-        <div className={styles.imageWrap}>
-          <Image
-            src={product.image}
-            alt={product.name}
-            fill
-            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
-            className={styles.image}
-            unoptimized={shouldUnoptimizeImage(product.image)}
-          />
-          <div className={styles.badges}>
-            {onSale && <span className={styles.badgeSale}>Sale</span>}
-            {isNew(product.createdAt) && <span className={styles.badgeNew}>New</span>}
-          </div>
-          <WishlistButton product={product} />
-          <div className={styles.quickAdd}>
-            <AddToCartButton
-              product={product}
-              className={styles.addBtn}
+      <div className={styles.imageArea}>
+        <Link href={`/shop/${product.slug}`} className={styles.imageLink}>
+          <div className={styles.imageWrap}>
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 280px"
+              className={styles.image}
+              unoptimized={shouldUnoptimizeImage(product.image)}
             />
+            <div className={styles.badges}>
+              {onSale && <span className={styles.badgeSale}>Sale</span>}
+              {isNew(product.createdAt) && <span className={styles.badgeNew}>New</span>}
+            </div>
           </div>
+        </Link>
+        <WishlistButton product={product} />
+        <div className={styles.quickAdd}>
+          <AddToCartButton product={product} className={styles.addBtn} />
         </div>
-      </Link>
+      </div>
 
       <div className={styles.body}>
         {product.category && (
@@ -87,6 +86,10 @@ export default function ProductCard({ product, variant = 'default' }: ProductCar
               View
             </Link>
           )}
+        </div>
+
+        <div className={styles.cartAction}>
+          <AddToCartButton product={product} className={styles.addBtn} compact />
         </div>
       </div>
     </article>
