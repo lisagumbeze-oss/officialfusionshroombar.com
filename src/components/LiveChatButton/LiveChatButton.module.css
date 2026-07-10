@@ -2,7 +2,8 @@
   position: fixed;
   right: var(--floating-side, 20px);
   bottom: var(--floating-chat-bottom);
-  z-index: 999997;
+  z-index: 1000000;
+  pointer-events: auto;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;

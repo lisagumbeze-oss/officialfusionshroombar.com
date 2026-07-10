@@ -21,6 +21,27 @@ export function syncSmartsuppPointerEvents() {
     });
 }
 
+function invokeSmartsupp(...args: unknown[]) {
+  if (typeof window === 'undefined' || typeof window.smartsupp !== 'function') {
+    return false;
+  }
+
+  window.smartsupp(...args);
+  return true;
+}
+
+export function openSmartsuppChat() {
+  if (!invokeSmartsupp('chat:show')) return;
+
+  invokeSmartsupp('chat:open');
+  setSmartsuppChatOpen(true);
+}
+
+export function closeSmartsuppChat() {
+  invokeSmartsupp('chat:close');
+  setSmartsuppChatOpen(false);
+}
+
 export function registerSmartsuppChatListeners() {
   if (typeof window === 'undefined' || typeof window.smartsupp !== 'function') return;
 

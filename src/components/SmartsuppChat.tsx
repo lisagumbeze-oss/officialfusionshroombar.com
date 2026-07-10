@@ -14,6 +14,7 @@ import {
   MOBILE_NAV_QUERY,
 } from '@/lib/floating-widgets';
 import {
+  closeSmartsuppChat,
   registerSmartsuppChatListeners,
   setSmartsuppChatOpen,
   syncSmartsuppPointerEvents,
@@ -41,44 +42,15 @@ function applyBrandColor() {
   }
 }
 
-function hideDefaultBubble() {
-  document
-    .querySelectorAll(
-      '#smartsupp-widget-container, #smartsupp-widget, [id^="smartsupp"]:not(iframe), [class*="smartsupp-widget"]'
-    )
-    .forEach((el) => {
-      const node = el as HTMLElement;
-      if (node.closest('[data-chat-hidden="true"]')) return;
-      if (node.tagName === 'IFRAME') return;
-      node.style.setProperty('display', 'none', 'important');
-      node.style.setProperty('visibility', 'hidden', 'important');
-      node.style.setProperty('pointer-events', 'none', 'important');
-    });
-}
-
 function applyChatOffset() {
-  const offsetY = getChatOffsetY();
-
   applyFloatingWidgetCssVars();
   applyBrandColor();
-  hideDefaultBubble();
 
   if (window._smartsupp) {
-    window._smartsupp.offsetY = offsetY;
+    window._smartsupp.offsetY = getChatOffsetY();
     window._smartsupp.offsetX = FLOATING_SIDE;
+    window._smartsupp.hideBanner = true;
   }
-
-  const bottom = `${offsetY}px`;
-  const right = `${FLOATING_SIDE}px`;
-
-  document
-    .querySelectorAll('iframe[src*="smartsupp"]')
-    .forEach((el) => {
-      const node = el as HTMLElement;
-      if (node.closest('[data-chat-hidden="true"]')) return;
-      node.style.setProperty('bottom', bottom, 'important');
-      node.style.setProperty('right', right, 'important');
-    });
 
   syncSmartsuppPointerEvents();
 }
@@ -117,7 +89,6 @@ export default function SmartsuppChat() {
     const colorRetries = [0, 400, 1000, 2500, 5000].map((ms) =>
       setTimeout(() => {
         applyBrandColor();
-        hideDefaultBubble();
       }, ms)
     );
 
@@ -169,7 +140,7 @@ export default function SmartsuppChat() {
 
   useEffect(() => {
     if (isAdmin) return;
-    setSmartsuppChatOpen(false);
+    closeSmartsuppChat();
   }, [pathname, isAdmin]);
 
   if (isAdmin) {
@@ -183,15 +154,11 @@ export default function SmartsuppChat() {
         strategy="lazyOnload"
         onLoad={() => {
           applyBrandColor();
-          hideDefaultBubble();
-          setTimeout(() => {
-            applyBrandColor();
-            hideDefaultBubble();
-          }, 500);
-          setTimeout(() => {
-            applyBrandColor();
-            hideDefaultBubble();
-          }, 2000);
+          applyChatOffset();
+          setTimeout(applyBrandColor, 500);
+          setTimeout(applyChatOffset, 500);
+          setTimeout(applyBrandColor, 2000);
+          setTimeout(applyChatOffset, 2000);
         }}
       >
         {`

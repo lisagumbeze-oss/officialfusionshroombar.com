@@ -635,11 +635,9 @@ select:focus {
   margin-bottom: 1rem;
 }
 
-/* Floating support widgets — chat panel only (custom button handles bubble) */
+/* Smartsupp — block stray iframe clicks when chat is closed */
 iframe[src*="smartsupp"]:not([data-chat-hidden="true"]) {
-  right: var(--floating-side, 20px) !important;
-  bottom: var(--floating-chat-bottom) !important;
-  z-index: 999997 !important;
+  z-index: 999996 !important;
   pointer-events: none !important;
 }
 

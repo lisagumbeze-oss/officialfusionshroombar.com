@@ -8,7 +8,7 @@ import {
   FLOATING_WIDGETS_CHANGE,
   notifyFloatingWidgetsChange,
 } from '@/lib/floating-widgets';
-import { setSmartsuppChatOpen } from '@/lib/smartsupp-widget';
+import { openSmartsuppChat } from '@/lib/smartsupp-widget';
 import styles from './LiveChatButton.module.css';
 
 declare global {
@@ -35,9 +35,18 @@ export default function LiveChatButton() {
 
   const openChat = () => {
     if (typeof window.smartsupp === 'function') {
-      setSmartsuppChatOpen(true);
-      window.smartsupp('chat:open');
+      openSmartsuppChat();
+      return;
     }
+
+    const retry = window.setInterval(() => {
+      if (typeof window.smartsupp === 'function') {
+        window.clearInterval(retry);
+        openSmartsuppChat();
+      }
+    }, 250);
+
+    window.setTimeout(() => window.clearInterval(retry), 10000);
   };
 
   return (
