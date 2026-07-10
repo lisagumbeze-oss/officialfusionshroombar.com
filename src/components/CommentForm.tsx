@@ -9,6 +9,7 @@ interface CommentFormProps {
 
 export default function CommentForm({ blogPostId }: CommentFormProps) {
     const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
     const [content, setContent] = useState('');
     const [token, setToken] = useState<string>('');
     const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
@@ -37,13 +38,14 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
             const res = await fetch('/api/comments', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, content, blogPostId, turnstileToken: token }),
+                body: JSON.stringify({ name, email: email || undefined, content, blogPostId, turnstileToken: token }),
             });
 
             if (res.ok) {
                 setStatus('success');
                 setMessage('Thank you! Your comment has been posted.');
                 setName('');
+                setEmail('');
                 setContent('');
                 setToken('');
                 if ((window as any).turnstile) {
@@ -81,6 +83,23 @@ export default function CommentForm({ blogPostId }: CommentFormProps) {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
+                            style={{
+                                width: '100%',
+                                padding: '12px 16px',
+                                background: 'var(--surface)',
+                                border: '1px solid var(--border)',
+                                borderRadius: '8px',
+                                color: 'var(--foreground)',
+                                outline: 'none'
+                            }}
+                        />
+                    </div>
+                    <div>
+                        <input
+                            type="email"
+                            placeholder="Email (optional, for confirmation)"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             style={{
                                 width: '100%',
                                 padding: '12px 16px',

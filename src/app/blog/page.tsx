@@ -1,10 +1,11 @@
 import prisma from '@/lib/prisma';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ArrowRight, Search, ChevronLeft, ChevronRight, Mail, Sparkles } from 'lucide-react';
+import { ArrowRight, Search, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
 import type { Metadata } from 'next';
 import { PAGE_SEO } from '@/lib/keywords';
 import { Reveal } from '@/components/Reveal';
+import NewsletterForm from '@/components/NewsletterForm';
 import styles from './page.module.css';
 
 const seo = PAGE_SEO['/blog'];
@@ -298,17 +299,7 @@ export default async function BlogPage({
                             Subscribe for exclusive insights into mushroom science, early access to
                             new limited flavors, and wellness tips delivered to your inbox.
                         </p>
-                        <form className={styles.newsletterForm}>
-                            <input
-                                type="email"
-                                placeholder="Enter your email"
-                                className={styles.newsletterInput}
-                                aria-label="Email address"
-                            />
-                            <button type="submit" className={`btn btn-primary ${styles.newsletterBtn}`}>
-                                Subscribe <Mail size={14} />
-                            </button>
-                        </form>
+                        <NewsletterForm />
                     </section>
                 </Reveal>
 
